@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Labmem No.1">
+    
+    <meta name="description" content="一切都是命运石之门的选择">
+    
+    
+    
+    
+    
+    
+    <title>UVa1619 感觉很好 | 爱吃咸鱼的喵の无名小站</title>
+    <link href="”https://github.com/JJXiangJiaoJun“" rel="”prefetch”">
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/aos.css">
+<link rel="stylesheet" href="/css/style.css">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/aos.js"></script>
+    <script src="/js/highslide/highslide-full.min.js"></script>
+    <link rel="stylesheet" href="/js/highslide/highslide.css">
+    <style type="text/css">
+        @media (max-width: 768px) {
+            body {
+                background-color: #f0f0f0;
+                background: url('/imgs/mobile.jpg');
+                background-attachment: fixed;
+            }
+        }
+    </style>
+    
+    <script src="//cdn1.lncld.net/static/js/3.4.2/av-min.js"></script>
+    <script>
+      AV.init({
+        appId: 'uJUp6NroM9R4yTpnGYBF7hhw-gzGzoHsz',
+        appKey: 'w5Qtn48qXMY1nyCSf7oahEM7'
+      })
+    </script>
+    
+    <!--<script type="text/javascript">
+      if (document.images) {
+        var avatar = new Image();
+        avatar.src = '/imgs/https:/ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3485132381,143374086&fm=26&gp=0.jpg'
+        var previews = 'preview1.jpg,preview2.jpg,preview12.jpeg,preview3.jpg,preview4.jpg,preview5.jpg,preview6.jpeg,preview7.png,preview8.jpeg,preview9.jpeg,preview10.jpg,preview11.jpg,preview12.jpeg,preview13.jpg,preview14.jpeg,preview15.jpeg,preview16.png'.split(',')
+        var previewsPreLoad = []
+        for(var i = 0; i < length; i++) {
+          previewsPreLoad.push(new Image())
+          previewsPreLoad[previewsPreLoad.length - 1].src = '/imgs/preview' + previews[i]
+        }
+      }
+    </script>--><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head></html>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- 背景轮播图功能 -->
+    <section class="hidden-xs">
+    <ul class="cb-slideshow">
+        <li><span>天若</span></li>
+        <li><span>有情</span></li>
+        <li><span>天亦老</span></li>
+        <li><span>我为</span></li>
+        <li><span>长者</span></li>
+        <li><span>续一秒</span></li>
+    </ul>
+</section>
+    <!-- 欧尼酱功能, 谁用谁知道 -->
+    
+    <header class="navbar navbar-inverse" id="gal-header">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".bs-navbar-collapse" aria-expanded="false">
+                <span class="fa fa-lg fa-reorder"></span>
+            </button>
+            <a href="https://github.com/JJXiangJiaoJun">
+                
+                <!-- 这里background使用imgs/${logo_image}(路径文件名) -->
+                <style>
+                    #gal-header .navbar-brand {
+                        width: 200px;
+                        height: 50px;
+                        display: block;
+                        background: url('/imgs/minilogo.jpeg') no-repeat;
+                    }
+                </style>
+                    
+                <div class="navbar-brand"></div>
+                
+            </a>
+        </div>
+        <div class="collapse navbar-collapse bs-navbar-collapse">
+            <ul class="nav navbar-nav" id="menu-gal">
+                
+                
+                <li class="">
+                    <a href="/">
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/archives">
+                        <i class="fa fa-archive"></i>归档
+                    </a>
+                </li>
+                
+                
+                
+                
+                <li class="dropdown">
+                    <!-- TODO 添加hover dropdown效果 -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-hover="dropdown">
+                        <i class="fa fa-list"></i>分类
+                    </a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        <li>
+                            <a href="/categories/算法与数据结构/">算法与数据结构</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/git/">git</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/Ubuntu系统/">Ubuntu系统</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/深度学习/">深度学习</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/Java后端/">Java后端</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/深度学习论文/">深度学习论文</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/python常用库/">python常用库</a>
+                        </li>
+                        
+                        
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                
+                
+                <li class="dropdown">
+                    <!-- TODO 添加hover dropdown效果 -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-hover="dropdown">
+                        <i class="fa fa-tags"></i>标签
+                    </a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        <li>
+                            <a href="/tags/暴力枚举/">暴力枚举</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/剪枝/">剪枝</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/线段树/">线段树</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/前缀和/">前缀和</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/二分法/">二分法</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/git命令/">git命令</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/mxnet/">mxnet</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/faster-rcnn/">faster_rcnn</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/java/">java</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/jsp/">jsp</a>
+                        </li>
+                        
+                        
+                        <li>
+                            <a href="/tags">...</a>
+                        </li>
+                        
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                
+                <li class="">
+                    <a href="/message">
+                        <i class="fa fa-commenting"></i>留言板
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/about">
+                        <i class="fa fa-user"></i>关于我
+                    </a>
+                </li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</header>
+    <div id="gal-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 gal-right" id="mainstay">
+                    
+<article class="article well article-body" id="article">
+    <div class="breadcrumb">
+        <i class="fa fa-home"></i>
+        <a href="https://github.com/JJXiangJiaoJun">爱吃咸鱼的喵の无名小站</a>
+        >
+        <span>UVa1619 感觉很好</span>
+    </div>
+    <!-- 大型设备详细文章 -->
+    <div class="hidden-xs">
+        <div class="title-article">
+            <h1>
+                <a href="/2019/01/18/UVa1619/">UVa1619 感觉很好</a>
+            </h1>
+        </div>
+        <div class="tag-article">
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2019-01-18
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-eye"></i>
+            </span>
+            
+        </div>
+    </div>
+    <!-- 小型设备详细文章 -->
+    <div class="visible-xs">
+        <center>
+            <div class="title-article">
+                <h4>
+                    <a href="/2019/01/18/UVa1619/">UVa1619 感觉很好</a>
+                </h4>
+            </div>
+            <p>
+                <i class="fa fa-calendar"></i> 2019-01-18
+            </p>
+            <p>
+                
+                
+                <i class="fa fa-eye"></i>
+                
+            </p>
+        </center>
+    </div>
+    <div class="content-article">
+        <h1 id="UVa1619-感觉很好-解题报告"><a href="#UVa1619-感觉很好-解题报告" class="headerlink" title="UVa1619 感觉很好 解题报告"></a>UVa1619 感觉很好 解题报告</h1><p><a href="https://uva.onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=8&amp;category=845&amp;page=show_problem&amp;problem=4494" target="_blank" rel="noopener">题目链接</a><br>&emsp;&emsp;这题使用单调栈，可以在$O(n)$时间内解决，单调栈还是不熟练，总结一下希望能提高吧。</p>
+<h2 id="题目分析"><a href="#题目分析" class="headerlink" title="题目分析"></a>题目分析</h2><p>&emsp;&emsp;题目的意思很简单，实际就是给定一个数组 A，在其中找出一个子序列$A[i]…A[j]$，使其满足$sum(A[i]+A[i+1]+…+A[j])*min(A[i],A[i-1],…,A[j])$为最大值。根据题目的要求，至少要设计出$O(n\log n)$的算法，当时我有以下几种思路：</p>
+<ul>
+<li>枚举起点，然后快速找到终点，不过这题好像没法在$O(1)、O(\log n)$时间内快速找到终点</li>
+<li>枚举子序列的长度，然后用滑动窗口判断，不过好像没法二分枚举，肯定会超时</li>
+<li><strong>枚举最小值的可能位置，然后在$O(1)、O(\log n)$时间内算出，以当前枚举位置为最小值，满足条件的子序列最大值</strong></li>
+</ul>
+<p>&emsp;&emsp;用贪心的思想，当最小值一定时，上述式子的长度越长，那么最后算出的值越大，所以我们只要找出，以当前枚举位置为最小值，向左向右最多能延伸多长即可。可以通过预处理出Left[i]、right[i]，表示i位置为最小值时，向左向右最多能延伸的位置。</p>
+<h2 id="算法设计"><a href="#算法设计" class="headerlink" title="算法设计"></a>算法设计</h2><p>&emsp;&emsp;现在的唯一问题就是，如何在$O(n)$时间内得到当前数字向左向右最大的延伸位置？<br>&emsp;&emsp;不难想到，可以用单调栈+滑动窗口来实现，这样在统计的过程中，每个元素至多入队出队一次，时间复杂度为$O(n)$。具体思想就是，假设新加入的元素为 $a$ 那么，将栈中所有 大于等于 $a$ 的元素都出栈。出栈完毕后，栈顶元素位置即为当前元素能延伸到的最大位置，最后将当前元素入栈。<br>&emsp;&emsp;<strong>说明如下</strong>：因为当栈中的一个元素大于 $a$ 时，它所能延伸到的位置，那么 $a$ 也一定能延伸到，而如果在栈中碰到一个小于 $a$ 的元素时，那么这个栈中元素的位置就是$a$ 能延伸到的最大位置。出栈条件是 $\geq$ 是因为需要尽量多的延伸，当相等时也要尽量往外延伸。<br><br>&emsp;&emsp;总结一下单调栈的使用：</p>
+<ul>
+<li>首先确定入栈的元素是什么（是数组中的元素，还是数组的下标）</li>
+<li>确定单调栈中出栈的条件（大于还是小于，是否有等于）</li>
+<li>新加入的元素一定要在最后入栈</li>
+<li>注意栈为空的处理</li>
+</ul>
+<h2 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">100000</span> + <span class="number">1000</span>;</span><br><span class="line"><span class="keyword">int</span> A[maxn];</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="keyword">long</span> <span class="keyword">long</span> sum[maxn];</span><br><span class="line"><span class="keyword">int</span> <span class="built_in">stack</span>[maxn];</span><br><span class="line"><span class="keyword">int</span> top;</span><br><span class="line"><span class="keyword">int</span> L[maxn], R[maxn];</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> kcase = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">solve</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">memset</span>(sum, <span class="number">0</span>, <span class="keyword">sizeof</span>(sum));</span><br><span class="line">	<span class="comment">//计算前缀和</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">		sum[i] = sum[i - <span class="number">1</span>] +(<span class="keyword">long</span> <span class="keyword">long</span>) A[i];</span><br><span class="line"></span><br><span class="line">	<span class="comment">//利用单调栈预处理出 left[i]  表示第i个数字最左能延伸到的位置</span></span><br><span class="line">	top = <span class="number">0</span>;</span><br><span class="line">	<span class="built_in">memset</span>(<span class="built_in">stack</span>, <span class="number">0</span>, <span class="keyword">sizeof</span>(<span class="built_in">stack</span>));</span><br><span class="line">	<span class="built_in">memset</span>(L, <span class="number">0</span>, <span class="keyword">sizeof</span>(L));</span><br><span class="line">	<span class="built_in">memset</span>(R, <span class="number">0</span>, <span class="keyword">sizeof</span>(R));</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//栈非空，而且栈顶元素大于当前元素，说明栈顶元素能延伸到的位置，当前元素一定能延伸到</span></span><br><span class="line">		<span class="keyword">while</span> (top &gt; <span class="number">0</span> &amp;&amp; A[<span class="built_in">stack</span>[top - <span class="number">1</span>]] &gt;= A[i]) top--;</span><br><span class="line">		</span><br><span class="line">		L[i] = top == <span class="number">0</span> ? <span class="number">1</span> : (<span class="built_in">stack</span>[top - <span class="number">1</span>] + <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//当前元素入栈</span></span><br><span class="line">		<span class="built_in">stack</span>[top++] = i;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	top = <span class="number">0</span>;</span><br><span class="line">	<span class="built_in">memset</span>(<span class="built_in">stack</span>, <span class="number">0</span>, <span class="keyword">sizeof</span>(<span class="built_in">stack</span>));</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = n; i &gt;= <span class="number">1</span>; i--)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">while</span> (top &gt; <span class="number">0</span> &amp;&amp; A[<span class="built_in">stack</span>[top - <span class="number">1</span>]] &gt;= A[i]) top--;</span><br><span class="line"></span><br><span class="line">		R[i] = top == <span class="number">0</span> ? n : (<span class="built_in">stack</span>[top - <span class="number">1</span>] - <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">		<span class="built_in">stack</span>[top++] = i;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> left=<span class="number">1</span>, right=<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">long</span> <span class="keyword">long</span>  max_val = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">long</span> <span class="keyword">long</span>  temp_val = (sum[R[i]] - sum[L[i] - <span class="number">1</span>])*(<span class="keyword">long</span> <span class="keyword">long</span> )A[i];</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (temp_val &gt; max_val ||( temp_val == max_val &amp;&amp; (right - left) &gt; (R[i] - L[i])))</span><br><span class="line">		&#123;</span><br><span class="line">			max_val = temp_val;</span><br><span class="line">			left = L[i];</span><br><span class="line">			right = R[i];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%lld\n%d %d\n"</span>, max_val, left, right);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	freopen(<span class="string">"C:\\Users\\lenovo\\Desktop\\test\\in.txt"</span>, <span class="string">"r"</span>, <span class="built_in">stdin</span>);</span><br><span class="line">	freopen(<span class="string">"C:\\Users\\lenovo\\Desktop\\test\\out.txt"</span>, <span class="string">"w"</span>, <span class="built_in">stdout</span>);</span><br><span class="line">	<span class="keyword">while</span> (<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n) == <span class="number">1</span> &amp;&amp; n)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (kcase++) <span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;A[i]);</span><br><span class="line">		solve();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+</article>
+
+
+<div id="comments-template"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script>
+	if(!window.commentConfig) {
+      window.commentConfig = {}
+      window.commentConfig.title = 'UVa1619 感觉很好'
+    }
+</script>
+
+                </div>
+                <aside class="col-md-4 gal-left" id="sidebar">
+    <!-- 此为sidebar的搜索框, 非搜索结果页面 -->
+<aside id="sidebar-search">
+    <div class="search hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <form class="form-inline clearfix" id="search-form" method="get" action="/search/index.html">
+            <input type="text" name="s" class="form-control" id="searchInput" placeholder="搜索文章~" autocomplete="off">
+            <button class="btn btn-danger btn-gal" type="submit">
+                <i class="fa fa-search"></i>
+            </button>
+        </form>
+    </div>
+</aside>
+    <aside id="sidebar-author">
+    <div class="panel panel-gal" data-aos="flip-right" data-aos-duration="3000">
+        <div class="panel-heading" style="text-align: center">
+            <i class="fa fa-quote-left"></i>
+            Labmem No.1
+            <i class="fa fa-quote-right"></i>
+        </div>
+        <div class="author-panel text-center">
+            <img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3485132381,143374086&fm=26&gp=0.jpg" width="140" height="140" alt="个人头像" class="author-image">
+            <p class="author-description"></p><p>一切都是命运石之门的选择</p>
+<p></p>
+        </div>
+    </div>
+</aside>
+    
+    <aside id="sidebar-recent_comments">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-comments"></i>
+            最新评论
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush"></ul>
+    </div>
+</aside>
+    
+    <!-- 要配置好leancloud才能开启此小工具 -->
+    
+    <aside id="sidebar-hot_posts">
+    <div class="panel panel-gal hot hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-fire"></i>
+            最热文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush"></ul>
+    </div>
+</aside>
+    
+    
+    <aside id="sidebar-recent_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            近期文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/22/UbuntuToDo/">安装Ubuntu系统必做的事情（常用软件安装＋系统配置）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/mxnet-hrbrid-forward/">MXNet学习笔记：HybridBlock类hybrid_forwar()函数解析</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/mxnet-set-learning-rate/">MXNet使用技巧：单独设置网络中每层的学习率</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/python-argparse/">python常用库总结：argparse库</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/faster-rcnn/">Faster-RCNN论文细节原理解读+代码实现gluoncv(MXNet)</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/traits/">C++ Traits简介（OpenCV中DataType类分析）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode4/">LeetCode 第四题 Median of Two Sorted Arrays（计算两个有序数组的中位数）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode5/">LeetCode 第5题 Longest Palindromic Substring 最长回文子串</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/mxnetAPIobjectdetection/">MXNet中目标检测API使用总结：MultiBoxDetection、MultiBoxPrior、MultiBoxTarget</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode2/">LeetCode 第2题 Add Two Numbers</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    <aside id="sidebar-rand_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            随机文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/HDU6344/">2018百度之星程序设计大赛（资格赛） 调查问卷 HDU6344 解题思路</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/HDU6345/">2018百度之星程序设计大赛（资格赛） 子串查询 HDU6345 解题思路</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/UVa1618/">UVa1618 弱键</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/UbuntSSH/">Ubuntu系统生成SSH秘钥并添加到github远程仓库(解决git push被拒绝的问题)</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/jsp/">JSP实现网页的自动登录(session+cookie)实现</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode5/">LeetCode 第5题 Longest Palindromic Substring 最长回文子串</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/object-detection-note1/">物体检测Object Detection学习笔记（MXNet）（一）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/object-detection-note3/">物体检测Object Detection学习笔记（MXNet）（三）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/python-argparse/">python常用库总结：argparse库</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/深度学习论文汇总/">深度学习论文汇总</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    <aside id="gal-sets">
+        <div class="panel panel-gal hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+            <ul class="nav nav-pills pills-gal">
+
+                
+                <li>
+                    <a href="/2019/01/18/UVa1619/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                </li>
+                
+                
+                <li>
+                    <a href="/2019/01/18/UVa1619/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                </li>
+                
+                
+                <li>
+                    <a href="/2019/01/18/UVa1619/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                </li>
+                
+            </ul>
+            <div class="tab-content">
+                
+                <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
+    
+    <a href="/tags/暴力枚举/" style="font-size: 16.91544879302892px;" class="tag-cloud-link">暴力枚举</a>
+    
+    <a href="/tags/剪枝/" style="font-size: 18.706290736644462px;" class="tag-cloud-link">剪枝</a>
+    
+    <a href="/tags/线段树/" style="font-size: 16.995427520691486px;" class="tag-cloud-link">线段树</a>
+    
+    <a href="/tags/前缀和/" style="font-size: 19.307741058771235px;" class="tag-cloud-link">前缀和</a>
+    
+    <a href="/tags/二分法/" style="font-size: 12.65222102824493px;" class="tag-cloud-link">二分法</a>
+    
+    <a href="/tags/git命令/" style="font-size: 11.819589944696286px;" class="tag-cloud-link">git命令</a>
+    
+    <a href="/tags/mxnet/" style="font-size: 11.14125360735686px;" class="tag-cloud-link">mxnet</a>
+    
+    <a href="/tags/faster-rcnn/" style="font-size: 11.159455274473574px;" class="tag-cloud-link">faster_rcnn</a>
+    
+    <a href="/tags/java/" style="font-size: 13.543312720710752px;" class="tag-cloud-link">java</a>
+    
+    <a href="/tags/jsp/" style="font-size: 11.058532129001035px;" class="tag-cloud-link">jsp</a>
+    
+    <a href="/tags/servlet/" style="font-size: 11.282129053393103px;" class="tag-cloud-link">servlet</a>
+    
+    <a href="/tags/物体检测/" style="font-size: 13.001284896479238px;" class="tag-cloud-link">物体检测</a>
+    
+    <a href="/tags/论文/" style="font-size: 10.564346420029324px;" class="tag-cloud-link">论文</a>
+    
+    <a href="/tags/python/" style="font-size: 12.323486957126072px;" class="tag-cloud-link">python</a>
+    
+    <a href="/tags/深度学习/" style="font-size: 19.798120244840874px;" class="tag-cloud-link">深度学习</a>
+    
+</div>
+                
+                
+                <div class="friend-links tab-pane nav bs-sidenav fade" id="sidebar-friend-links">
+    
+    <li>
+        <a href="http://baidu.com/" target="_blank">百度</a>
+    </li>
+    
+    <li>
+        <a href="http://www.google.com/" target="_blank">谷歌</a>
+    </li>
+    
+    <li>
+        <a href="http://www.moe123.com/" target="_blank">木有啊</a>
+    </li>
+    
+</div>
+                
+                
+                <div class="links tab-pane nav bs-sidenav fade" id="sidebar-links">
+    
+    <li>
+        <a href="https://github.com/JJXiangJiaoJun/" target="_blank">Github</a>
+    </li>
+    
+    <li>
+        <a href="https://blog.csdn.net/XiangJiaoJun_/" target="_blank">CSDN</a>
+    </li>
+    
+    <li>
+        <a href="https://www.zhihu.com/people/ye-xiao-bai-11-96/activities" target="_blank">知乎</a>
+    </li>
+    
+</div>
+                
+            </div>
+        </div>
+    </aside>
+    
+</aside>
+            </div>
+        </div>
+    </div>
+    <footer id="gal-footer">
+    <div class="container">
+        Copyright © 2018 Labmem No.1 Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>.&nbsp;Theme by <a href="https://github.com/ZEROKISEKI" target="_blank">AONOSORA</a>
+    </div>
+</footer>
+
+<!-- 回到顶端 -->
+<div id="gal-gotop">
+    <i class="fa fa-angle-up"></i>
+</div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"pluginJsPath":"lib/","pluginRootPath":"live2dw/"});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+<script src="/js/activate-power-mode.js"></script>
+<script>
+
+    // 配置highslide
+	hs.graphicsDir = '/js/highslide/graphics/'
+    hs.outlineType = "rounded-white";
+    hs.dimmingOpacity = 0.8;
+    hs.outlineWhileAnimating = true;
+    hs.showCredits = false;
+    hs.captionEval = "this.thumb.alt";
+    hs.numberPosition = "caption";
+    hs.align = "center";
+    hs.transitions = ["expand", "crossfade"];
+    hs.lang.number = '共%2张图, 当前是第%1张';
+    hs.addSlideshow({
+      interval: 5000,
+      repeat: true,
+      useControls: true,
+      fixedControls: "fit",
+      overlayOptions: {
+        opacity: 0.75,
+        position: "bottom center",
+        hideOnMouseOut: true
+      }
+    })
+
+    // 初始化aos
+    AOS.init({
+      duration: 1000,
+      delay: 0,
+      easing: 'ease-out-back'
+    });
+
+</script>
+<script>
+	POWERMODE.colorful = 'true';    // make power mode colorful
+	POWERMODE.shake = 'true';       // turn off shake
+	// TODO 这里根据具体情况修改
+	document.body.addEventListener('input', POWERMODE);
+</script>
+<script>
+    window.slideConfig = {
+      prefix: '/imgs/slide/background',
+      ext: 'jpg',
+      maxCount: '21'
+    }
+</script>
+<script src="/js/hs.js"></script>
+<script src="/js/blog.js"></script>
+
+
+<script>
+    window.hot_posts_count = '10'
+    // window.use_leancloud = 'true'
+</script>
+<script src="/js/comment/leancloud.js"></script>
+
+
+<script src="https://myau.moe/js/comment/gitment.browser.js"></script>
+<script>
+    if(window.commentConfig) {
+      window.commentConfig.id = 'Fri Jan 18 2019 19:10:06 GMT+0800'
+      window.commentConfig.owner = 'JJXiangJiaoJun'
+      window.commentConfig.repo = 'comment_page'
+      window.commentConfig.client_id = 'd7df3d5d159f81371d76'
+      window.commentConfig.client_secret = '3794527fca067871d3795782ae7fd14f94ce3a74'
+      window.commentConfig.redirect_uri = 'https://hongbb.top'
+    } else {
+      window.commentConfig = {
+      	id: 'Fri Jan 18 2019 19:10:06 GMT+0800',
+        owner: 'JJXiangJiaoJun',
+        repo: 'comment_page',
+        client_id: 'd7df3d5d159f81371d76',
+        client_secret: '3794527fca067871d3795782ae7fd14f94ce3a74',
+        redirect_uri: 'https://hongbb.top'
+      }
+    }
+</script>
+<script src="/js/comment/gitment.js"></script>
+
+</html>

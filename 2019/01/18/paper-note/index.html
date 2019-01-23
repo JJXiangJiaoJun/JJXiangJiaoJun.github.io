@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Labmem No.1">
+    
+    <meta name="description" content="一切都是命运石之门的选择">
+    
+    
+    
+    
+    
+    
+    <title>论文笔记 Deep Learning for Generic Object Detection A Survey （一） | 爱吃咸鱼的喵の无名小站</title>
+    <link href="”https://github.com/JJXiangJiaoJun“" rel="”prefetch”">
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/aos.css">
+<link rel="stylesheet" href="/css/style.css">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/aos.js"></script>
+    <script src="/js/highslide/highslide-full.min.js"></script>
+    <link rel="stylesheet" href="/js/highslide/highslide.css">
+    <style type="text/css">
+        @media (max-width: 768px) {
+            body {
+                background-color: #f0f0f0;
+                background: url('/imgs/mobile.jpg');
+                background-attachment: fixed;
+            }
+        }
+    </style>
+    
+    <script src="//cdn1.lncld.net/static/js/3.4.2/av-min.js"></script>
+    <script>
+      AV.init({
+        appId: 'uJUp6NroM9R4yTpnGYBF7hhw-gzGzoHsz',
+        appKey: 'w5Qtn48qXMY1nyCSf7oahEM7'
+      })
+    </script>
+    
+    <!--<script type="text/javascript">
+      if (document.images) {
+        var avatar = new Image();
+        avatar.src = '/imgs/https:/ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3485132381,143374086&fm=26&gp=0.jpg'
+        var previews = 'preview1.jpg,preview2.jpg,preview12.jpeg,preview3.jpg,preview4.jpg,preview5.jpg,preview6.jpeg,preview7.png,preview8.jpeg,preview9.jpeg,preview10.jpg,preview11.jpg,preview12.jpeg,preview13.jpg,preview14.jpeg,preview15.jpeg,preview16.png'.split(',')
+        var previewsPreLoad = []
+        for(var i = 0; i < length; i++) {
+          previewsPreLoad.push(new Image())
+          previewsPreLoad[previewsPreLoad.length - 1].src = '/imgs/preview' + previews[i]
+        }
+      }
+    </script>--><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head></html>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- 背景轮播图功能 -->
+    <section class="hidden-xs">
+    <ul class="cb-slideshow">
+        <li><span>天若</span></li>
+        <li><span>有情</span></li>
+        <li><span>天亦老</span></li>
+        <li><span>我为</span></li>
+        <li><span>长者</span></li>
+        <li><span>续一秒</span></li>
+    </ul>
+</section>
+    <!-- 欧尼酱功能, 谁用谁知道 -->
+    
+    <header class="navbar navbar-inverse" id="gal-header">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".bs-navbar-collapse" aria-expanded="false">
+                <span class="fa fa-lg fa-reorder"></span>
+            </button>
+            <a href="https://github.com/JJXiangJiaoJun">
+                
+                <!-- 这里background使用imgs/${logo_image}(路径文件名) -->
+                <style>
+                    #gal-header .navbar-brand {
+                        width: 200px;
+                        height: 50px;
+                        display: block;
+                        background: url('/imgs/minilogo.jpeg') no-repeat;
+                    }
+                </style>
+                    
+                <div class="navbar-brand"></div>
+                
+            </a>
+        </div>
+        <div class="collapse navbar-collapse bs-navbar-collapse">
+            <ul class="nav navbar-nav" id="menu-gal">
+                
+                
+                <li class="">
+                    <a href="/">
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/archives">
+                        <i class="fa fa-archive"></i>归档
+                    </a>
+                </li>
+                
+                
+                
+                
+                <li class="dropdown">
+                    <!-- TODO 添加hover dropdown效果 -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-hover="dropdown">
+                        <i class="fa fa-list"></i>分类
+                    </a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        <li>
+                            <a href="/categories/算法与数据结构/">算法与数据结构</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/git/">git</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/Ubuntu系统/">Ubuntu系统</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/深度学习/">深度学习</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/Java后端/">Java后端</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/深度学习论文/">深度学习论文</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/python常用库/">python常用库</a>
+                        </li>
+                        
+                        
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                
+                
+                <li class="dropdown">
+                    <!-- TODO 添加hover dropdown效果 -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-hover="dropdown">
+                        <i class="fa fa-tags"></i>标签
+                    </a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        <li>
+                            <a href="/tags/暴力枚举/">暴力枚举</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/剪枝/">剪枝</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/线段树/">线段树</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/前缀和/">前缀和</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/二分法/">二分法</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/git命令/">git命令</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/mxnet/">mxnet</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/faster-rcnn/">faster_rcnn</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/java/">java</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/jsp/">jsp</a>
+                        </li>
+                        
+                        
+                        <li>
+                            <a href="/tags">...</a>
+                        </li>
+                        
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                
+                <li class="">
+                    <a href="/message">
+                        <i class="fa fa-commenting"></i>留言板
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/about">
+                        <i class="fa fa-user"></i>关于我
+                    </a>
+                </li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</header>
+    <div id="gal-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 gal-right" id="mainstay">
+                    
+<article class="article well article-body" id="article">
+    <div class="breadcrumb">
+        <i class="fa fa-home"></i>
+        <a href="https://github.com/JJXiangJiaoJun">爱吃咸鱼的喵の无名小站</a>
+        >
+        <span>论文笔记 Deep Learning for Generic Object Detection A Survey （一）</span>
+    </div>
+    <!-- 大型设备详细文章 -->
+    <div class="hidden-xs">
+        <div class="title-article">
+            <h1>
+                <a href="/2019/01/18/paper-note/">论文笔记 Deep Learning for Generic Object Detection A Survey （一）</a>
+            </h1>
+        </div>
+        <div class="tag-article">
+            
+            <span class="label label-gal">
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/论文/">论文</a>
+                
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2019-01-18
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-eye"></i>
+            </span>
+            
+        </div>
+    </div>
+    <!-- 小型设备详细文章 -->
+    <div class="visible-xs">
+        <center>
+            <div class="title-article">
+                <h4>
+                    <a href="/2019/01/18/paper-note/">论文笔记 Deep Learning for Generic Object Detection A Survey （一）</a>
+                </h4>
+            </div>
+            <p>
+                <i class="fa fa-calendar"></i> 2019-01-18
+            </p>
+            <p>
+                
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/论文/">论文</a>
+                
+                
+                
+                <i class="fa fa-eye"></i>
+                
+            </p>
+        </center>
+    </div>
+    <div class="content-article">
+        <p>&emsp;&emsp;本文总结了近十多年来物体检测（object detection）方面的进展，对每个里程碑式的成果都做了介绍，自己在读过程中也了解了很多，希望能把自己的体会和学习过程记录下来吧。</p>
+<ul>
+<li><a href="#%E6%80%BB%E4%BD%93%E4%BB%8B%E7%BB%8D">总体介绍</a><ul>
+<li><a href="#%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0">问题描述</a></li>
+<li><a href="#%E9%9A%BE%E7%82%B9%E6%8C%91%E6%88%98">难点&amp;挑战</a></li>
+<li><a href="#%E8%BF%87%E5%8E%BB20%E5%B9%B4%E6%9D%A5%E7%9A%84%E5%8F%91%E5%B1%95">过去20年来的发展</a></li>
+</ul>
+</li>
+<li><a href="#%E7%89%A9%E4%BD%93%E6%A3%80%E6%B5%8B%E6%A1%86%E6%9E%B6">物体检测框架</a><ul>
+<li><a href="#region-basedtwo-stage-framework">Region Based（Two Stage Framework）</a><ul>
+<li><a href="#rcnn">RCNN</a></li>
+<li><a href="#sppnet">SPPNet</a></li>
+<li><a href="#fast-rcnn">Fast-RCNN</a></li>
+<li><a href="#faster-rcnn">Faster-RCNN</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="总体介绍"><a href="#总体介绍" class="headerlink" title="总体介绍"></a>总体介绍</h1><h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>&emsp;&emsp; <strong>物体检测目标</strong>：给定一张任意的图像，检测其中是否含有给定类别的物体，如果含有，则返回其位置和大小。<br>&emsp;&emsp;<strong>发展历程</strong>: Image level object classification -&gt; single object localization -&gt; generic object detection -&gt; pixel-wise object segmantation</p>
+<p><img src="https://raw.githubusercontent.com/JJXiangJiaoJun/blog_images/master/paper_notes/1.png" alt="图片挂了QAQ"></p>
+<ul>
+<li><strong>物体分类(object classification)</strong> 给定一幅图像，输出其中含有物体的标签，并不需要定位<pre><code>如图中(a)所示
+</code></pre></li>
+<li><strong>物体检测(object detection)</strong> 给定一幅图像，不仅需要检测出其中含有的物体，并且需要对其进行定位，用边界框将所有物体标记出来，如图中(b)所示</li>
+<li><strong>语义分割(Semantic Segmentation)</strong> 将一幅图像中的每个像素都分配一个物体类别标签，如图中（c）所示</li>
+<li><strong>实例分割(Instance Segmentation</strong> 不同于语义分割，实例分割中，对于每个相同类别的实例也会进行分割，如图中（d）所示</li>
+</ul>
+<h2 id="难点-amp-挑战"><a href="#难点-amp-挑战" class="headerlink" title="难点&amp;挑战"></a>难点&amp;挑战</h2><ul>
+<li><strong>准确率</strong><ol>
+<li>the vast range of intraclass variation 大量的类内变化<br>同样的子类有着不同颜色、材质、形状等，同样的物体有着不同的姿态，不同的拍摄时间、地点、天气状况、背景等等。</li>
+<li>huge number of object categories 大量的物体类别<br> 一共$10^4-10^5$种、有些类别之间只有细微的差别</li>
+</ol>
+</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/JJXiangJiaoJun/blog_images/master/paper_notes/2.png" alt="图片挂了QAQ"></p>
+<ul>
+<li><strong>高效性</strong><br>移动设备、可穿戴设备只有有限的存储空间和计算能力，需要降低算法总体的运算复杂度。</li>
+</ul>
+<h2 id="过去20年来的发展"><a href="#过去20年来的发展" class="headerlink" title="过去20年来的发展"></a>过去20年来的发展</h2><p><img src="https://raw.githubusercontent.com/JJXiangJiaoJun/blog_images/master/paper_notes/3.png" alt="图片挂了QAQ"></p>
+<p>&emsp;&emsp;在1990年以前，典型的物体检测方法是基于 geometric representations，之后物体检测的方法像统计分类的方向发展(神经网络、SVM、Adaboost等）。<br>&emsp;&emsp;在20世纪晚期和21世纪早期，物体检测领域取得了突破性的进展，正如图中所示，SIFT 和 DCNN 开启了新的纪元。Handcrafted local invariant feature（人工提取图像特征） 变得流行起来，比如Scale Invariant Feature Transform(SIFT)、Histogram of Gradients(HOG)、Local Binary Patterns(LBP)等都是特征提取的方法。<br>&emsp;&emsp;2012年当深度神经网络(DCNN)在图像分类上取得了突破性进展时，这个巨大的成功也被用到了物体检测上。Girshick提出了里程碑式的物体检测模型Region based CNN(RCNN)，在此之后物体检测领域飞速发展、并且提出了许多基于深度学习的方法……</p>
+<h1 id="物体检测框架"><a href="#物体检测框架" class="headerlink" title="物体检测框架"></a>物体检测框架</h1><p><img src="https://raw.githubusercontent.com/JJXiangJiaoJun/blog_images/master/paper_notes/4.png" alt="图片挂了QAQ"></p>
+<p>&emsp;&emsp;物体检测框架发展如上图所示。上面的框架可以分为下面两个类别：</p>
+<ul>
+<li>Two stage detection framework，包括生成 region proposal 的预处理步骤，以及之后的物体分类以及bounding box 回归。</li>
+<li>One stage detection framework ，不需要region proposal的生成，直接通过一遍前向运算就能完成物体检测的任务。</li>
+</ul>
+<h2 id="Region-Based（Two-Stage-Framework）"><a href="#Region-Based（Two-Stage-Framework）" class="headerlink" title="Region Based（Two Stage Framework）"></a>Region Based（Two Stage Framework）</h2><h3 id="RCNN"><a href="#RCNN" class="headerlink" title="RCNN"></a>RCNN</h3><p>&emsp;&emsp;Region based CNN 是 Girshick 受到 CNN 在图像分类上的巨大成功，以及selective search(用于生成 region proposal)等人工特征提取方法的成功鼓舞而提出来的，这是一个里程碑式的物体检测框架，后续的框架或多或少都参考了RCNN，训练和测试具体步骤如下图所示：</p>
+<p><img src="https://raw.githubusercontent.com/JJXiangJiaoJun/blog_images/master/paper_notes/5.png" alt="图片挂了QAQ"></p>
+<p><strong>训练过程</strong></p>
+<ol>
+<li>首先采用selective search 方法生成2000个region proposal（目标区域）。</li>
+<li>将生成的目标区域通过warp操作（缩放）到统一尺寸（为了以后的全连接层），作为提前训练好的CNN模型的输入数据(finetune)。</li>
+<li>用CNN提取出 feature map，并训练一系列线性SVM分类器，用这些分类器取代最后一层的softmax层。</li>
+<li>对每个类别都会用CNN提取的特征训练一个bounding box regression 模型，用于边界框的回归预测。</li>
+</ol>
+<p><strong>缺点</strong></p>
+<ul>
+<li>训练过程是muti-stage，每一个部分都必须单独进行训练、复杂、低效</li>
+<li>训练SVM和回归器需要大量的时间和空间</li>
+<li>测试速度非常慢，每个候选窗口都要输入到CNN中进行特征提取</li>
+</ul>
+<h3 id="SPPNet"><a href="#SPPNet" class="headerlink" title="SPPNet"></a>SPPNet</h3><p>&emsp;&emsp;由于CNN的特征提取是RCNN的一个主要瓶颈，SPPNet中提出了Spatial Pyramid Pooling Layer（空间金字塔池化层 ）。由于存在FC（全连接）层，所以RCNN输入的图像需要固定尺寸，并且需要进行warp操作，SPPNet中在最后一层卷积层后加入了SPP层，经过SPP层后可以获得固定长度的特征向量。<br>&emsp;&emsp;通过这种方式，可以让网络输入任意尺寸的图片，并且最终会输出固定尺寸的特征。<br><strong>步骤</strong></p>
+<ol>
+<li>首先采用selective search 方法生成2000个region proposal（目标区域）。和RCNN一样</li>
+<li>_特征提取阶段_。这一步是和RCNN最大的不同，先把整张图片输入CNN进行特征提取，得到feature map，然后在feature map 中找到各个候选框区域，再对各个候选框进行金字塔池化，从而最后可以提取出固定长度的特征向量。由于SPPNet中只需要对整张图片用CNN进行一次特征提取，于是相比于RCNN速度大大提高。</li>
+<li>最后一步也和RCNN一样，采用SVM算法进行特征向量的分类识别，以及boundingbox 的回归。<h3 id="Fast-RCNN"><a href="#Fast-RCNN" class="headerlink" title="Fast-RCNN"></a>Fast-RCNN</h3>&emsp;&emsp;改进了RCNN以及SPPNet的缺点，实现了end-to-end的训练。并提出了RoI pooling层，用于对特征图的池化从而得到固定大小的特征向量。<br><strong>创新</strong></li>
+<li>定义了一个多任务的损失函数，同时包括softmax、BBRs等训练目标。</li>
+<li>采用了共享卷积计算的思想</li>
+<li>在最后一层卷积层上对每个RoI求映射关系，并用一个RoI pooling Layer 来统一到相同大小。</li>
+</ol>
+<p>具体步骤和RCNN相似。</p>
+<p><img src="https://raw.githubusercontent.com/JJXiangJiaoJun/blog_images/master/paper_notes/6.png" alt="图片挂了QAQ"></p>
+<h3 id="Faster-RCNN"><a href="#Faster-RCNN" class="headerlink" title="Faster-RCNN"></a>Faster-RCNN</h3><p><strong>创新点</strong></p>
+<ol>
+<li>用RPN(Region Proposal Network)取代selective search，大大提升了整体运行速度。</li>
+<li>通过RPN来生成目标候选框，之后在最后一层卷积层得到的feature map上进行RoI pooling从而得到固定大小的特征图，最后进行分类和回归。</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/JJXiangJiaoJun/blog_images/master/paper_notes/7.png" alt="图片挂了QAQ"></p>
+<p>未完待续……………………</p>
+
+    </div>
+</article>
+
+
+<div id="comments-template"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script>
+	if(!window.commentConfig) {
+      window.commentConfig = {}
+      window.commentConfig.title = '论文笔记 Deep Learning for Generic Object Detection A Survey （一）'
+    }
+</script>
+
+                </div>
+                <aside class="col-md-4 gal-left" id="sidebar">
+    <!-- 此为sidebar的搜索框, 非搜索结果页面 -->
+<aside id="sidebar-search">
+    <div class="search hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <form class="form-inline clearfix" id="search-form" method="get" action="/search/index.html">
+            <input type="text" name="s" class="form-control" id="searchInput" placeholder="搜索文章~" autocomplete="off">
+            <button class="btn btn-danger btn-gal" type="submit">
+                <i class="fa fa-search"></i>
+            </button>
+        </form>
+    </div>
+</aside>
+    <aside id="sidebar-author">
+    <div class="panel panel-gal" data-aos="flip-right" data-aos-duration="3000">
+        <div class="panel-heading" style="text-align: center">
+            <i class="fa fa-quote-left"></i>
+            Labmem No.1
+            <i class="fa fa-quote-right"></i>
+        </div>
+        <div class="author-panel text-center">
+            <img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3485132381,143374086&fm=26&gp=0.jpg" width="140" height="140" alt="个人头像" class="author-image">
+            <p class="author-description"></p><p>一切都是命运石之门的选择</p>
+<p></p>
+        </div>
+    </div>
+</aside>
+    
+    <aside id="sidebar-recent_comments">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-comments"></i>
+            最新评论
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush"></ul>
+    </div>
+</aside>
+    
+    <!-- 要配置好leancloud才能开启此小工具 -->
+    
+    <aside id="sidebar-hot_posts">
+    <div class="panel panel-gal hot hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-fire"></i>
+            最热文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush"></ul>
+    </div>
+</aside>
+    
+    
+    <aside id="sidebar-recent_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            近期文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/22/UbuntuToDo/">安装Ubuntu系统必做的事情（常用软件安装＋系统配置）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/mxnet-hrbrid-forward/">MXNet学习笔记：HybridBlock类hybrid_forwar()函数解析</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/mxnet-set-learning-rate/">MXNet使用技巧：单独设置网络中每层的学习率</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/python-argparse/">python常用库总结：argparse库</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/faster-rcnn/">Faster-RCNN论文细节原理解读+代码实现gluoncv(MXNet)</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/traits/">C++ Traits简介（OpenCV中DataType类分析）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode4/">LeetCode 第四题 Median of Two Sorted Arrays（计算两个有序数组的中位数）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode5/">LeetCode 第5题 Longest Palindromic Substring 最长回文子串</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/mxnetAPIobjectdetection/">MXNet中目标检测API使用总结：MultiBoxDetection、MultiBoxPrior、MultiBoxTarget</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode2/">LeetCode 第2题 Add Two Numbers</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    <aside id="sidebar-rand_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            随机文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/UVa1619/">UVa1619 感觉很好</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/UbuntSSH/">Ubuntu系统生成SSH秘钥并添加到github远程仓库(解决git push被拒绝的问题)</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/gitpush_deny/">本地仓库git push命令提交到github远程仓库时，出现 更新被拒绝，因为远程仓库包含您本地尚不存在的提交。解决方案</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/faster-rcnn/">Faster-RCNN论文细节原理解读+代码实现gluoncv(MXNet)</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/jsp/">JSP实现网页的自动登录(session+cookie)实现</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode4/">LeetCode 第四题 Median of Two Sorted Arrays（计算两个有序数组的中位数）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode5/">LeetCode 第5题 Longest Palindromic Substring 最长回文子串</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/mxnet-set-learning-rate/">MXNet使用技巧：单独设置网络中每层的学习率</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/object-detection-note3/">物体检测Object Detection学习笔记（MXNet）（三）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/深度学习论文汇总/">深度学习论文汇总</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    <aside id="gal-sets">
+        <div class="panel panel-gal hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+            <ul class="nav nav-pills pills-gal">
+
+                
+                <li>
+                    <a href="/2019/01/18/paper-note/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                </li>
+                
+                
+                <li>
+                    <a href="/2019/01/18/paper-note/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                </li>
+                
+                
+                <li>
+                    <a href="/2019/01/18/paper-note/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                </li>
+                
+            </ul>
+            <div class="tab-content">
+                
+                <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
+    
+    <a href="/tags/暴力枚举/" style="font-size: 10.892922126146594px;" class="tag-cloud-link">暴力枚举</a>
+    
+    <a href="/tags/剪枝/" style="font-size: 12.455751591711078px;" class="tag-cloud-link">剪枝</a>
+    
+    <a href="/tags/线段树/" style="font-size: 10.261070631074704px;" class="tag-cloud-link">线段树</a>
+    
+    <a href="/tags/前缀和/" style="font-size: 17.73444460438554px;" class="tag-cloud-link">前缀和</a>
+    
+    <a href="/tags/二分法/" style="font-size: 11.83495632307739px;" class="tag-cloud-link">二分法</a>
+    
+    <a href="/tags/git命令/" style="font-size: 15.591334024869845px;" class="tag-cloud-link">git命令</a>
+    
+    <a href="/tags/mxnet/" style="font-size: 12.187603499791177px;" class="tag-cloud-link">mxnet</a>
+    
+    <a href="/tags/faster-rcnn/" style="font-size: 11.400638461879284px;" class="tag-cloud-link">faster_rcnn</a>
+    
+    <a href="/tags/java/" style="font-size: 14.856748561018192px;" class="tag-cloud-link">java</a>
+    
+    <a href="/tags/jsp/" style="font-size: 14.078722816870691px;" class="tag-cloud-link">jsp</a>
+    
+    <a href="/tags/servlet/" style="font-size: 18.380772506984485px;" class="tag-cloud-link">servlet</a>
+    
+    <a href="/tags/物体检测/" style="font-size: 9.591702857882915px;" class="tag-cloud-link">物体检测</a>
+    
+    <a href="/tags/论文/" style="font-size: 15.22768981958809px;" class="tag-cloud-link">论文</a>
+    
+    <a href="/tags/python/" style="font-size: 11.894614266624739px;" class="tag-cloud-link">python</a>
+    
+    <a href="/tags/深度学习/" style="font-size: 9.731414495751864px;" class="tag-cloud-link">深度学习</a>
+    
+</div>
+                
+                
+                <div class="friend-links tab-pane nav bs-sidenav fade" id="sidebar-friend-links">
+    
+    <li>
+        <a href="http://baidu.com/" target="_blank">百度</a>
+    </li>
+    
+    <li>
+        <a href="http://www.google.com/" target="_blank">谷歌</a>
+    </li>
+    
+    <li>
+        <a href="http://www.moe123.com/" target="_blank">木有啊</a>
+    </li>
+    
+</div>
+                
+                
+                <div class="links tab-pane nav bs-sidenav fade" id="sidebar-links">
+    
+    <li>
+        <a href="https://github.com/JJXiangJiaoJun/" target="_blank">Github</a>
+    </li>
+    
+    <li>
+        <a href="https://blog.csdn.net/XiangJiaoJun_/" target="_blank">CSDN</a>
+    </li>
+    
+    <li>
+        <a href="https://www.zhihu.com/people/ye-xiao-bai-11-96/activities" target="_blank">知乎</a>
+    </li>
+    
+</div>
+                
+            </div>
+        </div>
+    </aside>
+    
+</aside>
+            </div>
+        </div>
+    </div>
+    <footer id="gal-footer">
+    <div class="container">
+        Copyright © 2018 Labmem No.1 Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>.&nbsp;Theme by <a href="https://github.com/ZEROKISEKI" target="_blank">AONOSORA</a>
+    </div>
+</footer>
+
+<!-- 回到顶端 -->
+<div id="gal-gotop">
+    <i class="fa fa-angle-up"></i>
+</div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"pluginJsPath":"lib/","pluginRootPath":"live2dw/"});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+<script src="/js/activate-power-mode.js"></script>
+<script>
+
+    // 配置highslide
+	hs.graphicsDir = '/js/highslide/graphics/'
+    hs.outlineType = "rounded-white";
+    hs.dimmingOpacity = 0.8;
+    hs.outlineWhileAnimating = true;
+    hs.showCredits = false;
+    hs.captionEval = "this.thumb.alt";
+    hs.numberPosition = "caption";
+    hs.align = "center";
+    hs.transitions = ["expand", "crossfade"];
+    hs.lang.number = '共%2张图, 当前是第%1张';
+    hs.addSlideshow({
+      interval: 5000,
+      repeat: true,
+      useControls: true,
+      fixedControls: "fit",
+      overlayOptions: {
+        opacity: 0.75,
+        position: "bottom center",
+        hideOnMouseOut: true
+      }
+    })
+
+    // 初始化aos
+    AOS.init({
+      duration: 1000,
+      delay: 0,
+      easing: 'ease-out-back'
+    });
+
+</script>
+<script>
+	POWERMODE.colorful = 'true';    // make power mode colorful
+	POWERMODE.shake = 'true';       // turn off shake
+	// TODO 这里根据具体情况修改
+	document.body.addEventListener('input', POWERMODE);
+</script>
+<script>
+    window.slideConfig = {
+      prefix: '/imgs/slide/background',
+      ext: 'jpg',
+      maxCount: '21'
+    }
+</script>
+<script src="/js/hs.js"></script>
+<script src="/js/blog.js"></script>
+
+
+<script>
+    window.hot_posts_count = '10'
+    // window.use_leancloud = 'true'
+</script>
+<script src="/js/comment/leancloud.js"></script>
+
+
+<script src="https://myau.moe/js/comment/gitment.browser.js"></script>
+<script>
+    if(window.commentConfig) {
+      window.commentConfig.id = 'Fri Jan 18 2019 19:02:53 GMT+0800'
+      window.commentConfig.owner = 'JJXiangJiaoJun'
+      window.commentConfig.repo = 'comment_page'
+      window.commentConfig.client_id = 'd7df3d5d159f81371d76'
+      window.commentConfig.client_secret = '3794527fca067871d3795782ae7fd14f94ce3a74'
+      window.commentConfig.redirect_uri = 'https://hongbb.top'
+    } else {
+      window.commentConfig = {
+      	id: 'Fri Jan 18 2019 19:02:53 GMT+0800',
+        owner: 'JJXiangJiaoJun',
+        repo: 'comment_page',
+        client_id: 'd7df3d5d159f81371d76',
+        client_secret: '3794527fca067871d3795782ae7fd14f94ce3a74',
+        redirect_uri: 'https://hongbb.top'
+      }
+    }
+</script>
+<script src="/js/comment/gitment.js"></script>
+
+</html>

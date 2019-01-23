@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Labmem No.1">
+    
+    <meta name="description" content="一切都是命运石之门的选择">
+    
+    
+    
+    
+    
+    
+    <title>物体检测Object Detection学习笔记（MXNet）（一） | 爱吃咸鱼的喵の无名小站</title>
+    <link href="”https://github.com/JJXiangJiaoJun“" rel="”prefetch”">
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/aos.css">
+<link rel="stylesheet" href="/css/style.css">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/aos.js"></script>
+    <script src="/js/highslide/highslide-full.min.js"></script>
+    <link rel="stylesheet" href="/js/highslide/highslide.css">
+    <style type="text/css">
+        @media (max-width: 768px) {
+            body {
+                background-color: #f0f0f0;
+                background: url('/imgs/mobile.jpg');
+                background-attachment: fixed;
+            }
+        }
+    </style>
+    
+    <script src="//cdn1.lncld.net/static/js/3.4.2/av-min.js"></script>
+    <script>
+      AV.init({
+        appId: 'uJUp6NroM9R4yTpnGYBF7hhw-gzGzoHsz',
+        appKey: 'w5Qtn48qXMY1nyCSf7oahEM7'
+      })
+    </script>
+    
+    <!--<script type="text/javascript">
+      if (document.images) {
+        var avatar = new Image();
+        avatar.src = '/imgs/https:/ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3485132381,143374086&fm=26&gp=0.jpg'
+        var previews = 'preview1.jpg,preview2.jpg,preview12.jpeg,preview3.jpg,preview4.jpg,preview5.jpg,preview6.jpeg,preview7.png,preview8.jpeg,preview9.jpeg,preview10.jpg,preview11.jpg,preview12.jpeg,preview13.jpg,preview14.jpeg,preview15.jpeg,preview16.png'.split(',')
+        var previewsPreLoad = []
+        for(var i = 0; i < length; i++) {
+          previewsPreLoad.push(new Image())
+          previewsPreLoad[previewsPreLoad.length - 1].src = '/imgs/preview' + previews[i]
+        }
+      }
+    </script>--><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head></html>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- 背景轮播图功能 -->
+    <section class="hidden-xs">
+    <ul class="cb-slideshow">
+        <li><span>天若</span></li>
+        <li><span>有情</span></li>
+        <li><span>天亦老</span></li>
+        <li><span>我为</span></li>
+        <li><span>长者</span></li>
+        <li><span>续一秒</span></li>
+    </ul>
+</section>
+    <!-- 欧尼酱功能, 谁用谁知道 -->
+    
+    <header class="navbar navbar-inverse" id="gal-header">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".bs-navbar-collapse" aria-expanded="false">
+                <span class="fa fa-lg fa-reorder"></span>
+            </button>
+            <a href="https://github.com/JJXiangJiaoJun">
+                
+                <!-- 这里background使用imgs/${logo_image}(路径文件名) -->
+                <style>
+                    #gal-header .navbar-brand {
+                        width: 200px;
+                        height: 50px;
+                        display: block;
+                        background: url('/imgs/minilogo.jpeg') no-repeat;
+                    }
+                </style>
+                    
+                <div class="navbar-brand"></div>
+                
+            </a>
+        </div>
+        <div class="collapse navbar-collapse bs-navbar-collapse">
+            <ul class="nav navbar-nav" id="menu-gal">
+                
+                
+                <li class="">
+                    <a href="/">
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/archives">
+                        <i class="fa fa-archive"></i>归档
+                    </a>
+                </li>
+                
+                
+                
+                
+                <li class="dropdown">
+                    <!-- TODO 添加hover dropdown效果 -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-hover="dropdown">
+                        <i class="fa fa-list"></i>分类
+                    </a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        <li>
+                            <a href="/categories/算法与数据结构/">算法与数据结构</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/git/">git</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/Ubuntu系统/">Ubuntu系统</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/深度学习/">深度学习</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/Java后端/">Java后端</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/深度学习论文/">深度学习论文</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/python常用库/">python常用库</a>
+                        </li>
+                        
+                        
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                
+                
+                <li class="dropdown">
+                    <!-- TODO 添加hover dropdown效果 -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-hover="dropdown">
+                        <i class="fa fa-tags"></i>标签
+                    </a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        <li>
+                            <a href="/tags/暴力枚举/">暴力枚举</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/剪枝/">剪枝</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/线段树/">线段树</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/前缀和/">前缀和</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/二分法/">二分法</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/git命令/">git命令</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/mxnet/">mxnet</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/faster-rcnn/">faster_rcnn</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/java/">java</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/jsp/">jsp</a>
+                        </li>
+                        
+                        
+                        <li>
+                            <a href="/tags">...</a>
+                        </li>
+                        
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                
+                <li class="">
+                    <a href="/message">
+                        <i class="fa fa-commenting"></i>留言板
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/about">
+                        <i class="fa fa-user"></i>关于我
+                    </a>
+                </li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</header>
+    <div id="gal-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 gal-right" id="mainstay">
+                    
+<article class="article well article-body" id="article">
+    <div class="breadcrumb">
+        <i class="fa fa-home"></i>
+        <a href="https://github.com/JJXiangJiaoJun">爱吃咸鱼的喵の无名小站</a>
+        >
+        <span>物体检测Object Detection学习笔记（MXNet）（一）</span>
+    </div>
+    <!-- 大型设备详细文章 -->
+    <div class="hidden-xs">
+        <div class="title-article">
+            <h1>
+                <a href="/2019/01/18/object-detection-note1/">物体检测Object Detection学习笔记（MXNet）（一）</a>
+            </h1>
+        </div>
+        <div class="tag-article">
+            
+            <span class="label label-gal">
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/mxnet/">mxnet</a>, 
+                
+                <a href="/tags/物体检测/">物体检测</a>
+                
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2019-01-18
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-eye"></i>
+            </span>
+            
+        </div>
+    </div>
+    <!-- 小型设备详细文章 -->
+    <div class="visible-xs">
+        <center>
+            <div class="title-article">
+                <h4>
+                    <a href="/2019/01/18/object-detection-note1/">物体检测Object Detection学习笔记（MXNet）（一）</a>
+                </h4>
+            </div>
+            <p>
+                <i class="fa fa-calendar"></i> 2019-01-18
+            </p>
+            <p>
+                
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/mxnet/">mxnet</a>, 
+                
+                <a href="/tags/物体检测/">物体检测</a>
+                
+                
+                
+                <i class="fa fa-eye"></i>
+                
+            </p>
+        </center>
+    </div>
+    <div class="content-article">
+        <p>物体检测比图像分类的难度大得多，过程也复杂了许多。所以希望自己能将自己的学习过程记录下来，总结过程中也许会有不一样的体会。</p>
+<h1 id="边界框"><a href="#边界框" class="headerlink" title="边界框"></a>边界框</h1><p>&emsp;&emsp;目标检测中，通常不止需要我们识别出物体的类别，还需要我们检测出物体的具体位置,所以我们常用<strong>边界框</strong>来描述物体的具体位置，具体来说通常情况下，我们用物体的左上角 $x,y$ 坐标和右上角 $x,y$ 来标记一个物体的位置，即 $(x_l,y_l,x_r,y_r)$ 来标记物体的位置。<br>&emsp;&emsp;具体实现：其实边界框就是一个矩形框，我们可以使用matplotlib绘制一个矩形框然后显示就行。<strong>总结步骤如下</strong></p>
+<ul>
+<li><p>读入图片，例如使用MXNet API <code>mx.image.imread(path).asnumpy()</code>，记住后面需要转换为<code>numpy</code>数据格式，因为matplotlib只支持<code>numpy</code>格式数据，而不支持ndarray。如<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">* 生成边界框坐标，一般用一个数组来保存，如`dog_box,cat_box = [60, 45, 378, 516], [400, 112, 655, 493]`,其坐标按顺序分别为$(x_l,y_l,x_r,y_r)$ </span><br><span class="line">* 使用plt绘制出矩形,获得一个矩形框对象，使用`plt.Rectangle(xy, width, height, angle=0.0, **kwargs)`函数进行绘制，所以我们需要将上述的坐标转换为左上角坐标+长宽,具体代码为`dog_bbox=plt.Rectangle((dog_box[0],dog_box[1]),width=(dog_bbox[2]-dog_bbox[0]),height=(dog_bbox[3]-dog_bbox[1]),</span><br><span class="line">                        fill = False,edgecolor = &apos;r&apos;,linewidth=2)` </span><br><span class="line">* 最后一步，将我们上述生成的矩形框对象加入到显示的图像中即可，使用`fig.axes.add_patch()`函数实现。 </span><br><span class="line"></span><br><span class="line">```python</span><br><span class="line">img =image.imread(&apos;../img/catdog.jpg&apos;).asnumpy()</span><br><span class="line">dog_bbox,cat_bbox = [60, 45, 378, 516], [400, 112, 655, 493]</span><br><span class="line"> dog_bbox = plt.Rectangle((dog_bbox[0],dog_bbox[1]),</span><br><span class="line"> 						width=dog_bbox[2]-dog_bbox[0],height=dog_bbox[3]-dog_bbox[1],</span><br><span class="line">                        fill = False,edgecolor = &apos;r&apos;,linewidth=2)</span><br><span class="line">cat_bbox = plt.Rectangle((cat_bbox[0],cat_bbox[1]),</span><br><span class="line">						width=cat_bbox[2]-cat_bbox[0],height=cat_bbox[3]-cat_bbox[1],</span><br><span class="line">                        fill = False,edgecolor = &apos;r&apos;,linewidth=2)</span><br><span class="line">                        </span><br><span class="line">fig = plt.imshow(img)</span><br><span class="line">fig.axes.add_patch(dog_bbox)</span><br><span class="line">fig.axes.add_patch(cat_bbox)</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://raw.githubusercontent.com/JJXiangJiaoJun/blog_images/master/object_detection_note1/1.png" alt="图片失效啦"></p>
+<hr>
+</li>
+</ul>
+<h1 id="锚框"><a href="#锚框" class="headerlink" title="锚框"></a>锚框</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p> &emsp;&emsp;目标检测历史中，RCNN，Fast-RCNN采用的是启发式搜索(selective search)来生成我们感兴趣的目标区域(<strong>RoI</strong>)，并且在这些区域的基础上提取特征，最后进行分类和回归预测。<br><br> &emsp;&emsp;之后的方法如Faster-RCNN、YOLO、SSD等检测框架中，放弃了启发式搜索方法，而是改用 锚框 来生成我们的RoI。<br><br> &emsp;&emsp;具体就是，目标检测通常会以每个像素为中心生成多个大小和宽高比不同的边界框。这些边界框就成为锚框，之后的特征提取、分类、回归预测都是基于这些锚框的。<br></p>
+<h2 id="生成方式"><a href="#生成方式" class="headerlink" title="生成方式"></a>生成方式</h2><p>  &emsp;&emsp;通常我们会选取多组大小比例 $s \in (0,1)$ 和宽高比 $r &gt; 0$ 的锚框，生成的锚框大小为 $ws \sqrt r$和 $hs \sqrt r$。<br>  &emsp;&emsp;假设我们分别设定好了一组大小比例 $s_1,s_2…,s_n$，以及一组宽高比$r_1,r_2,…,r_m$。如果我们以每个像素为中心都使用所有大小的宽高比组合，那么输入图像一共会得到$whnm$ 个锚框。</p>
+<ul>
+<li>RCNN中 的确是如此做，直接使用生成的锚框</li>
+<li>SSD中为了降低计算复杂度，只使用包含 $r_1$ 或 $s_1$ 的大小和宽高比组合，所以一共有$n+m-1$个锚框。</li>
+</ul>
+<p>下面记录一下，MXNet中生成锚框的方式，MXNet中使用<code>contrib.nd.MultiBoxPrior(data=None, sizes=_Null, ratios=_Null, clip=_Null, steps=_Null, offsets=_Null, out=None, name=None, **kwargs)</code>函数来生成锚框。解释一下其中的重要参数：</p>
+<ul>
+<li><strong>data</strong>：输入数据，形状为(批量大小，通道数，宽，高)，函数会基于宽、高为每个像素生成锚框,其中输入数据的前两维 (批量大小,通道数) 对输出没有影响。</li>
+<li><strong>sizes</strong>：大小比例，即上面说的 $s$ 一般输入为一个列表，表示不同的大小比例</li>
+<li><strong>ratios</strong>：宽高比例，即上面说的 $w$ 一般输入也为一个列表，表示不同的宽高比例</li>
+</ul>
+<p>返回值为 ( 1，生成的锚框总数，4 )  形状的张量。其中锚框总数为 $hw(n+m-1)$ 并且返回的锚框的坐标值均除以了宽和高。<br>（P.S. 教程中说的是会返回（批量大小，生成的锚框总数，4）形状的锚框，但是我测试了一下发现无论批量大小为多少，其第一维均为1）<br><img src="https://raw.githubusercontent.com/JJXiangJiaoJun/blog_images/master/object_detection_note1/2.png" alt="图片失效啦"></p>
+<hr>
+<h2 id="绘制锚框的方式"><a href="#绘制锚框的方式" class="headerlink" title="绘制锚框的方式"></a>绘制锚框的方式</h2><p>那么我们如何绘制所有锚框呢？这里首先总结一下matpoltlib中常用的绘图加标注的函数：<br>|函数|作用|<br>|:—-:|:——:|<br>|plt.xlabel()|给整幅图像的X轴添加文本标签说明|<br>|plt.ylabel()|给整幅图像的Y轴添加文本标签说明|<br>|plt.title()|给整幅图形添加文本标题说明|<br>|plt.text()|在图像中任意位置添加文本标签说明|<br>|plt.annotation()|在图像中任意位置添加带箭头的文本标签说明|</p>
+<p>&emsp;&emsp;这里我们需要用到的是 plt.text()函数，用于给我们绘制的锚框添加标签，一般我们最后在显示的时候会为每个锚框显示预测类别置信度和类别的标签。下面详细说明一下 <strong>plt.text()</strong> 中我们需要用到的参数</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">参数</th>
+<th style="text-align:center">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">x</td>
+<td style="text-align:center">显示位置的x坐标</td>
+</tr>
+<tr>
+<td style="text-align:center">y</td>
+<td style="text-align:center">显示位置的y坐标</td>
+</tr>
+<tr>
+<td style="text-align:center">fontsize</td>
+<td style="text-align:center">显示文字标签的字体大小</td>
+</tr>
+<tr>
+<td style="text-align:center">color</td>
+<td style="text-align:center">显示文字标签的字体颜色</td>
+</tr>
+<tr>
+<td style="text-align:center">bbox</td>
+<td style="text-align:center">用于给文字标签生成边界框</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>其中bbox常用参数如下</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">bbox参数</th>
+<th style="text-align:center">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">boxstyle</td>
+<td style="text-align:center">边框外形</td>
+</tr>
+<tr>
+<td style="text-align:center">facecolor</td>
+<td style="text-align:center">背景颜色</td>
+</tr>
+<tr>
+<td style="text-align:center">edgecolor</td>
+<td style="text-align:center">边框颜色</td>
+</tr>
+<tr>
+<td style="text-align:center">edgewidth</td>
+<td style="text-align:center">边框线条大小</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>常用格式如下<code>axes.text(rect.xy[0], rect.xy[1], labels[i],va=&#39;center&#39;, ha=&#39;center&#39;, fontsize=9, color=text_color,bbox=dict(facecolor=color, lw=0))</code><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">show_bboxes</span><span class="params">(axes,bboxes,labels=None,colors=None)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_make_list</span><span class="params">(obj,defaultvalue=None)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> obj <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">            obj = defaultvalue</span><br><span class="line">        <span class="keyword">elif</span> <span class="keyword">not</span> isinstance(obj,(list,tuple)):</span><br><span class="line">            obj = [obj]</span><br><span class="line">        <span class="keyword">return</span> obj</span><br><span class="line">    </span><br><span class="line">    labels = _make_list(labels)</span><br><span class="line">    colors = _make_list(colors,[<span class="string">'b'</span>,<span class="string">'g'</span>,<span class="string">'r'</span>,<span class="string">'m'</span>,<span class="string">'c'</span>])</span><br><span class="line">    <span class="comment">#下面开始绘制图像</span></span><br><span class="line">    <span class="keyword">for</span> i,bbox <span class="keyword">in</span> enumerate(bboxes):</span><br><span class="line">        <span class="comment">#获取bbox背景颜色</span></span><br><span class="line">        color = colors[i%len(colors)]</span><br><span class="line">        rect = bbox_to_rect(bbox.asnumpy(),color)</span><br><span class="line">        axes.add_patch(rect)</span><br><span class="line">        <span class="comment">#添加标签</span></span><br><span class="line">        <span class="keyword">if</span> labels <span class="keyword">and</span> len(labels)&gt;i:</span><br><span class="line">            text_color = <span class="string">'k'</span> <span class="keyword">if</span> color==<span class="string">'w'</span> <span class="keyword">else</span> <span class="string">'w'</span></span><br><span class="line">            axes.text(x=rect.xy[<span class="number">0</span>],y=rect.xy[<span class="number">1</span>],s=labels[i],</span><br><span class="line">                     va=<span class="string">'center'</span>,ha=<span class="string">'center'</span>,fontsize=<span class="number">9</span>,color=text_color,</span><br><span class="line">                     bbox=dict(facecolor=color,lw=<span class="number">0</span>))</span><br></pre></td></tr></table></figure></p>
+<p><strong>注意</strong>，当显示通过 <code>contrib.nd.MultiBoxPrior</code> 生成的锚框时，需要将生成的坐标乘以宽和高，这样才是生成坐标的绝对坐标。</p>
+<hr>
+<h2 id="交并比"><a href="#交并比" class="headerlink" title="交并比"></a>交并比</h2><p>&emsp;&emsp; <strong>交并比(Intersection over Union)</strong> 作用主要是用来衡量生成的锚框与真实物体框之间的相似度，也就是“距离”。<br>&emsp;&emsp;物体分类中，衡量预测类别和真实类别之间的相似度很简单，直接看预测的概率就行。那么锚框有四个坐标，是一个多标签的区域，我们一般采用交并比来衡量两个区域之间的相似度，具体定义如下：</p>
+<script type="math/tex; mode=display">J(\mathcal{A},\mathcal{B}) = \frac{\left|\mathcal{A} \cap \mathcal{B}\right|}{\left| \mathcal{A} \cup \mathcal{B}\right|}.</script><p><img src="https://raw.githubusercontent.com/JJXiangJiaoJun/blog_images/master/object_detection_note1/3.png" alt="图片失效啦"><br>所以我们可以通过交并比，来衡量锚框与真实物框、以及锚框与锚框之间的相似度(用于后面的非极大值抑制)。</p>
+<hr>
+<h2 id="如何为每个锚框标注其匹配的真实边界框"><a href="#如何为每个锚框标注其匹配的真实边界框" class="headerlink" title="如何为每个锚框标注其匹配的真实边界框"></a>如何为每个锚框标注其匹配的真实边界框</h2><p>&emsp;&emsp;图像分类时，我们会将每一张图片都看作一个训练样本，为其标注真实的物体标签（猫、狗、飞机、…..）。这样我们就可以通过预测的标签和真实标签之间的差值，来计算损失函数。<br>&emsp;&emsp;同理在目标检测中，我们将每个锚框都看作一个训练样本，所以我们需要为每个锚框打上标记，为其分配真实标签：</p>
+<ul>
+<li>锚框的物体类别（背景、猫、狗、….）  </li>
+<li>锚框与真实物体框之间的偏移量（如果是背景锚框则不关心，计算偏移量的损失函数的时候并不将其计算在内）  </li>
+</ul>
+<p>&emsp;&emsp;问题：我们如何为一个锚框分配真实边框呢？一张图片中真实物体边框的个数肯定远远小于我们生成的锚框数，也就是说大部分锚框应该都是背景框，给定一个锚框，我们如何为其分配最相似的真实物体框呢？<br>&emsp;&emsp;不妨假设图片中我们生成的锚框为$A_1,A_2,…,A_{n_a}$，真实的物体框为$B_1,B_2,…,B_{n_b}$，显然$n_a&gt;n_b$。定义矩阵 $X \in \mathbb R^{n_a<em>n_b}$ ，其中第$i$行，第$j$列的元素$x_{ij}$定义为：锚框$A_i$和真实边界框$B_j$的<em>*交并比</em></em>，那么标记每个锚框的具体步骤如下：</p>
+<ol>
+<li>首先找出矩阵所有元素的最大值，也就是找出所有锚框和所有真实物体框中交并比最大的那个，不妨假设该元素的行和列索引为$i_1,j_1$，那么我们为锚框$A_{i_1}$分配真实边界框$B_{j_1}$，之后我们丢弃第$i_11$行所有元素，以及第$j_1$列的所有元素。</li>
+<li>重复上一个步骤，我们找到剩余元素中的最大值，假设为行和列索引分别为$i_2,j_2$,那么我们为锚框$A_{i_2}$分配真实物体框$B_{j_2}$,之后我们丢弃第$i_2$行所有元素，以及第$j_2$列的所有元素。</li>
+<li>重复上述步骤，直到矩阵的所有$n_b$列都被丢弃为止，那么我们现在已经分配了$n_b$个锚框和真实边界框匹配。只剩下$n_a-n_b$个锚框还未分配。</li>
+<li>最后一步，我们遍历剩余的$n_a-n_b$个锚框，也就是我们对剩余的每个锚框$A_i$遍历其所在的行，找出最大的元素，也就是找出与其交并比最大的真实物体框$B_j$，之后如果满足 最大的元素 $&gt;$ 设定的阈值，那么我们为其分配真实边界框$B_j$,否则，将其标记背景锚框（也就是不分配锚框）。</li>
+</ol>
+<p>过程如图所示:$x_{23}、x_{71}、x_{54}、x_{92}$分别为每次选出的最大值：</p>
+<p><img src="https://raw.githubusercontent.com/JJXiangJiaoJun/blog_images/master/object_detection_note1/4.png" alt="图片失效啦"></p>
+<p>&emsp;&emsp;MXNet中已经有函数可以帮我们实现这些功能，这个函数为<code>contrib.nd.MultiBoxTarget()</code>，下面总结一下这个函数各个重要参数说明：<br>参数|作用<br>———-|———-<br><strong>anchor</strong> |输入的锚框，一般为MultiBoxPrior生成的锚框，形状为(1，锚框总数，4)，各通道共享这些锚框<br><strong>label</strong> |真实的物体框标记，一般形状为（批量大小，最多的真实物体框数，5），第二维为一个训练集中最多的真实物体框数，如果某一张图像没有这么多物体框，将会为其填充-1表示是负样本，这里的第三维为（真实物体框类别+四个边界边界坐标）如[0, 0.1, 0.08, 0.52, 0.92]<br><strong>cls_pred</strong>|预测的类别，一般形状为（批量大小，预测的总类别数+1，锚框总数），这个输入的作用是为了负采样（negative_mining），如果不设置负采样，那么这个输入并不影响输出<br><strong>overlap_threshold</strong>|前面说的设定的IoU的阈值<br><strong>negative_mining_ratio</strong>|负采样的比例，设置了负采样之后，输出只会选择置信度最小的一些负类锚框进行训练，而未选择的负类锚框将标记为-1<br>输入如下图所示</p>
+<p><img src="https://raw.githubusercontent.com/JJXiangJiaoJun/blog_images/master/object_detection_note1/5.png" alt="图片失效啦"></p>
+<p><img src="https://raw.githubusercontent.com/JJXiangJiaoJun/blog_images/master/object_detection_note1/6.png" alt="图片失效啦"></p>
+<p>下面说明一下输出，输出为一个list，其中有三个元素，第一个元素为每个锚框标记的四个偏移量，形状为（批量大小，锚框个数*4），其中负类锚框的偏移量标注为0</p>
+<p><img src="https://raw.githubusercontent.com/JJXiangJiaoJun/blog_images/master/object_detection_note1/7.png" alt="图片失效啦"></p>
+<p>第二个元素为掩码(mask)，形状为（批量大小，锚框个数*4），与上面生成的每个锚框的四个偏移量一一对应。由于我们不关心对背景的检测，所以负类的偏移量不应该影响目标函数。我们可以通过按元素乘法，从而可以在计算目标函数之前过滤掉负类的偏移量。</p>
+<p><img src="https://raw.githubusercontent.com/JJXiangJiaoJun/blog_images/master/object_detection_note1/8.png" alt="图片失效啦"></p>
+<p>最后一个元素为对应锚框标记的类别数，其中0表示背景，然后依次类推，输出的形状为（批量大小，锚框个数）。注意如果我们设置了负采样，那么有一些负类会标记为-1，表示我们丢弃了这些负类样本，在计算损失函数时，应该将其过滤，使用SoftmaxCrossEnrtopy（）函数的sample_weight可以实现过滤。</p>
+<p><img src="https://raw.githubusercontent.com/JJXiangJiaoJun/blog_images/master/object_detection_note1/9.png" alt="图片失效啦"></p>
+<hr>
+<h2 id="输出预测边界框"><a href="#输出预测边界框" class="headerlink" title="输出预测边界框"></a>输出预测边界框</h2><p>&emsp;&emsp;模型预测时，我们会为一张图片生成大量的锚框，并且一一为这些锚框预测类别和偏移量。<strong>问题</strong>：这些锚框可能会有大量的重复区域，比如所一个物体被框了很多次。<strong>解决办法</strong>：我们采用非极大值抑制（NMS）来去除重复相似的锚框。<br>&emsp;&emsp;对一个预测边界框$B$，模型会预测它属于各个类别的概率。设其中的最大值为$p$，该概率所对应的类别即为$B$所预测的类别，我们也将$p$称为预测边界框$B$的置信度。<br>&emsp;&emsp;那么具体步骤如下：</p>
+<ol>
+<li>在同一张图像上，我们将预测类别非背景的预测边界框置信度，按照从高到低的顺序排序，得到列表。$L$</li>
+<li>在列表$L$中选择置信度最大的预测边界框$B_1$，并且将所有与$B_1$交并比大于设定阈值的非基准边界框，从$L$中移除。</li>
+<li>接下来，从$L$中选择置信度第二高的边界框$B_2$作为基准，并且重复上一步的操作</li>
+<li>最后直到$L$中所有的边界框都曾经作为基准。此时$L$中剩余的任意一对预测边界框的交并比都小于设定阈值</li>
+</ol>
+<p>MXNet中实现这个功能的函数为<code>contrib.ndarray.MultiBoxDetection()</code>下面总结一下其常用的参数<br>参数|作用<br>——-|———-<br><strong>cls_prob</strong>|预测各个锚框的概率值，也就是说要经过$\boldsymbol {softmax}$运算，注意这里的形状为（批量大小，总类别数，锚框总数），和前面有点不一样<br><strong>anchor</strong>|预测的所有锚框，形状为（批量大小，锚框总数，4）<br><strong>loc_pred</strong>|预测出来的偏移量，形状为（批量大小，锚框总数*4）</p>
+<p>输出：输出的形状为（批量大小，锚框总数，6），其中最后一维第一个元素表示锚框的类别，其中-1表示该锚框为背景框或者NMS过程中被删除，最后一维第二各元素为该锚框的置信度，最后一维的最后四个元素为锚框的四个坐标<br><img src="https://raw.githubusercontent.com/JJXiangJiaoJun/blog_images/master/object_detection_note1/10.png" alt="图片失效啦"></p>
+<p>图像NMS之前如下图所示</p>
+<p><img src="https://raw.githubusercontent.com/JJXiangJiaoJun/blog_images/master/object_detection_note1/11.png" alt="图片失效啦"></p>
+<p>进行NMS处理之后，如下图所示</p>
+<p><img src="https://raw.githubusercontent.com/JJXiangJiaoJun/blog_images/master/object_detection_note1/12.png" alt="图片失效啦"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">show_nms_bbox</span><span class="params">(axes,nms_bboxes,colors=None)</span>:</span></span><br><span class="line">    bboxes = []</span><br><span class="line">    labels = []</span><br><span class="line">    <span class="keyword">for</span> nms_bbox <span class="keyword">in</span> nms_bboxes[<span class="number">0</span>].asnumpy():</span><br><span class="line">        <span class="keyword">if</span>(nms_bbox[<span class="number">0</span>]&gt;=<span class="number">0</span>):</span><br><span class="line">            <span class="keyword">if</span> nms_bbox[<span class="number">0</span>]==<span class="number">0</span> :</span><br><span class="line">                label = <span class="string">'dog'</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                label = <span class="string">'cat'</span></span><br><span class="line">            bboxes.append(nms_bbox[<span class="number">2</span>:])</span><br><span class="line">            labels.append(label+str(nms_bbox[<span class="number">1</span>])) </span><br><span class="line">            </span><br><span class="line">    bboxes = nd.array(bboxes)</span><br><span class="line">    print(bboxes)</span><br><span class="line">    show_bboxes(axes,bboxes*img_scale,labels)</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(<span class="number">10</span>,<span class="number">10</span>))</span><br><span class="line">fig=plt.imshow(img)</span><br><span class="line">show_nms_bbox(fig.axes,outputs)</span><br></pre></td></tr></table></figure>
+<p>总结一下关于锚框常用的函数：</p>
+<ol>
+<li><code>contrib.nd.MultiBoxPrior</code>用来生成锚框。 </li>
+<li><code>contrib.nd.MultiBoxTarget</code>用来为生成的锚框分配真实边界框和标记偏移量。</li>
+<li><code>contrib.nd.MultiBoxDetection</code>用来去掉重复的锚框，NMS。</li>
+<li><strong>所有的锚框坐标都除以了宽和高 ，归一化到了（0,1），绘制边界框的时候记得要乘以原来图像的尺寸</strong> </li>
+</ol>
+<p>参考资料：<a href="http://zh.gluon.ai/" target="_blank" rel="noopener">动手深度学习</a></p>
+
+    </div>
+</article>
+
+
+<div id="comments-template"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script>
+	if(!window.commentConfig) {
+      window.commentConfig = {}
+      window.commentConfig.title = '物体检测Object Detection学习笔记（MXNet）（一）'
+    }
+</script>
+
+                </div>
+                <aside class="col-md-4 gal-left" id="sidebar">
+    <!-- 此为sidebar的搜索框, 非搜索结果页面 -->
+<aside id="sidebar-search">
+    <div class="search hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <form class="form-inline clearfix" id="search-form" method="get" action="/search/index.html">
+            <input type="text" name="s" class="form-control" id="searchInput" placeholder="搜索文章~" autocomplete="off">
+            <button class="btn btn-danger btn-gal" type="submit">
+                <i class="fa fa-search"></i>
+            </button>
+        </form>
+    </div>
+</aside>
+    <aside id="sidebar-author">
+    <div class="panel panel-gal" data-aos="flip-right" data-aos-duration="3000">
+        <div class="panel-heading" style="text-align: center">
+            <i class="fa fa-quote-left"></i>
+            Labmem No.1
+            <i class="fa fa-quote-right"></i>
+        </div>
+        <div class="author-panel text-center">
+            <img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3485132381,143374086&fm=26&gp=0.jpg" width="140" height="140" alt="个人头像" class="author-image">
+            <p class="author-description"></p><p>一切都是命运石之门的选择</p>
+<p></p>
+        </div>
+    </div>
+</aside>
+    
+    <aside id="sidebar-recent_comments">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-comments"></i>
+            最新评论
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush"></ul>
+    </div>
+</aside>
+    
+    <!-- 要配置好leancloud才能开启此小工具 -->
+    
+    <aside id="sidebar-hot_posts">
+    <div class="panel panel-gal hot hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-fire"></i>
+            最热文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush"></ul>
+    </div>
+</aside>
+    
+    
+    <aside id="sidebar-recent_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            近期文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/22/UbuntuToDo/">安装Ubuntu系统必做的事情（常用软件安装＋系统配置）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/mxnet-hrbrid-forward/">MXNet学习笔记：HybridBlock类hybrid_forwar()函数解析</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/mxnet-set-learning-rate/">MXNet使用技巧：单独设置网络中每层的学习率</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/python-argparse/">python常用库总结：argparse库</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/faster-rcnn/">Faster-RCNN论文细节原理解读+代码实现gluoncv(MXNet)</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/traits/">C++ Traits简介（OpenCV中DataType类分析）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode4/">LeetCode 第四题 Median of Two Sorted Arrays（计算两个有序数组的中位数）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode5/">LeetCode 第5题 Longest Palindromic Substring 最长回文子串</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/mxnetAPIobjectdetection/">MXNet中目标检测API使用总结：MultiBoxDetection、MultiBoxPrior、MultiBoxTarget</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode2/">LeetCode 第2题 Add Two Numbers</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    <aside id="sidebar-rand_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            随机文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/HDU6345/">2018百度之星程序设计大赛（资格赛） 子串查询 HDU6345 解题思路</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/UVa11536/">UVa11536 Smallest Sub-Array</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/UVa1618/">UVa1618 弱键</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/UbuntSSH/">Ubuntu系统生成SSH秘钥并添加到github远程仓库(解决git push被拒绝的问题)</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/gitpush_deny/">本地仓库git push命令提交到github远程仓库时，出现 更新被拒绝，因为远程仓库包含您本地尚不存在的提交。解决方案</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode2/">LeetCode 第2题 Add Two Numbers</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode5/">LeetCode 第5题 Longest Palindromic Substring 最长回文子串</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/mxnet-hrbrid-forward/">MXNet学习笔记：HybridBlock类hybrid_forwar()函数解析</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/mxnet-set-learning-rate/">MXNet使用技巧：单独设置网络中每层的学习率</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/object-detection-note1/">物体检测Object Detection学习笔记（MXNet）（一）</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    <aside id="gal-sets">
+        <div class="panel panel-gal hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+            <ul class="nav nav-pills pills-gal">
+
+                
+                <li>
+                    <a href="/2019/01/18/object-detection-note1/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                </li>
+                
+                
+                <li>
+                    <a href="/2019/01/18/object-detection-note1/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                </li>
+                
+                
+                <li>
+                    <a href="/2019/01/18/object-detection-note1/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                </li>
+                
+            </ul>
+            <div class="tab-content">
+                
+                <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
+    
+    <a href="/tags/暴力枚举/" style="font-size: 10.944888004407165px;" class="tag-cloud-link">暴力枚举</a>
+    
+    <a href="/tags/剪枝/" style="font-size: 14.316847563429004px;" class="tag-cloud-link">剪枝</a>
+    
+    <a href="/tags/线段树/" style="font-size: 19.856419859124912px;" class="tag-cloud-link">线段树</a>
+    
+    <a href="/tags/前缀和/" style="font-size: 8.016925058091356px;" class="tag-cloud-link">前缀和</a>
+    
+    <a href="/tags/二分法/" style="font-size: 19.102411406761433px;" class="tag-cloud-link">二分法</a>
+    
+    <a href="/tags/git命令/" style="font-size: 15.834257170746543px;" class="tag-cloud-link">git命令</a>
+    
+    <a href="/tags/mxnet/" style="font-size: 18.981439778320862px;" class="tag-cloud-link">mxnet</a>
+    
+    <a href="/tags/faster-rcnn/" style="font-size: 18.88698677011728px;" class="tag-cloud-link">faster_rcnn</a>
+    
+    <a href="/tags/java/" style="font-size: 14.435367964686293px;" class="tag-cloud-link">java</a>
+    
+    <a href="/tags/jsp/" style="font-size: 11.615331917739486px;" class="tag-cloud-link">jsp</a>
+    
+    <a href="/tags/servlet/" style="font-size: 12.448423859536216px;" class="tag-cloud-link">servlet</a>
+    
+    <a href="/tags/物体检测/" style="font-size: 16.90676758670748px;" class="tag-cloud-link">物体检测</a>
+    
+    <a href="/tags/论文/" style="font-size: 18.00825958744605px;" class="tag-cloud-link">论文</a>
+    
+    <a href="/tags/python/" style="font-size: 17.82881329871857px;" class="tag-cloud-link">python</a>
+    
+    <a href="/tags/深度学习/" style="font-size: 11.777861135696165px;" class="tag-cloud-link">深度学习</a>
+    
+</div>
+                
+                
+                <div class="friend-links tab-pane nav bs-sidenav fade" id="sidebar-friend-links">
+    
+    <li>
+        <a href="http://baidu.com/" target="_blank">百度</a>
+    </li>
+    
+    <li>
+        <a href="http://www.google.com/" target="_blank">谷歌</a>
+    </li>
+    
+    <li>
+        <a href="http://www.moe123.com/" target="_blank">木有啊</a>
+    </li>
+    
+</div>
+                
+                
+                <div class="links tab-pane nav bs-sidenav fade" id="sidebar-links">
+    
+    <li>
+        <a href="https://github.com/JJXiangJiaoJun/" target="_blank">Github</a>
+    </li>
+    
+    <li>
+        <a href="https://blog.csdn.net/XiangJiaoJun_/" target="_blank">CSDN</a>
+    </li>
+    
+    <li>
+        <a href="https://www.zhihu.com/people/ye-xiao-bai-11-96/activities" target="_blank">知乎</a>
+    </li>
+    
+</div>
+                
+            </div>
+        </div>
+    </aside>
+    
+</aside>
+            </div>
+        </div>
+    </div>
+    <footer id="gal-footer">
+    <div class="container">
+        Copyright © 2018 Labmem No.1 Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>.&nbsp;Theme by <a href="https://github.com/ZEROKISEKI" target="_blank">AONOSORA</a>
+    </div>
+</footer>
+
+<!-- 回到顶端 -->
+<div id="gal-gotop">
+    <i class="fa fa-angle-up"></i>
+</div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"pluginJsPath":"lib/","pluginRootPath":"live2dw/"});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+<script src="/js/activate-power-mode.js"></script>
+<script>
+
+    // 配置highslide
+	hs.graphicsDir = '/js/highslide/graphics/'
+    hs.outlineType = "rounded-white";
+    hs.dimmingOpacity = 0.8;
+    hs.outlineWhileAnimating = true;
+    hs.showCredits = false;
+    hs.captionEval = "this.thumb.alt";
+    hs.numberPosition = "caption";
+    hs.align = "center";
+    hs.transitions = ["expand", "crossfade"];
+    hs.lang.number = '共%2张图, 当前是第%1张';
+    hs.addSlideshow({
+      interval: 5000,
+      repeat: true,
+      useControls: true,
+      fixedControls: "fit",
+      overlayOptions: {
+        opacity: 0.75,
+        position: "bottom center",
+        hideOnMouseOut: true
+      }
+    })
+
+    // 初始化aos
+    AOS.init({
+      duration: 1000,
+      delay: 0,
+      easing: 'ease-out-back'
+    });
+
+</script>
+<script>
+	POWERMODE.colorful = 'true';    // make power mode colorful
+	POWERMODE.shake = 'true';       // turn off shake
+	// TODO 这里根据具体情况修改
+	document.body.addEventListener('input', POWERMODE);
+</script>
+<script>
+    window.slideConfig = {
+      prefix: '/imgs/slide/background',
+      ext: 'jpg',
+      maxCount: '21'
+    }
+</script>
+<script src="/js/hs.js"></script>
+<script src="/js/blog.js"></script>
+
+
+<script>
+    window.hot_posts_count = '10'
+    // window.use_leancloud = 'true'
+</script>
+<script src="/js/comment/leancloud.js"></script>
+
+
+<script src="https://myau.moe/js/comment/gitment.browser.js"></script>
+<script>
+    if(window.commentConfig) {
+      window.commentConfig.id = 'Fri Jan 18 2019 19:11:17 GMT+0800'
+      window.commentConfig.owner = 'JJXiangJiaoJun'
+      window.commentConfig.repo = 'comment_page'
+      window.commentConfig.client_id = 'd7df3d5d159f81371d76'
+      window.commentConfig.client_secret = '3794527fca067871d3795782ae7fd14f94ce3a74'
+      window.commentConfig.redirect_uri = 'https://hongbb.top'
+    } else {
+      window.commentConfig = {
+      	id: 'Fri Jan 18 2019 19:11:17 GMT+0800',
+        owner: 'JJXiangJiaoJun',
+        repo: 'comment_page',
+        client_id: 'd7df3d5d159f81371d76',
+        client_secret: '3794527fca067871d3795782ae7fd14f94ce3a74',
+        redirect_uri: 'https://hongbb.top'
+      }
+    }
+</script>
+<script src="/js/comment/gitment.js"></script>
+
+</html>

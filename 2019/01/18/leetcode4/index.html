@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Labmem No.1">
+    
+    <meta name="description" content="一切都是命运石之门的选择">
+    
+    
+    
+    
+    
+    
+    <title>LeetCode 第四题 Median of Two Sorted Arrays（计算两个有序数组的中位数） | 爱吃咸鱼的喵の无名小站</title>
+    <link href="”https://github.com/JJXiangJiaoJun“" rel="”prefetch”">
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/aos.css">
+<link rel="stylesheet" href="/css/style.css">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/aos.js"></script>
+    <script src="/js/highslide/highslide-full.min.js"></script>
+    <link rel="stylesheet" href="/js/highslide/highslide.css">
+    <style type="text/css">
+        @media (max-width: 768px) {
+            body {
+                background-color: #f0f0f0;
+                background: url('/imgs/mobile.jpg');
+                background-attachment: fixed;
+            }
+        }
+    </style>
+    
+    <script src="//cdn1.lncld.net/static/js/3.4.2/av-min.js"></script>
+    <script>
+      AV.init({
+        appId: 'uJUp6NroM9R4yTpnGYBF7hhw-gzGzoHsz',
+        appKey: 'w5Qtn48qXMY1nyCSf7oahEM7'
+      })
+    </script>
+    
+    <!--<script type="text/javascript">
+      if (document.images) {
+        var avatar = new Image();
+        avatar.src = '/imgs/https:/ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3485132381,143374086&fm=26&gp=0.jpg'
+        var previews = 'preview1.jpg,preview2.jpg,preview12.jpeg,preview3.jpg,preview4.jpg,preview5.jpg,preview6.jpeg,preview7.png,preview8.jpeg,preview9.jpeg,preview10.jpg,preview11.jpg,preview12.jpeg,preview13.jpg,preview14.jpeg,preview15.jpeg,preview16.png'.split(',')
+        var previewsPreLoad = []
+        for(var i = 0; i < length; i++) {
+          previewsPreLoad.push(new Image())
+          previewsPreLoad[previewsPreLoad.length - 1].src = '/imgs/preview' + previews[i]
+        }
+      }
+    </script>--><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head></html>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- 背景轮播图功能 -->
+    <section class="hidden-xs">
+    <ul class="cb-slideshow">
+        <li><span>天若</span></li>
+        <li><span>有情</span></li>
+        <li><span>天亦老</span></li>
+        <li><span>我为</span></li>
+        <li><span>长者</span></li>
+        <li><span>续一秒</span></li>
+    </ul>
+</section>
+    <!-- 欧尼酱功能, 谁用谁知道 -->
+    
+    <header class="navbar navbar-inverse" id="gal-header">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".bs-navbar-collapse" aria-expanded="false">
+                <span class="fa fa-lg fa-reorder"></span>
+            </button>
+            <a href="https://github.com/JJXiangJiaoJun">
+                
+                <!-- 这里background使用imgs/${logo_image}(路径文件名) -->
+                <style>
+                    #gal-header .navbar-brand {
+                        width: 200px;
+                        height: 50px;
+                        display: block;
+                        background: url('/imgs/minilogo.jpeg') no-repeat;
+                    }
+                </style>
+                    
+                <div class="navbar-brand"></div>
+                
+            </a>
+        </div>
+        <div class="collapse navbar-collapse bs-navbar-collapse">
+            <ul class="nav navbar-nav" id="menu-gal">
+                
+                
+                <li class="">
+                    <a href="/">
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/archives">
+                        <i class="fa fa-archive"></i>归档
+                    </a>
+                </li>
+                
+                
+                
+                
+                <li class="dropdown">
+                    <!-- TODO 添加hover dropdown效果 -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-hover="dropdown">
+                        <i class="fa fa-list"></i>分类
+                    </a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        <li>
+                            <a href="/categories/算法与数据结构/">算法与数据结构</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/git/">git</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/Ubuntu系统/">Ubuntu系统</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/深度学习/">深度学习</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/Java后端/">Java后端</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/深度学习论文/">深度学习论文</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/python常用库/">python常用库</a>
+                        </li>
+                        
+                        
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                
+                
+                <li class="dropdown">
+                    <!-- TODO 添加hover dropdown效果 -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-hover="dropdown">
+                        <i class="fa fa-tags"></i>标签
+                    </a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        <li>
+                            <a href="/tags/暴力枚举/">暴力枚举</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/剪枝/">剪枝</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/线段树/">线段树</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/前缀和/">前缀和</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/二分法/">二分法</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/git命令/">git命令</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/mxnet/">mxnet</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/faster-rcnn/">faster_rcnn</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/java/">java</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/jsp/">jsp</a>
+                        </li>
+                        
+                        
+                        <li>
+                            <a href="/tags">...</a>
+                        </li>
+                        
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                
+                <li class="">
+                    <a href="/message">
+                        <i class="fa fa-commenting"></i>留言板
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/about">
+                        <i class="fa fa-user"></i>关于我
+                    </a>
+                </li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</header>
+    <div id="gal-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 gal-right" id="mainstay">
+                    
+<article class="article well article-body" id="article">
+    <div class="breadcrumb">
+        <i class="fa fa-home"></i>
+        <a href="https://github.com/JJXiangJiaoJun">爱吃咸鱼的喵の无名小站</a>
+        >
+        <span>LeetCode 第四题 Median of Two Sorted Arrays（计算两个有序数组的中位数）</span>
+    </div>
+    <!-- 大型设备详细文章 -->
+    <div class="hidden-xs">
+        <div class="title-article">
+            <h1>
+                <a href="/2019/01/18/leetcode4/">LeetCode 第四题 Median of Two Sorted Arrays（计算两个有序数组的中位数）</a>
+            </h1>
+        </div>
+        <div class="tag-article">
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2019-01-18
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-eye"></i>
+            </span>
+            
+        </div>
+    </div>
+    <!-- 小型设备详细文章 -->
+    <div class="visible-xs">
+        <center>
+            <div class="title-article">
+                <h4>
+                    <a href="/2019/01/18/leetcode4/">LeetCode 第四题 Median of Two Sorted Arrays（计算两个有序数组的中位数）</a>
+                </h4>
+            </div>
+            <p>
+                <i class="fa fa-calendar"></i> 2019-01-18
+            </p>
+            <p>
+                
+                
+                <i class="fa fa-eye"></i>
+                
+            </p>
+        </center>
+    </div>
+    <div class="content-article">
+        <p>&emsp;&emsp;这题要求的时间复杂度为$O(log(m+n))$，这一点感觉挺难想的，我打算是用递归将一个数组分割然后插入到另一个数组中，不过调了很久都没过，题解中的解法很巧妙，而且可以用在找两个有序数组中第$k_{th}$元素。</p>
+<p>&emsp;&emsp;下面看一下中位数的作用：</p>
+<blockquote>
+<p>将一个集合分成连个长度相等的子集合，其中一个子集合中的元素全部大于另一个子集合中的元素</p>
+</blockquote>
+<p>&emsp;&emsp;随机将一个长度为$m$的数组分成两份，我们一共有$m+1$种分法。$i=0\to m$</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">left_A</th>
+<th style="text-align:center">right_A</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">$A[0],A[1],…..,A[i-1]$</td>
+<td style="text-align:center">$A[i],A[i+1],…..,A[m-1]$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>其中有$len(left_A)=i，len(right_A)=m-i$，当$i=0$的时候，左边部分为空，当$i=m$的时候，右半部分为空。<br>&emsp;&emsp;同理,若我们将数组$B$也随机分割:</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">left_B</th>
+<th style="text-align:center">right_B</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">$B[0],B[1],…..,B[j-1]$</td>
+<td style="text-align:center">$B[j],B[j+1],…..,B[n-1]$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>&emsp;&emsp;然后我们将两个数组的左半边和右半边进行合并</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">left_part</th>
+<th style="text-align:center">right_part</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">$A[0],A[1],…..,A[i-1]$</td>
+<td style="text-align:center">$A[i],A[i+1],…..,A[m-1]$</td>
+</tr>
+<tr>
+<td style="text-align:center">$B[0],B[1],…..,B[j-1]$</td>
+<td style="text-align:center">$B[j],B[j+1],…..,B[n-1]$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>这时，如果满足条件：</p>
+<ul>
+<li>$len(left_part)=len(right_part)$</li>
+<li>$max(left_part)\leq min(right_part)$</li>
+</ul>
+<p>那么这时候，我们已经将$\{A,B\}$分成了长度相等的两个集合，而且有一个集合中的元素总是大于另一个集合中的元素，这样我们就找到了中位数了，即<script type="math/tex">median = \frac{max(left\_part)+min(right\_part）}{2}</script><br>为了满足上面两个条件，我们只需要满足:</p>
+<ul>
+<li>$i+j = \frac {(m+n+1)}{2}$，即$j=\frac {(m+n+1)}{2}-i$</li>
+<li>$A[i-1]\leq B[j]$ and $B[j-1]\leq A[i]$</li>
+</ul>
+<p>&emsp;&emsp;这里我们假设有$n&gt;m$，由于$0\leq i \leq m$，那么$j$就一定为一个非负数。(这里，要是我们将上面的条件改为$i+j=k$，那么就可以查找$k_{th}$的数)<br>所以我们只需要二分查找$i$的位置，即可得到答案。步骤如下所示：</p>
+<ul>
+<li>设置左边界$L=0$，右边界$R=m$，从区间$[L,R]$开始查找</li>
+<li>让$i=\frac {L+R}{2}$，$j=\frac {(m+n+1)}{2}-i$</li>
+<li>现在我们已经满足$len(left_part)=len(right_part)$，只需满足第二个条件即可。<ul>
+<li>如果满足$A[i-1]\leq B[j]$ and $B[j-1]\leq A[i]$，那么我们已经得到了解，退出二分查找即可</li>
+<li>如果有$A[i-1] &gt; B[j]$ ，说明我们的$A[i-1]$太大了，所以我们需要减小$i$,由于减小$i$时，$j$会增大，所以能找到我们要的解。而如果我们增大$i$，同时$j$会变小，所以不能得到解，所以此时，我们应该让$R = i-1$,，然后继续查找</li>
+<li>如果有$B[j-1] &gt; A[i]$ ，说明我们的$A[i]$太小了，所以我们需要增大$i$,理由同上，所以此时，我们应该让$L = i+1$，然后继续查找</li>
+</ul>
+</li>
+</ul>
+<p>最后当$i$找到的时候，分奇偶两种情况</p>
+<ul>
+<li>$max(A[i-1],B[j-1])$，当$m+n$为奇数</li>
+<li>$\frac {max(A[i-1],B[j-1])+min(A[i],B[j])} {2}$，当$m+n$为偶数</li>
+</ul>
+<p>&emsp;&emsp;考虑到当$i=0,i=m,j=0,j=n$时，$A[i-1],B[j-1],A[i],B[j]$可能不存在，由于我们只是要判断是否满足条件，所以我们当元素不存在时，就不用进行判断了。也就是说，</p>
+<ul>
+<li>$(j=0$ || $i=m$ || $B[j-1] \leq A[i]$ &amp;&amp; $A[i-1] \leq B[j])$</li>
+<li>$(j&gt;0$ &amp;&amp; $i<m$ ||="" $b[j-1]=""> A[i]$)$</m$></li>
+<li>$(i&gt;0$ &amp;&amp; $j<n$ ||="" $a[i-1]=""> B[j]$)$</n$></li>
+</ul>
+<p>&emsp;&emsp;代码如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">double</span> <span class="title">findMedianSortedArrays</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums1, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> m  = nums1.size();</span><br><span class="line">        <span class="keyword">int</span> n = nums2.size();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//我们需要保持 n&gt;m</span></span><br><span class="line">        <span class="keyword">if</span>(m&gt;n)</span><br><span class="line">        &#123;</span><br><span class="line">            swap(nums1,nums2);</span><br><span class="line">            swap(m,n);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//二分法查找i  </span></span><br><span class="line">        <span class="keyword">int</span> L = <span class="number">0</span>,R = m;</span><br><span class="line">        <span class="keyword">int</span> len = (m+n+<span class="number">1</span>)/<span class="number">2</span>;</span><br><span class="line">        <span class="keyword">while</span>(L&lt;=R)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">int</span> i = (L + R)/<span class="number">2</span>;</span><br><span class="line">            <span class="keyword">int</span> j = len-i;</span><br><span class="line">            <span class="comment">//i太小</span></span><br><span class="line">            <span class="keyword">if</span>(j&gt;<span class="number">0</span>&amp;&amp;i&lt;R&amp;&amp;nums2[j<span class="number">-1</span>]&gt;nums1[i])</span><br><span class="line">            &#123;</span><br><span class="line">                L = i+<span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//i太大</span></span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(i&gt;<span class="number">0</span>&amp;&amp;j&lt;n&amp;&amp;nums1[i<span class="number">-1</span>]&gt;nums2[j])</span><br><span class="line">            &#123;</span><br><span class="line">                R = i<span class="number">-1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//满足两个条件，我们得到了解</span></span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">//首先求左边的最大值</span></span><br><span class="line">                <span class="keyword">int</span> maxleft = <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">if</span>(i==<span class="number">0</span>) &#123;maxleft = nums2[j<span class="number">-1</span>];&#125;</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span>(j==<span class="number">0</span>)&#123;maxleft = nums1[i<span class="number">-1</span>];&#125;</span><br><span class="line">                <span class="keyword">else</span>&#123;maxleft  = max(nums1[i<span class="number">-1</span>],nums2[j<span class="number">-1</span>]);&#125;</span><br><span class="line">                <span class="comment">//判断是否为奇数</span></span><br><span class="line">                <span class="keyword">if</span>((m+n)%<span class="number">2</span>==<span class="number">1</span>) <span class="keyword">return</span> maxleft;</span><br><span class="line">                </span><br><span class="line">                <span class="keyword">int</span> minright = <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">if</span>(i == m) minright = nums2[j];</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span>(j == n) minright = nums1[i];</span><br><span class="line">                <span class="keyword">else</span>&#123;minright = min(nums1[i],nums2[j]);&#125;</span><br><span class="line">                </span><br><span class="line">                <span class="keyword">return</span> (maxleft+minright)/<span class="number">2.0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> <span class="number">0.0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+
+    </div>
+</article>
+
+
+<div id="comments-template"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script>
+	if(!window.commentConfig) {
+      window.commentConfig = {}
+      window.commentConfig.title = 'LeetCode 第四题 Median of Two Sorted Arrays（计算两个有序数组的中位数）'
+    }
+</script>
+
+                </div>
+                <aside class="col-md-4 gal-left" id="sidebar">
+    <!-- 此为sidebar的搜索框, 非搜索结果页面 -->
+<aside id="sidebar-search">
+    <div class="search hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <form class="form-inline clearfix" id="search-form" method="get" action="/search/index.html">
+            <input type="text" name="s" class="form-control" id="searchInput" placeholder="搜索文章~" autocomplete="off">
+            <button class="btn btn-danger btn-gal" type="submit">
+                <i class="fa fa-search"></i>
+            </button>
+        </form>
+    </div>
+</aside>
+    <aside id="sidebar-author">
+    <div class="panel panel-gal" data-aos="flip-right" data-aos-duration="3000">
+        <div class="panel-heading" style="text-align: center">
+            <i class="fa fa-quote-left"></i>
+            Labmem No.1
+            <i class="fa fa-quote-right"></i>
+        </div>
+        <div class="author-panel text-center">
+            <img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3485132381,143374086&fm=26&gp=0.jpg" width="140" height="140" alt="个人头像" class="author-image">
+            <p class="author-description"></p><p>一切都是命运石之门的选择</p>
+<p></p>
+        </div>
+    </div>
+</aside>
+    
+    <aside id="sidebar-recent_comments">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-comments"></i>
+            最新评论
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush"></ul>
+    </div>
+</aside>
+    
+    <!-- 要配置好leancloud才能开启此小工具 -->
+    
+    <aside id="sidebar-hot_posts">
+    <div class="panel panel-gal hot hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-fire"></i>
+            最热文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush"></ul>
+    </div>
+</aside>
+    
+    
+    <aside id="sidebar-recent_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            近期文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/22/UbuntuToDo/">安装Ubuntu系统必做的事情（常用软件安装＋系统配置）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/mxnet-hrbrid-forward/">MXNet学习笔记：HybridBlock类hybrid_forwar()函数解析</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/mxnet-set-learning-rate/">MXNet使用技巧：单独设置网络中每层的学习率</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/python-argparse/">python常用库总结：argparse库</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/faster-rcnn/">Faster-RCNN论文细节原理解读+代码实现gluoncv(MXNet)</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/traits/">C++ Traits简介（OpenCV中DataType类分析）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode4/">LeetCode 第四题 Median of Two Sorted Arrays（计算两个有序数组的中位数）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode5/">LeetCode 第5题 Longest Palindromic Substring 最长回文子串</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/mxnetAPIobjectdetection/">MXNet中目标检测API使用总结：MultiBoxDetection、MultiBoxPrior、MultiBoxTarget</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode2/">LeetCode 第2题 Add Two Numbers</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    <aside id="sidebar-rand_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            随机文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/HDU6345/">2018百度之星程序设计大赛（资格赛） 子串查询 HDU6345 解题思路</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/UVa11536/">UVa11536 Smallest Sub-Array</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/UVa1618/">UVa1618 弱键</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/UVa1619/">UVa1619 感觉很好</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/22/UbuntuToDo/">安装Ubuntu系统必做的事情（常用软件安装＋系统配置）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode2/">LeetCode 第2题 Add Two Numbers</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/mxnetAPIobjectdetection/">MXNet中目标检测API使用总结：MultiBoxDetection、MultiBoxPrior、MultiBoxTarget</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/object-detection-note3/">物体检测Object Detection学习笔记（MXNet）（三）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/python-argparse/">python常用库总结：argparse库</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/traits/">C++ Traits简介（OpenCV中DataType类分析）</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    <aside id="gal-sets">
+        <div class="panel panel-gal hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+            <ul class="nav nav-pills pills-gal">
+
+                
+                <li>
+                    <a href="/2019/01/18/leetcode4/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                </li>
+                
+                
+                <li>
+                    <a href="/2019/01/18/leetcode4/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                </li>
+                
+                
+                <li>
+                    <a href="/2019/01/18/leetcode4/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                </li>
+                
+            </ul>
+            <div class="tab-content">
+                
+                <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
+    
+    <a href="/tags/暴力枚举/" style="font-size: 10.90722352255258px;" class="tag-cloud-link">暴力枚举</a>
+    
+    <a href="/tags/剪枝/" style="font-size: 17.950447602174684px;" class="tag-cloud-link">剪枝</a>
+    
+    <a href="/tags/线段树/" style="font-size: 9.453275616831853px;" class="tag-cloud-link">线段树</a>
+    
+    <a href="/tags/前缀和/" style="font-size: 19.15151943180482px;" class="tag-cloud-link">前缀和</a>
+    
+    <a href="/tags/二分法/" style="font-size: 16.637365485189665px;" class="tag-cloud-link">二分法</a>
+    
+    <a href="/tags/git命令/" style="font-size: 15.953750546573747px;" class="tag-cloud-link">git命令</a>
+    
+    <a href="/tags/mxnet/" style="font-size: 19.44020655238105px;" class="tag-cloud-link">mxnet</a>
+    
+    <a href="/tags/faster-rcnn/" style="font-size: 14.486598844725645px;" class="tag-cloud-link">faster_rcnn</a>
+    
+    <a href="/tags/java/" style="font-size: 14.344157017885253px;" class="tag-cloud-link">java</a>
+    
+    <a href="/tags/jsp/" style="font-size: 18.802891035991763px;" class="tag-cloud-link">jsp</a>
+    
+    <a href="/tags/servlet/" style="font-size: 13.18571287167868px;" class="tag-cloud-link">servlet</a>
+    
+    <a href="/tags/物体检测/" style="font-size: 14.372088903491427px;" class="tag-cloud-link">物体检测</a>
+    
+    <a href="/tags/论文/" style="font-size: 12.837565921707341px;" class="tag-cloud-link">论文</a>
+    
+    <a href="/tags/python/" style="font-size: 18.227629686302286px;" class="tag-cloud-link">python</a>
+    
+    <a href="/tags/深度学习/" style="font-size: 17.322152063287458px;" class="tag-cloud-link">深度学习</a>
+    
+</div>
+                
+                
+                <div class="friend-links tab-pane nav bs-sidenav fade" id="sidebar-friend-links">
+    
+    <li>
+        <a href="http://baidu.com/" target="_blank">百度</a>
+    </li>
+    
+    <li>
+        <a href="http://www.google.com/" target="_blank">谷歌</a>
+    </li>
+    
+    <li>
+        <a href="http://www.moe123.com/" target="_blank">木有啊</a>
+    </li>
+    
+</div>
+                
+                
+                <div class="links tab-pane nav bs-sidenav fade" id="sidebar-links">
+    
+    <li>
+        <a href="https://github.com/JJXiangJiaoJun/" target="_blank">Github</a>
+    </li>
+    
+    <li>
+        <a href="https://blog.csdn.net/XiangJiaoJun_/" target="_blank">CSDN</a>
+    </li>
+    
+    <li>
+        <a href="https://www.zhihu.com/people/ye-xiao-bai-11-96/activities" target="_blank">知乎</a>
+    </li>
+    
+</div>
+                
+            </div>
+        </div>
+    </aside>
+    
+</aside>
+            </div>
+        </div>
+    </div>
+    <footer id="gal-footer">
+    <div class="container">
+        Copyright © 2018 Labmem No.1 Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>.&nbsp;Theme by <a href="https://github.com/ZEROKISEKI" target="_blank">AONOSORA</a>
+    </div>
+</footer>
+
+<!-- 回到顶端 -->
+<div id="gal-gotop">
+    <i class="fa fa-angle-up"></i>
+</div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"pluginJsPath":"lib/","pluginRootPath":"live2dw/"});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+<script src="/js/activate-power-mode.js"></script>
+<script>
+
+    // 配置highslide
+	hs.graphicsDir = '/js/highslide/graphics/'
+    hs.outlineType = "rounded-white";
+    hs.dimmingOpacity = 0.8;
+    hs.outlineWhileAnimating = true;
+    hs.showCredits = false;
+    hs.captionEval = "this.thumb.alt";
+    hs.numberPosition = "caption";
+    hs.align = "center";
+    hs.transitions = ["expand", "crossfade"];
+    hs.lang.number = '共%2张图, 当前是第%1张';
+    hs.addSlideshow({
+      interval: 5000,
+      repeat: true,
+      useControls: true,
+      fixedControls: "fit",
+      overlayOptions: {
+        opacity: 0.75,
+        position: "bottom center",
+        hideOnMouseOut: true
+      }
+    })
+
+    // 初始化aos
+    AOS.init({
+      duration: 1000,
+      delay: 0,
+      easing: 'ease-out-back'
+    });
+
+</script>
+<script>
+	POWERMODE.colorful = 'true';    // make power mode colorful
+	POWERMODE.shake = 'true';       // turn off shake
+	// TODO 这里根据具体情况修改
+	document.body.addEventListener('input', POWERMODE);
+</script>
+<script>
+    window.slideConfig = {
+      prefix: '/imgs/slide/background',
+      ext: 'jpg',
+      maxCount: '21'
+    }
+</script>
+<script src="/js/hs.js"></script>
+<script src="/js/blog.js"></script>
+
+
+<script>
+    window.hot_posts_count = '10'
+    // window.use_leancloud = 'true'
+</script>
+<script src="/js/comment/leancloud.js"></script>
+
+
+<script src="https://myau.moe/js/comment/gitment.browser.js"></script>
+<script>
+    if(window.commentConfig) {
+      window.commentConfig.id = 'Fri Jan 18 2019 19:21:25 GMT+0800'
+      window.commentConfig.owner = 'JJXiangJiaoJun'
+      window.commentConfig.repo = 'comment_page'
+      window.commentConfig.client_id = 'd7df3d5d159f81371d76'
+      window.commentConfig.client_secret = '3794527fca067871d3795782ae7fd14f94ce3a74'
+      window.commentConfig.redirect_uri = 'https://hongbb.top'
+    } else {
+      window.commentConfig = {
+      	id: 'Fri Jan 18 2019 19:21:25 GMT+0800',
+        owner: 'JJXiangJiaoJun',
+        repo: 'comment_page',
+        client_id: 'd7df3d5d159f81371d76',
+        client_secret: '3794527fca067871d3795782ae7fd14f94ce3a74',
+        redirect_uri: 'https://hongbb.top'
+      }
+    }
+</script>
+<script src="/js/comment/gitment.js"></script>
+
+</html>

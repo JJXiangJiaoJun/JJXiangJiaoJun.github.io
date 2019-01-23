@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Labmem No.1">
+    
+    <meta name="description" content="一切都是命运石之门的选择">
+    
+    
+    
+    
+    
+    
+    <title>物体检测Object Detection学习笔记（MXNet）（三） | 爱吃咸鱼的喵の无名小站</title>
+    <link href="”https://github.com/JJXiangJiaoJun“" rel="”prefetch”">
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/aos.css">
+<link rel="stylesheet" href="/css/style.css">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/aos.js"></script>
+    <script src="/js/highslide/highslide-full.min.js"></script>
+    <link rel="stylesheet" href="/js/highslide/highslide.css">
+    <style type="text/css">
+        @media (max-width: 768px) {
+            body {
+                background-color: #f0f0f0;
+                background: url('/imgs/mobile.jpg');
+                background-attachment: fixed;
+            }
+        }
+    </style>
+    
+    <script src="//cdn1.lncld.net/static/js/3.4.2/av-min.js"></script>
+    <script>
+      AV.init({
+        appId: 'uJUp6NroM9R4yTpnGYBF7hhw-gzGzoHsz',
+        appKey: 'w5Qtn48qXMY1nyCSf7oahEM7'
+      })
+    </script>
+    
+    <!--<script type="text/javascript">
+      if (document.images) {
+        var avatar = new Image();
+        avatar.src = '/imgs/https:/ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3485132381,143374086&fm=26&gp=0.jpg'
+        var previews = 'preview1.jpg,preview2.jpg,preview12.jpeg,preview3.jpg,preview4.jpg,preview5.jpg,preview6.jpeg,preview7.png,preview8.jpeg,preview9.jpeg,preview10.jpg,preview11.jpg,preview12.jpeg,preview13.jpg,preview14.jpeg,preview15.jpeg,preview16.png'.split(',')
+        var previewsPreLoad = []
+        for(var i = 0; i < length; i++) {
+          previewsPreLoad.push(new Image())
+          previewsPreLoad[previewsPreLoad.length - 1].src = '/imgs/preview' + previews[i]
+        }
+      }
+    </script>--><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head></html>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- 背景轮播图功能 -->
+    <section class="hidden-xs">
+    <ul class="cb-slideshow">
+        <li><span>天若</span></li>
+        <li><span>有情</span></li>
+        <li><span>天亦老</span></li>
+        <li><span>我为</span></li>
+        <li><span>长者</span></li>
+        <li><span>续一秒</span></li>
+    </ul>
+</section>
+    <!-- 欧尼酱功能, 谁用谁知道 -->
+    
+    <header class="navbar navbar-inverse" id="gal-header">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".bs-navbar-collapse" aria-expanded="false">
+                <span class="fa fa-lg fa-reorder"></span>
+            </button>
+            <a href="https://github.com/JJXiangJiaoJun">
+                
+                <!-- 这里background使用imgs/${logo_image}(路径文件名) -->
+                <style>
+                    #gal-header .navbar-brand {
+                        width: 200px;
+                        height: 50px;
+                        display: block;
+                        background: url('/imgs/minilogo.jpeg') no-repeat;
+                    }
+                </style>
+                    
+                <div class="navbar-brand"></div>
+                
+            </a>
+        </div>
+        <div class="collapse navbar-collapse bs-navbar-collapse">
+            <ul class="nav navbar-nav" id="menu-gal">
+                
+                
+                <li class="">
+                    <a href="/">
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/archives">
+                        <i class="fa fa-archive"></i>归档
+                    </a>
+                </li>
+                
+                
+                
+                
+                <li class="dropdown">
+                    <!-- TODO 添加hover dropdown效果 -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-hover="dropdown">
+                        <i class="fa fa-list"></i>分类
+                    </a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        <li>
+                            <a href="/categories/算法与数据结构/">算法与数据结构</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/git/">git</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/Ubuntu系统/">Ubuntu系统</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/深度学习/">深度学习</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/Java后端/">Java后端</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/深度学习论文/">深度学习论文</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/python常用库/">python常用库</a>
+                        </li>
+                        
+                        
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                
+                
+                <li class="dropdown">
+                    <!-- TODO 添加hover dropdown效果 -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-hover="dropdown">
+                        <i class="fa fa-tags"></i>标签
+                    </a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        <li>
+                            <a href="/tags/暴力枚举/">暴力枚举</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/剪枝/">剪枝</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/线段树/">线段树</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/前缀和/">前缀和</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/二分法/">二分法</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/git命令/">git命令</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/mxnet/">mxnet</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/faster-rcnn/">faster_rcnn</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/java/">java</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/jsp/">jsp</a>
+                        </li>
+                        
+                        
+                        <li>
+                            <a href="/tags">...</a>
+                        </li>
+                        
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                
+                <li class="">
+                    <a href="/message">
+                        <i class="fa fa-commenting"></i>留言板
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/about">
+                        <i class="fa fa-user"></i>关于我
+                    </a>
+                </li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</header>
+    <div id="gal-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 gal-right" id="mainstay">
+                    
+<article class="article well article-body" id="article">
+    <div class="breadcrumb">
+        <i class="fa fa-home"></i>
+        <a href="https://github.com/JJXiangJiaoJun">爱吃咸鱼的喵の无名小站</a>
+        >
+        <span>物体检测Object Detection学习笔记（MXNet）（三）</span>
+    </div>
+    <!-- 大型设备详细文章 -->
+    <div class="hidden-xs">
+        <div class="title-article">
+            <h1>
+                <a href="/2019/01/18/object-detection-note3/">物体检测Object Detection学习笔记（MXNet）（三）</a>
+            </h1>
+        </div>
+        <div class="tag-article">
+            
+            <span class="label label-gal">
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/mxnet/">mxnet</a>, 
+                
+                <a href="/tags/物体检测/">物体检测</a>
+                
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2019-01-18
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-eye"></i>
+            </span>
+            
+        </div>
+    </div>
+    <!-- 小型设备详细文章 -->
+    <div class="visible-xs">
+        <center>
+            <div class="title-article">
+                <h4>
+                    <a href="/2019/01/18/object-detection-note3/">物体检测Object Detection学习笔记（MXNet）（三）</a>
+                </h4>
+            </div>
+            <p>
+                <i class="fa fa-calendar"></i> 2019-01-18
+            </p>
+            <p>
+                
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/mxnet/">mxnet</a>, 
+                
+                <a href="/tags/物体检测/">物体检测</a>
+                
+                
+                
+                <i class="fa fa-eye"></i>
+                
+            </p>
+        </center>
+    </div>
+    <div class="content-article">
+        <p>&emsp;&emsp;今天总结一下学习的SSD（single shot detector）单发多框物体检测框架，总的来说物体检测处理流程和图像分类的总体流程差不多，只不过多了很多细节。<br>&emsp;&emsp;总结一下，实现一个网络的基本流程：</p>
+<ol>
+<li>首先需要定义整体网络中小的功能块，比如说ResNet中的残差小块，GoogLeNet中的inception等，一些可以抽象出来的功能块。</li>
+<li>搞清楚每一层的输出形状，以及要进行的处理。比如说SSD中对每一层的输出特征图都要进行预测类别和预测边界框回归量</li>
+<li>继承<code>nn.Block</code>定义一个完整的网络，重写实现其中的<code>__init()__</code>函数和<code>forward()</code>函数</li>
+<li>获取用于训练的小批量数据</li>
+<li>定义损失函数的计算，定义优化器</li>
+<li>定义评估方法，如何进行模型评估</li>
+<li>训练模型<ul>
+<li>首先获取用于训练小批量数据</li>
+<li>前向运算，获得模型输出</li>
+<li>计算损失函数</li>
+<li>反向传播</li>
+<li>用优化器迭代更新参数</li>
+<li>输出模型训练信息，并且重复上述步骤</li>
+</ul>
+</li>
+</ol>
+<p>参考资料：<a href="http://zh.gluon.ai/" target="_blank" rel="noopener">动手深度学习</a></p>
+<h1 id="SSD简介"><a href="#SSD简介" class="headerlink" title="SSD简介"></a>SSD简介</h1><h2 id="框架说明"><a href="#框架说明" class="headerlink" title="框架说明"></a>框架说明</h2><p>&emsp;&emsp;SSD是一种多尺度的目标检测模型，SSD主要由一个基础网络快和若干个多尺度特征块串联而成。</p>
+<ul>
+<li>基础网络块：一般选择常用的深度卷积神经网络，比如分类层之前截断的VGG，ResNet等，用来提取图像的特征。</li>
+<li>多尺度特征块，可以将上一层特征图的高和宽减小，增大每个像素的感受野，越靠近输出层的多尺度特征块输出的特征图越小，基于特征图生成的锚框数量也越小，更加适合检测尺寸较大的目标</li>
+</ul>
+<p>SSD具体的检测过程如下图所示：</p>
+<p><img src="https://raw.githubusercontent.com/JJXiangJiaoJun/blog_images/master/object_detection_note3/1.png" alt="图片来自于《动手深度学习》"></p>
+<p><img src="https://raw.githubusercontent.com/JJXiangJiaoJun/blog_images/master/object_detection_note3/2.png" alt="图片失效啦">)</p>
+<hr>
+<h2 id="SSD中锚框的类别预测层"><a href="#SSD中锚框的类别预测层" class="headerlink" title="SSD中锚框的类别预测层"></a>SSD中锚框的类别预测层</h2><p>&emsp;&emsp;SSD中对每个特征图中的锚框都要预测类别，如果物体类别数为$q$，那么SSD中预测的类别数应为$q+1$，其中0表示该锚框中只有背景。<br>&emsp;&emsp;为了减少运算量，SSD中采用<strong>通道数</strong>来表示预测的类别，类别预测层的输出高和宽等于输入的高和宽，而通道数 = 每个像素生成的锚框个数<em>（物体类别数+1），其中输入和输出在特征图在空间坐标上一一对应。比如说第$i$个锚框各个类别的预测分数在第 $(i-1)$\</em>（物体类别数+1）到  $i$ * （物体类别数+1）通道之间。<br>&emsp;&emsp;从论文中可以看出，预测所用的卷积核大小均为$3*3$，步幅为$1$，填充为$1$，保证输入和输出的大小一致<br>&emsp;&emsp;使用MXNet实现类别预测层代码如下<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cls_predictors</span><span class="params">(num_anchors,num_classes)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> nn.Conv2D(channels=num_anchors*(num_classes+<span class="number">1</span>),kernel_size=<span class="number">3</span>,padding=<span class="number">1</span>)</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h2 id="SSD中锚框的偏移量预测层"><a href="#SSD中锚框的偏移量预测层" class="headerlink" title="SSD中锚框的偏移量预测层"></a>SSD中锚框的偏移量预测层</h2><p>&emsp;&emsp;SSD中对每个特征图中的锚框还需要预测四个偏移量，还是采用通道数来表示预测的偏移量，从论文中可以看出，偏移量预测层输出的通道数应为 $4<em>$每个像素生成的锚框个数。其中第$i$个锚框预测的4个偏移量在 第$(i-1)</em>4$ 到 $i*4$ 个通道中<br>&emsp;&emsp;使用MXNet实现偏移量预测层代码如下<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bbox_predictors</span><span class="params">(num_anchors)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> nn.Conv2D(channels=num_anchors*<span class="number">4</span>,kernel_size=<span class="number">3</span>,padding=<span class="number">1</span>)</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h2 id="SSD中高和宽减半模块"><a href="#SSD中高和宽减半模块" class="headerlink" title="SSD中高和宽减半模块"></a>SSD中高和宽减半模块</h2><p>&emsp;&emsp;由于SSD是多尺度的目标检测框架，所以高和宽减半模块主要是减小输入特征图的宽和高，增大每个像素的感受野，从而使越靠近输出层的特征图每个像素的感受野越大，从论文中可以看到，实现为128通道的$1<em>1$卷积，后面接上256通道的$3</em>3$卷积，并设置步幅为2以减小输入特征图的尺寸，不过这个网络我们也可以自己设计，只需要一步步增大特征图的感受野即可。下面我采用 128通道的$1<em>1$卷积，后面接上256通道的$3</em>3$卷积，最后加上$3*3$的MaxPooling，并设置步幅为2。<br>&emsp;&emsp;使用MXNet实现宽和高减半层代码如下<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">down_sample_blk</span><span class="params">(num_channels)</span>:</span></span><br><span class="line">    blk = nn.Sequential()</span><br><span class="line">    blk.add(nn.BatchNorm(),nn.Activation(<span class="string">'relu'</span>),</span><br><span class="line">           nn.Conv2D(channels=num_channels//<span class="number">2</span>,kernel_size=<span class="number">1</span>,strides=<span class="number">1</span>),</span><br><span class="line">            nn.BatchNorm(),nn.Activation(<span class="string">'relu'</span>),</span><br><span class="line">           nn.Conv2D(channels=num_channels,kernel_size=<span class="number">3</span>,strides=<span class="number">1</span>,padding=<span class="number">1</span>))</span><br><span class="line">    </span><br><span class="line">    blk.add(nn.MaxPool2D(pool_size=<span class="number">2</span>))</span><br><span class="line">    <span class="keyword">return</span> blk</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h2 id="SSD中的基础网络"><a href="#SSD中的基础网络" class="headerlink" title="SSD中的基础网络"></a>SSD中的基础网络</h2><p>&emsp;&emsp;SSD中的基础网络块用于提取图像特征，论文中采用的是VGG-16，并且将最后两个全连接层，换成了卷积层。通常情况下，基础网络输出的特征图相对来说较大，分辨率较高，所以通常在其上用来检测小物体。<br>&emsp;&emsp;使用MXNet实现VGG代码如下<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">vgg_blk</span><span class="params">(num_channels)</span>:</span></span><br><span class="line">    blk = nn.Sequential()</span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">2</span>):</span><br><span class="line">        blk.add(nn.BatchNorm(),</span><br><span class="line">                nn.Activation(<span class="string">'relu'</span>),</span><br><span class="line">                nn.Conv2D(channels=num_channels,kernel_size=<span class="number">3</span>,strides=<span class="number">1</span>,padding=<span class="number">1</span>))</span><br><span class="line">    blk.add(nn.BatchNorm(),nn.Activation(<span class="string">'relu'</span>),</span><br><span class="line">            nn.Conv2D(channels=num_channels,kernel_size=<span class="number">1</span>,strides=<span class="number">1</span>))</span><br><span class="line">    blk.add(nn.MaxPool2D(pool_size=<span class="number">2</span>,strides=<span class="number">2</span>))</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> blk</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">vgg_16</span><span class="params">()</span>:</span></span><br><span class="line">    vgg_16 = nn.Sequential()</span><br><span class="line">    conv = (<span class="number">32</span>,<span class="number">64</span>,<span class="number">128</span>,<span class="number">256</span>,<span class="number">512</span>,<span class="number">512</span>)</span><br><span class="line">    vgg_16.add(nn.BatchNorm(),nn.Activation(<span class="string">'relu'</span>),</span><br><span class="line">              nn.Conv2D(channels=conv[<span class="number">0</span>],kernel_size=<span class="number">7</span>,strides=<span class="number">1</span>,padding=<span class="number">3</span>),</span><br><span class="line">              nn.BatchNorm(),nn.Activation(<span class="string">'relu'</span>),</span><br><span class="line">              nn.Conv2D(channels=conv[<span class="number">0</span>],kernel_size=<span class="number">3</span>,strides=<span class="number">1</span>,padding=<span class="number">1</span>))   </span><br><span class="line">    <span class="comment">#vgg_16.add(nn.MaxPool2D(pool_size=2,strides=2))    </span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">3</span>):</span><br><span class="line">        vgg_16.add(vgg_blk(conv[i+<span class="number">1</span>]))</span><br><span class="line">    </span><br><span class="line">    <span class="comment">#最后两层换成卷积</span></span><br><span class="line">    vgg_16.add(nn.BatchNorm(),nn.Activation(<span class="string">'relu'</span>),</span><br><span class="line">               nn.Conv2D(channels=conv[<span class="number">4</span>],kernel_size=<span class="number">3</span>,strides=<span class="number">1</span>,padding=<span class="number">1</span>),</span><br><span class="line">               nn.BatchNorm(),nn.Activation(<span class="string">'relu'</span>),</span><br><span class="line">               nn.Conv2D(channels=conv[<span class="number">5</span>],kernel_size=<span class="number">1</span>))</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> vgg_16</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h2 id="连接各个层输入的函数"><a href="#连接各个层输入的函数" class="headerlink" title="连接各个层输入的函数"></a>连接各个层输入的函数</h2><p>&emsp;&emsp;以上SSD中的所有模块我们都已经构造完成了，由于每一层都会特征图都会输出预测的锚框类别，以及预测的锚框偏移量，我们需要将其拼接起来，以便后续的损失函数计算。我们直接将所有的预测结果拉成一个2D矩阵，其中第一维为批量大小，所有预测结果均在第二维进行拼接。<br>&emsp;&emsp;拼接函数的代码如下所示<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#把通道数换到最后</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">flatten_pred</span><span class="params">(pred)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> pred.transpose((<span class="number">0</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">1</span>)).flatten()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">concat_pred</span><span class="params">(preds)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> nd.concat(*[flatten_pred(pred) <span class="keyword">for</span> pred <span class="keyword">in</span> preds],dim=<span class="number">1</span>)</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h2 id="定义SSD中的每一层前向运算函数"><a href="#定义SSD中的每一层前向运算函数" class="headerlink" title="定义SSD中的每一层前向运算函数"></a>定义SSD中的每一层前向运算函数</h2><p>&emsp;&emsp;SSD中每一层的特征图都要有三个输出，分别为①、<strong>默认锚框</strong> 形状为（1，锚框总数，4） ②、<strong>类别预测</strong>，形状为（批量大小，每个像素锚框数<em>（总类别数+1），高，宽） ③、<strong>偏移量预测</strong>，形状为（批量大小，每个像素的锚框数</em>4，高，宽）<br>&emsp;&emsp;所以输入参数中应包括这一个特征图我们想生成锚框的大小比例，以及宽高比例，这是可以由我们自己指定的超参数，我们可以在前面的层生成比较多的小锚框，而在后面的层生成较少的大锚框。<br>&emsp;&emsp;拼接函数的代码如下所示</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">blk_forward</span><span class="params">(net,X,sizes,ratios,cls_predictor,bbox_predictor)</span>:</span></span><br><span class="line">    <span class="comment">#首先计算这一层的输出</span></span><br><span class="line">    Y = net(X)</span><br><span class="line">    <span class="comment">#生成默认锚框</span></span><br><span class="line">    anchors = contrib.nd.MultiBoxPrior(Y,sizes=sizes,ratios=ratios)</span><br><span class="line">    <span class="comment">#进行预测</span></span><br><span class="line">    cls_preds = cls_predictor(Y)</span><br><span class="line">    bbox_preds = bbox_predictor(Y)</span><br><span class="line">    <span class="comment">#输出生成的默认锚框，类别预测，偏移量预测</span></span><br><span class="line">    <span class="keyword">return</span> anchors,cls_preds,bbox_preds</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="定义SSD完整模型"><a href="#定义SSD完整模型" class="headerlink" title="定义SSD完整模型"></a>定义SSD完整模型</h2><p>&emsp;&emsp;定义SSD的结构为基础网络+3个宽高减半模块+全局最大池化层，最后将所有层的输出都通过上面定义的<code>concat</code>函数进行拼接，网络最后的输出为 <strong>生成的锚框</strong>、<strong>类别预测</strong>、<strong>偏移量预测</strong>。<br>&emsp;&emsp;SSD结构完整代码如下所示<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_blk</span><span class="params">(i)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> i==<span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> vgg_16()</span><br><span class="line">    <span class="keyword">elif</span> i==<span class="number">4</span>:</span><br><span class="line">        <span class="keyword">return</span> nn.GlobalMaxPool2D()</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> down_sample_blk(<span class="number">256</span>)</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SSD</span><span class="params">(nn.Block)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,num_classes,**kwargs)</span>:</span></span><br><span class="line">        super(SSD,self).__init__(**kwargs)</span><br><span class="line">        self.num_classes = num_classes           <span class="comment">#需要预测的总类别数</span></span><br><span class="line">        self.sizes = [[<span class="number">0.2</span>, <span class="number">0.272</span>], [<span class="number">0.37</span>, <span class="number">0.447</span>], [<span class="number">0.54</span>, <span class="number">0.619</span>], [<span class="number">0.71</span>, <span class="number">0.79</span>],</span><br><span class="line">                      [<span class="number">0.88</span>, <span class="number">0.961</span>]]</span><br><span class="line">        self.ratios = [[<span class="number">0.35</span>, <span class="number">1.5</span>, <span class="number">0.75</span>]] * <span class="number">5</span>                      <span class="comment">#超参数，每一层我们需要生成的锚框宽高比和大小比例</span></span><br><span class="line">        <span class="comment">#下面定义每一层的网络</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>):</span><br><span class="line">            <span class="comment">#这一层的每个像素的锚框个数</span></span><br><span class="line">            num_anchors = len(self.sizes[i])+len(self.ratios[i])<span class="number">-1</span></span><br><span class="line">            <span class="comment">#卷积层</span></span><br><span class="line">            setattr(self,<span class="string">'blk_%d'</span> % i,get_blk(i))</span><br><span class="line">            <span class="comment">#类别预测</span></span><br><span class="line">            setattr(self,<span class="string">'cls_pred_%d'</span> % i,cls_predictor(num_anchors,num_classes))</span><br><span class="line">            <span class="comment">#锚框偏移量预测</span></span><br><span class="line">            setattr(self,<span class="string">'bbox_pred_%d'</span> % i ,bbox_predictor(num_anchors))</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self,X)</span>:</span></span><br><span class="line">        <span class="comment">#前向运算函数</span></span><br><span class="line">        anchors,cls_preds,bbox_preds= [],[],[]</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>):</span><br><span class="line">            <span class="comment">#进行一次前向运算</span></span><br><span class="line">            X,anchor,cls_pred,bbox_pred = blk_forward(getattr(self,<span class="string">'blk_%d'</span> % i),X,self.sizes[i],self.ratios[i],</span><br><span class="line">                                                     getattr(self,<span class="string">'cls_pred_%d'</span> % i),</span><br><span class="line">                                                     getattr(self,<span class="string">'bbox_pred_%d'</span> % i))</span><br><span class="line">            <span class="comment">#将输出追加到结果中</span></span><br><span class="line">            anchors.append(anchor)</span><br><span class="line">            cls_preds.append(cls_pred)</span><br><span class="line">            bbox_preds.append(bbox_pred)</span><br><span class="line">        <span class="comment">#最后将结果输出</span></span><br><span class="line">        <span class="keyword">return</span>(nd.concat(*anchors,dim=<span class="number">1</span>),</span><br><span class="line">               concat_pred(cls_preds).reshape((<span class="number">0</span>,<span class="number">-1</span>,self.num_classes+<span class="number">1</span>)),</span><br><span class="line">               concat_pred(bbox_preds))</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h2 id="定义损失函数"><a href="#定义损失函数" class="headerlink" title="定义损失函数"></a>定义损失函数</h2><ul>
+<li>平滑$L_1$范数损失函数<br>&emsp;&emsp;SSD中将$L_1$范数损失函数替换成为平滑$L_1$范数损失函数。后者在零点附近做了平滑处理，其中可以通过设置超参数$\sigma$来控制平滑的区域</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/JJXiangJiaoJun/blog_images/master/object_detection_note3/3.png" alt="图片失效啦">)</p>
+<ul>
+<li>焦点损失函数</li>
+</ul>
+<p>&emsp;&emsp;其中类别预测中，使用了焦点损失：设真实类别$j$的预测概率是$p_j$，交叉熵损失为$- \log p_j$。那么给定超参数$\gamma$、$\alpha$，该损失的定义为：</p>
+<p><img src="https://raw.githubusercontent.com/JJXiangJiaoJun/blog_images/master/object_detection_note3/4.png" alt="图片失效啦">)</p>
+<p>可以通过增大$\gamma$来有效的减小正类预测概率较大时候的损失。</p>
+<p>&emsp;&emsp;我们可以通过继承<code>gluon.loss.Loss</code>类来重写损失函数，只需要重写其中的<code>__init()__</code>，以及<code>hybrid_forward</code>方法即可，MXNet可以帮我们实现自动求导</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">smooth_L1Loss</span><span class="params">(gloss.Loss)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,sigma=<span class="number">0.5</span>,weight=None,batch_axis=<span class="number">0</span>,data_axis=<span class="number">-1</span>,**kwargs)</span>:</span></span><br><span class="line">        super(smooth_L1Loss,self).__init__(weight,batch_axis,**kwargs)</span><br><span class="line">        self.axis = data_axis</span><br><span class="line">        self._sigma = sigma</span><br><span class="line">       </span><br><span class="line">    <span class="comment">#loss里面有很多函数可以自己来定义loss</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">hybrid_forward</span><span class="params">(self,F,pred,label,sample_weight=None)</span>:</span> </span><br><span class="line">        loss = F.smooth_l1((pred-label),scalar=self._sigma)</span><br><span class="line">        loss = gluon.loss._apply_weighting(F,loss,self._weight,sample_weight)</span><br><span class="line">        <span class="keyword">return</span> F.mean(loss,axis = self._batch_axis,exclude =<span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#######################################################</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">focal_SoftMaxCrossEntropy</span><span class="params">(gloss.Loss)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,gamma=<span class="number">2.0</span>,data_axis=<span class="number">-1</span>,batch_axis=<span class="number">0</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">                sparse_label = True,from_logits = False,eps =<span class="number">1e-5</span>,weight=None,**kwargs)</span>:</span></span><br><span class="line">        super(focal_SoftMaxCrossEntropy,self).__init__(weight,batch_axis,**kwargs)</span><br><span class="line">        self._gamma = <span class="number">2.0</span></span><br><span class="line">        self._axis = data_axis</span><br><span class="line">        self._sparse_label = sparse_label</span><br><span class="line">        self._from_logits = from_logits</span><br><span class="line">        self._eps = eps</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">hybrid_forward</span><span class="params">(self,F,pred,label,smaple_weight = None)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> self._from_logits:</span><br><span class="line">            <span class="comment">#计算一次softmax</span></span><br><span class="line">            pred = F.softmax(pred,axis = self._axis)</span><br><span class="line">        <span class="keyword">if</span> self._sparse_label:</span><br><span class="line">            <span class="comment">#这里keep_dim是为了后面与 smaple_weight相乘</span></span><br><span class="line">            pred = nd.pick(pred,label,axis=self._axis,keepdims=<span class="keyword">True</span>)</span><br><span class="line">            loss = -((<span class="number">1</span>-pred)**self._gamma)*F.log(pred+self._eps)</span><br><span class="line">        loss  = gluon.loss._apply_weighting(F,loss,self._weight,smaple_weight)</span><br><span class="line">        <span class="keyword">return</span> F.mean(loss,axis = self._batch_axis,exclude=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="定义优化器、以及评价函数"><a href="#定义优化器、以及评价函数" class="headerlink" title="定义优化器、以及评价函数"></a>定义优化器、以及评价函数</h2><p>&emsp;&emsp;优化器直接使用sgd优化器，评价函数直接使用$L1$损失函数即可</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">tiny_SSD.initialize(init = init.Xavier(),ctx=ctx)</span><br><span class="line">trainer = gluon.Trainer(tiny_SSD.collect_params(),<span class="string">'sgd'</span>,&#123;<span class="string">'learning_rate'</span>:<span class="number">0.2</span>,<span class="string">'wd'</span>:<span class="number">5e-4</span>&#125;)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cls_eval</span><span class="params">(cls_pred,cls_label)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> (cls_pred.argmax(axis=<span class="number">-1</span>)==cls_label).mean().asscalar()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bbox_eval</span><span class="params">(bbox_pred,bbox_label,bbox_mask)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> (bbox_pred*bbox_mask-bbox_label*bbox_mask).abs().mean().asscalar()</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="获取训练数据，训练模型"><a href="#获取训练数据，训练模型" class="headerlink" title="获取训练数据，训练模型"></a>获取训练数据，训练模型</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">train</span><span class="params">(num_epoches)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> epoch <span class="keyword">in</span> range(num_epoches):</span><br><span class="line">        start = time.time()</span><br><span class="line">        train_cls_acc = <span class="number">0</span></span><br><span class="line">        train_bbox_loss = <span class="number">0</span></span><br><span class="line">        train_iter.reset()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i,batch <span class="keyword">in</span> enumerate(train_iter):</span><br><span class="line">            <span class="comment">#获取小批量数据</span></span><br><span class="line">            X = batch.data[<span class="number">0</span>].as_in_context(ctx)</span><br><span class="line">            Y = batch.label[<span class="number">0</span>].as_in_context(ctx)</span><br><span class="line">            <span class="keyword">with</span> autograd.record():</span><br><span class="line">                <span class="comment">#前向运算</span></span><br><span class="line">                anchors,cls_preds,bbox_preds = tiny_SSD(X)</span><br><span class="line">                <span class="comment">#标记锚框获得标签,这里还可以设置负采样</span></span><br><span class="line">                bbox_labels,bbox_masks,cls_labels= contrib.nd.MultiBoxTarget(anchors,Y,cls_preds.transpose((<span class="number">0</span>,<span class="number">2</span>,<span class="number">1</span>)))</span><br><span class="line">                <span class="comment">#计算损失</span></span><br><span class="line">                l_cls = focal_loss(cls_preds,cls_labels)</span><br><span class="line">                l_bbox = smooth_L1(bbox_preds*bbox_masks,bbox_labels*bbox_masks)</span><br><span class="line">                l_total = l_cls+l_bbox</span><br><span class="line">            <span class="comment">#反向传播</span></span><br><span class="line">            l_total.backward()</span><br><span class="line">            <span class="comment">#迭代参数</span></span><br><span class="line">            trainer.step(batch_size)</span><br><span class="line">            train_cls_acc += cls_eval(cls_preds,cls_labels)</span><br><span class="line">            train_bbox_loss += bbox_eval(bbox_preds,bbox_labels,bbox_masks)</span><br><span class="line">        <span class="comment">#训练完epoch输出结果</span></span><br><span class="line">        print(<span class="string">'epoch %2d , train_cls_acc %.2f , bbox mae %.2e , time %.1f sec'</span> %</span><br><span class="line">             (epoch+<span class="number">1</span>,train_cls_acc/(i+<span class="number">1</span>),train_bbox_loss/(i+<span class="number">1</span>),time.time()-start))</span><br></pre></td></tr></table></figure>
+    </div>
+</article>
+
+
+<div id="comments-template"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script>
+	if(!window.commentConfig) {
+      window.commentConfig = {}
+      window.commentConfig.title = '物体检测Object Detection学习笔记（MXNet）（三）'
+    }
+</script>
+
+                </div>
+                <aside class="col-md-4 gal-left" id="sidebar">
+    <!-- 此为sidebar的搜索框, 非搜索结果页面 -->
+<aside id="sidebar-search">
+    <div class="search hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <form class="form-inline clearfix" id="search-form" method="get" action="/search/index.html">
+            <input type="text" name="s" class="form-control" id="searchInput" placeholder="搜索文章~" autocomplete="off">
+            <button class="btn btn-danger btn-gal" type="submit">
+                <i class="fa fa-search"></i>
+            </button>
+        </form>
+    </div>
+</aside>
+    <aside id="sidebar-author">
+    <div class="panel panel-gal" data-aos="flip-right" data-aos-duration="3000">
+        <div class="panel-heading" style="text-align: center">
+            <i class="fa fa-quote-left"></i>
+            Labmem No.1
+            <i class="fa fa-quote-right"></i>
+        </div>
+        <div class="author-panel text-center">
+            <img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3485132381,143374086&fm=26&gp=0.jpg" width="140" height="140" alt="个人头像" class="author-image">
+            <p class="author-description"></p><p>一切都是命运石之门的选择</p>
+<p></p>
+        </div>
+    </div>
+</aside>
+    
+    <aside id="sidebar-recent_comments">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-comments"></i>
+            最新评论
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush"></ul>
+    </div>
+</aside>
+    
+    <!-- 要配置好leancloud才能开启此小工具 -->
+    
+    <aside id="sidebar-hot_posts">
+    <div class="panel panel-gal hot hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-fire"></i>
+            最热文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush"></ul>
+    </div>
+</aside>
+    
+    
+    <aside id="sidebar-recent_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            近期文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/22/UbuntuToDo/">安装Ubuntu系统必做的事情（常用软件安装＋系统配置）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/mxnet-hrbrid-forward/">MXNet学习笔记：HybridBlock类hybrid_forwar()函数解析</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/mxnet-set-learning-rate/">MXNet使用技巧：单独设置网络中每层的学习率</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/python-argparse/">python常用库总结：argparse库</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/faster-rcnn/">Faster-RCNN论文细节原理解读+代码实现gluoncv(MXNet)</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/traits/">C++ Traits简介（OpenCV中DataType类分析）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode4/">LeetCode 第四题 Median of Two Sorted Arrays（计算两个有序数组的中位数）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode5/">LeetCode 第5题 Longest Palindromic Substring 最长回文子串</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/mxnetAPIobjectdetection/">MXNet中目标检测API使用总结：MultiBoxDetection、MultiBoxPrior、MultiBoxTarget</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode2/">LeetCode 第2题 Add Two Numbers</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    <aside id="sidebar-rand_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            随机文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/UVa1618/">UVa1618 弱键</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/UbuntSSH/">Ubuntu系统生成SSH秘钥并添加到github远程仓库(解决git push被拒绝的问题)</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/22/UbuntuToDo/">安装Ubuntu系统必做的事情（常用软件安装＋系统配置）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/gitpush_deny/">本地仓库git push命令提交到github远程仓库时，出现 更新被拒绝，因为远程仓库包含您本地尚不存在的提交。解决方案</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode2/">LeetCode 第2题 Add Two Numbers</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode5/">LeetCode 第5题 Longest Palindromic Substring 最长回文子串</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/mxnet-set-learning-rate/">MXNet使用技巧：单独设置网络中每层的学习率</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/mxnetAPIobjectdetection/">MXNet中目标检测API使用总结：MultiBoxDetection、MultiBoxPrior、MultiBoxTarget</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/traits/">C++ Traits简介（OpenCV中DataType类分析）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/深度学习论文汇总/">深度学习论文汇总</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    <aside id="gal-sets">
+        <div class="panel panel-gal hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+            <ul class="nav nav-pills pills-gal">
+
+                
+                <li>
+                    <a href="/2019/01/18/object-detection-note3/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                </li>
+                
+                
+                <li>
+                    <a href="/2019/01/18/object-detection-note3/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                </li>
+                
+                
+                <li>
+                    <a href="/2019/01/18/object-detection-note3/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                </li>
+                
+            </ul>
+            <div class="tab-content">
+                
+                <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
+    
+    <a href="/tags/暴力枚举/" style="font-size: 17.389940206812824px;" class="tag-cloud-link">暴力枚举</a>
+    
+    <a href="/tags/剪枝/" style="font-size: 12.1800029568621px;" class="tag-cloud-link">剪枝</a>
+    
+    <a href="/tags/线段树/" style="font-size: 17.85363217314614px;" class="tag-cloud-link">线段树</a>
+    
+    <a href="/tags/前缀和/" style="font-size: 16.458729090746438px;" class="tag-cloud-link">前缀和</a>
+    
+    <a href="/tags/二分法/" style="font-size: 12.948421594856784px;" class="tag-cloud-link">二分法</a>
+    
+    <a href="/tags/git命令/" style="font-size: 19.826837690615857px;" class="tag-cloud-link">git命令</a>
+    
+    <a href="/tags/mxnet/" style="font-size: 14.47757005410202px;" class="tag-cloud-link">mxnet</a>
+    
+    <a href="/tags/faster-rcnn/" style="font-size: 16.099725865565713px;" class="tag-cloud-link">faster_rcnn</a>
+    
+    <a href="/tags/java/" style="font-size: 14.477449607196906px;" class="tag-cloud-link">java</a>
+    
+    <a href="/tags/jsp/" style="font-size: 19.258114763466814px;" class="tag-cloud-link">jsp</a>
+    
+    <a href="/tags/servlet/" style="font-size: 9.577885951981113px;" class="tag-cloud-link">servlet</a>
+    
+    <a href="/tags/物体检测/" style="font-size: 18.45128347032209px;" class="tag-cloud-link">物体检测</a>
+    
+    <a href="/tags/论文/" style="font-size: 13.259308719185123px;" class="tag-cloud-link">论文</a>
+    
+    <a href="/tags/python/" style="font-size: 17.61701212333121px;" class="tag-cloud-link">python</a>
+    
+    <a href="/tags/深度学习/" style="font-size: 10.826799213296649px;" class="tag-cloud-link">深度学习</a>
+    
+</div>
+                
+                
+                <div class="friend-links tab-pane nav bs-sidenav fade" id="sidebar-friend-links">
+    
+    <li>
+        <a href="http://baidu.com/" target="_blank">百度</a>
+    </li>
+    
+    <li>
+        <a href="http://www.google.com/" target="_blank">谷歌</a>
+    </li>
+    
+    <li>
+        <a href="http://www.moe123.com/" target="_blank">木有啊</a>
+    </li>
+    
+</div>
+                
+                
+                <div class="links tab-pane nav bs-sidenav fade" id="sidebar-links">
+    
+    <li>
+        <a href="https://github.com/JJXiangJiaoJun/" target="_blank">Github</a>
+    </li>
+    
+    <li>
+        <a href="https://blog.csdn.net/XiangJiaoJun_/" target="_blank">CSDN</a>
+    </li>
+    
+    <li>
+        <a href="https://www.zhihu.com/people/ye-xiao-bai-11-96/activities" target="_blank">知乎</a>
+    </li>
+    
+</div>
+                
+            </div>
+        </div>
+    </aside>
+    
+</aside>
+            </div>
+        </div>
+    </div>
+    <footer id="gal-footer">
+    <div class="container">
+        Copyright © 2018 Labmem No.1 Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>.&nbsp;Theme by <a href="https://github.com/ZEROKISEKI" target="_blank">AONOSORA</a>
+    </div>
+</footer>
+
+<!-- 回到顶端 -->
+<div id="gal-gotop">
+    <i class="fa fa-angle-up"></i>
+</div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"pluginJsPath":"lib/","pluginRootPath":"live2dw/"});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+<script src="/js/activate-power-mode.js"></script>
+<script>
+
+    // 配置highslide
+	hs.graphicsDir = '/js/highslide/graphics/'
+    hs.outlineType = "rounded-white";
+    hs.dimmingOpacity = 0.8;
+    hs.outlineWhileAnimating = true;
+    hs.showCredits = false;
+    hs.captionEval = "this.thumb.alt";
+    hs.numberPosition = "caption";
+    hs.align = "center";
+    hs.transitions = ["expand", "crossfade"];
+    hs.lang.number = '共%2张图, 当前是第%1张';
+    hs.addSlideshow({
+      interval: 5000,
+      repeat: true,
+      useControls: true,
+      fixedControls: "fit",
+      overlayOptions: {
+        opacity: 0.75,
+        position: "bottom center",
+        hideOnMouseOut: true
+      }
+    })
+
+    // 初始化aos
+    AOS.init({
+      duration: 1000,
+      delay: 0,
+      easing: 'ease-out-back'
+    });
+
+</script>
+<script>
+	POWERMODE.colorful = 'true';    // make power mode colorful
+	POWERMODE.shake = 'true';       // turn off shake
+	// TODO 这里根据具体情况修改
+	document.body.addEventListener('input', POWERMODE);
+</script>
+<script>
+    window.slideConfig = {
+      prefix: '/imgs/slide/background',
+      ext: 'jpg',
+      maxCount: '21'
+    }
+</script>
+<script src="/js/hs.js"></script>
+<script src="/js/blog.js"></script>
+
+
+<script>
+    window.hot_posts_count = '10'
+    // window.use_leancloud = 'true'
+</script>
+<script src="/js/comment/leancloud.js"></script>
+
+
+<script src="https://myau.moe/js/comment/gitment.browser.js"></script>
+<script>
+    if(window.commentConfig) {
+      window.commentConfig.id = 'Fri Jan 18 2019 19:17:18 GMT+0800'
+      window.commentConfig.owner = 'JJXiangJiaoJun'
+      window.commentConfig.repo = 'comment_page'
+      window.commentConfig.client_id = 'd7df3d5d159f81371d76'
+      window.commentConfig.client_secret = '3794527fca067871d3795782ae7fd14f94ce3a74'
+      window.commentConfig.redirect_uri = 'https://hongbb.top'
+    } else {
+      window.commentConfig = {
+      	id: 'Fri Jan 18 2019 19:17:18 GMT+0800',
+        owner: 'JJXiangJiaoJun',
+        repo: 'comment_page',
+        client_id: 'd7df3d5d159f81371d76',
+        client_secret: '3794527fca067871d3795782ae7fd14f94ce3a74',
+        redirect_uri: 'https://hongbb.top'
+      }
+    }
+</script>
+<script src="/js/comment/gitment.js"></script>
+
+</html>

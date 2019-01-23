@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Labmem No.1">
+    
+    <meta name="description" content="一切都是命运石之门的选择">
+    
+    
+    
+    
+    
+    
+    <title>Faster-RCNN论文细节原理解读+代码实现gluoncv(MXNet) | 爱吃咸鱼的喵の无名小站</title>
+    <link href="”https://github.com/JJXiangJiaoJun“" rel="”prefetch”">
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/aos.css">
+<link rel="stylesheet" href="/css/style.css">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/aos.js"></script>
+    <script src="/js/highslide/highslide-full.min.js"></script>
+    <link rel="stylesheet" href="/js/highslide/highslide.css">
+    <style type="text/css">
+        @media (max-width: 768px) {
+            body {
+                background-color: #f0f0f0;
+                background: url('/imgs/mobile.jpg');
+                background-attachment: fixed;
+            }
+        }
+    </style>
+    
+    <script src="//cdn1.lncld.net/static/js/3.4.2/av-min.js"></script>
+    <script>
+      AV.init({
+        appId: 'uJUp6NroM9R4yTpnGYBF7hhw-gzGzoHsz',
+        appKey: 'w5Qtn48qXMY1nyCSf7oahEM7'
+      })
+    </script>
+    
+    <!--<script type="text/javascript">
+      if (document.images) {
+        var avatar = new Image();
+        avatar.src = '/imgs/https:/ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3485132381,143374086&fm=26&gp=0.jpg'
+        var previews = 'preview1.jpg,preview2.jpg,preview12.jpeg,preview3.jpg,preview4.jpg,preview5.jpg,preview6.jpeg,preview7.png,preview8.jpeg,preview9.jpeg,preview10.jpg,preview11.jpg,preview12.jpeg,preview13.jpg,preview14.jpeg,preview15.jpeg,preview16.png'.split(',')
+        var previewsPreLoad = []
+        for(var i = 0; i < length; i++) {
+          previewsPreLoad.push(new Image())
+          previewsPreLoad[previewsPreLoad.length - 1].src = '/imgs/preview' + previews[i]
+        }
+      }
+    </script>--><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head></html>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- 背景轮播图功能 -->
+    <section class="hidden-xs">
+    <ul class="cb-slideshow">
+        <li><span>天若</span></li>
+        <li><span>有情</span></li>
+        <li><span>天亦老</span></li>
+        <li><span>我为</span></li>
+        <li><span>长者</span></li>
+        <li><span>续一秒</span></li>
+    </ul>
+</section>
+    <!-- 欧尼酱功能, 谁用谁知道 -->
+    
+    <header class="navbar navbar-inverse" id="gal-header">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".bs-navbar-collapse" aria-expanded="false">
+                <span class="fa fa-lg fa-reorder"></span>
+            </button>
+            <a href="https://github.com/JJXiangJiaoJun">
+                
+                <!-- 这里background使用imgs/${logo_image}(路径文件名) -->
+                <style>
+                    #gal-header .navbar-brand {
+                        width: 200px;
+                        height: 50px;
+                        display: block;
+                        background: url('/imgs/minilogo.jpeg') no-repeat;
+                    }
+                </style>
+                    
+                <div class="navbar-brand"></div>
+                
+            </a>
+        </div>
+        <div class="collapse navbar-collapse bs-navbar-collapse">
+            <ul class="nav navbar-nav" id="menu-gal">
+                
+                
+                <li class="">
+                    <a href="/">
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/archives">
+                        <i class="fa fa-archive"></i>归档
+                    </a>
+                </li>
+                
+                
+                
+                
+                <li class="dropdown">
+                    <!-- TODO 添加hover dropdown效果 -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-hover="dropdown">
+                        <i class="fa fa-list"></i>分类
+                    </a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        <li>
+                            <a href="/categories/算法与数据结构/">算法与数据结构</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/git/">git</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/Ubuntu系统/">Ubuntu系统</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/深度学习/">深度学习</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/Java后端/">Java后端</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/深度学习论文/">深度学习论文</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/python常用库/">python常用库</a>
+                        </li>
+                        
+                        
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                
+                
+                <li class="dropdown">
+                    <!-- TODO 添加hover dropdown效果 -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-hover="dropdown">
+                        <i class="fa fa-tags"></i>标签
+                    </a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        <li>
+                            <a href="/tags/暴力枚举/">暴力枚举</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/剪枝/">剪枝</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/线段树/">线段树</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/前缀和/">前缀和</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/二分法/">二分法</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/git命令/">git命令</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/mxnet/">mxnet</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/faster-rcnn/">faster_rcnn</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/java/">java</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/jsp/">jsp</a>
+                        </li>
+                        
+                        
+                        <li>
+                            <a href="/tags">...</a>
+                        </li>
+                        
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                
+                <li class="">
+                    <a href="/message">
+                        <i class="fa fa-commenting"></i>留言板
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/about">
+                        <i class="fa fa-user"></i>关于我
+                    </a>
+                </li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</header>
+    <div id="gal-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 gal-right" id="mainstay">
+                    
+<article class="article well article-body" id="article">
+    <div class="breadcrumb">
+        <i class="fa fa-home"></i>
+        <a href="https://github.com/JJXiangJiaoJun">爱吃咸鱼的喵の无名小站</a>
+        >
+        <span>Faster-RCNN论文细节原理解读+代码实现gluoncv(MXNet)</span>
+    </div>
+    <!-- 大型设备详细文章 -->
+    <div class="hidden-xs">
+        <div class="title-article">
+            <h1>
+                <a href="/2019/01/18/faster-rcnn/">Faster-RCNN论文细节原理解读+代码实现gluoncv(MXNet)</a>
+            </h1>
+        </div>
+        <div class="tag-article">
+            
+            <span class="label label-gal">
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/mxnet/">mxnet</a>, 
+                
+                <a href="/tags/faster-rcnn/">faster_rcnn</a>
+                
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2019-01-18
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-eye"></i>
+            </span>
+            
+        </div>
+    </div>
+    <!-- 小型设备详细文章 -->
+    <div class="visible-xs">
+        <center>
+            <div class="title-article">
+                <h4>
+                    <a href="/2019/01/18/faster-rcnn/">Faster-RCNN论文细节原理解读+代码实现gluoncv(MXNet)</a>
+                </h4>
+            </div>
+            <p>
+                <i class="fa fa-calendar"></i> 2019-01-18
+            </p>
+            <p>
+                
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/mxnet/">mxnet</a>, 
+                
+                <a href="/tags/faster-rcnn/">faster_rcnn</a>
+                
+                
+                
+                <i class="fa fa-eye"></i>
+                
+            </p>
+        </center>
+    </div>
+    <div class="content-article">
+        <p>&emsp;&emsp;<font size="4">Faster-RCNN开创了基于锚框(anchors)的目标检测框架，并且提出了<strong>RPN</strong>(Region proposal network)，来生成RoI，用来取代之前的selective search方法。Faster-RCNN无论是训练/测试速度，还是物体检测的精度都超过了Fast-RCNN，并且实现了end-to-end训练。</font></p>
+<p>&emsp;&emsp;<font size="4">从RCNN到Fast-RCNN再到Faster-RCNN，后者无疑达到了这一系列算法的巅峰，并且后来的YOLO、SSD、Mask-RCNN、RFCN等物体检测框架都是借鉴了Faster-RCNN</font></p>
+<p>&emsp;&emsp;<font size="4">Faster-RCNN作为一种two-stage的物体检测框架，流程无疑比SSD这种one-stage物体检测框架要复杂，在阅读论文，以及代码复现的过程中也理解了很多细节，在这里记录一下自己的学习过程和自己的一点体会。</font></p>
+<ul>
+<li><a href="#背景介绍">背景介绍</a></li>
+<li><a href="#论文主要贡献">论文主要贡献</a></li>
+<li><a href="#1网络框架">1、网络框架</a></li>
+<li><a href="#2rpnregion-proposal-network">2、RPN(Region Proposal Network)</a><ul>
+<li><a href="#处理流程">处理流程</a></li>
+<li><a href="#详细步骤及代码">详细步骤及代码</a><ul>
+<li><a href="#在feature_map上生成锚框">在feature_map上生成锚框</a></li>
+<li><a href="#用conv3x3卷积进一步提取特征图">用conv3x3卷积进一步提取特征图</a></li>
+<li><a href="#用1x1卷积层进行二分类预测以及边界框回归预测">用1x1卷积层进行二分类预测以及边界框回归预测</a></li>
+<li><a href="#使用预测的score和offset对锚框处理输出region-proposal">使用预测的score和offset对锚框处理，输出Region Proposal</a></li>
+<li><a href="#rpn整体代码">RPN整体代码</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#3对rpn输出的region-proposal采样处理">3、对RPN输出的Region Proposal采样处理</a><ul>
+<li><a href="#训练过程中的region-proposal采样">训练过程中的Region Proposal采样</a>    </li>
+<li><a href="#测试过程中的region-proposal采样">测试过程中的Region Proposal采样</a>   </li>
+<li><a href="#region-proposal采样代码">Region Proposal采样代码</a></li>
+</ul>
+</li>
+<li><a href="#4roi-pooling层">4、RoI Pooling层</a></li>
+<li><a href="#5后续fast-rcnn处理">5、后续Fast-RCNN处理</a><ul>
+<li><a href="#处理流程-1">处理流程</a></li>
+<li><a href="#代码">代码</a></li>
+</ul>
+</li>
+<li><a href="#6总结">6、总结</a></li>
+<li><a href="#7题外话">7、题外话</a></li>
+</ul>
+<h1 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h1><p>&emsp;&emsp;<font size="4">Fast-RCNN通过共享卷积层，极大地提升了整体的运算速度。Selective Search 反倒成为了限制计算效率的瓶颈。Faster-RCNN中使用卷积神经网络取代了Selective Search，这个网络就是<strong>Region Proposal Networks(RPN)</strong>，Faster-RCNN将所有的步骤都包含到一个完整的框架中，真正实现了端对端(end-to-end)的训练。</font></p>
+<hr>
+<h1 id="论文主要贡献"><a href="#论文主要贡献" class="headerlink" title="论文主要贡献"></a>论文主要贡献</h1><ul>
+<li><font size="4">提出RPN，实现了端对端的训练</font></li>
+<li><font size="4">提出了基于anchors的物体检测方法</font>
+
+</li>
+</ul>
+<hr>
+<h1 id="1、网络框架"><a href="#1、网络框架" class="headerlink" title="1、网络框架"></a>1、网络框架</h1><p>&emsp;&emsp;<font size="4">Faster-RCNN总体流程框图如下（点击原图查看大图），通过这个框图我们比较一下Faster-RCNN和SSD的不同：</font></p>
+<ul>
+<li><font size="4">SSD中每一阶段生成的特征图，每个cell都会生成锚框，并且进行类别+边界框回归。</font></li>
+<li><font size="4">Faster-RCNN只对basenet提取出的特征图上生成锚框，并且对该锚框进行二分类（背景 or 有物体）+边界框回归，然后会进行NMS移除相似的结果，这样RPN最后会输出一系列region proposal，将这些region proposal区域从feature map中提取出来即为RoI，之后将会通过RoI pooling，进行真正的类别预测（判断属于哪一类）+边界框回归</font>
+
+</li>
+</ul>
+<p>&emsp;&emsp;<font size="4">可以看出Faster-RCNN之所以被称为two-stage，是由于需要有RPN生成region proposal这一步骤。相比来看SSD可以看做是稠密采样，它对所有生成的锚框进行了预测，而没有进行筛选。</font></p>
+<p>&emsp;&emsp;<font size="4">RPN中还有一些细节操作，比如说采样比例的设置，如何进行预测，这个在后面的部分会详细说明。</font></p>
+<p><img src="https://raw.githubusercontent.com/JJXiangJiaoJun/blog_images/master/faster_rcnn/1.png" alt="图片失效啦~"></p>
+<hr>
+<h1 id="2、RPN-Region-Proposal-Network"><a href="#2、RPN-Region-Proposal-Network" class="headerlink" title="2、RPN(Region Proposal Network)"></a>2、RPN(Region Proposal Network)</h1><h2 id="处理流程"><a href="#处理流程" class="headerlink" title="处理流程"></a>处理流程</h2><p>&emsp;&emsp;<font size="4">RPN在Faster-RCNN中作用为生成<strong>RoI</strong>，RPN的处理流程具体如下，一些细节将在之后介绍：</font></p>
+<ol>
+<li>输入为base_net提取出来的feature map，首先在feature map上生成锚框（anchor），其中每个cell有多个锚框。</li>
+<li>通过一个conv_3x3,stride=1,padding=1的卷积层，进一步提取特征，输出特征图的大小不变，这里称为<strong>rpn_feature</strong>。</li>
+<li>在<strong>rpn_feature</strong>上用<strong>两个1x1卷积层</strong>进行预测输出，分别为每个锚框的二分类分数、每个锚框的坐标偏移量。</li>
+<li>利用上面预测的分数以及偏移量，对锚框（anchor）进行非极大值抑制（NMS）操作，最终输出<strong>RoI候选区域</strong>。</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/JJXiangJiaoJun/blog_images/master/faster_rcnn/2.png" alt="图片失效啦~"></p>
+<h2 id="详细步骤及代码"><a href="#详细步骤及代码" class="headerlink" title="详细步骤及代码"></a>详细步骤及代码</h2><h3 id="在feature-map上生成锚框"><a href="#在feature-map上生成锚框" class="headerlink" title="在feature_map上生成锚框"></a>在feature_map上生成锚框</h3><font size="4">这一步中，会在feature_map每个cell上生成一系列不同大小和宽高比例的锚框。生成锚框的方式如下：</font>
+1. 选定一个锚框的基准大小，记为base，比如为16
+2. 选定一组宽高比例(aspect ratios)，比如为【0.5、1、2】
+3. 选定一组大小比例(scales)，比如为【16、32、64】
+4. 那么 **每个cell** 将会生成ratios*scales个锚框，而每个锚框的形状大小的计算公式如下：
+
+
+    $$ width_{anchor} = size_{base} \times scale \times \sqrt{ 1 / ratio}$$  
+    $$   height_{anchor} = size_{base} \times scale \times \sqrt{ratio}$$
+
+    <font size="4">举个例子，我们按照论文中取3种大小比例以及3种长宽比例，那么每个cell生成的锚框个数为$k=9$，而假设我们的特征图大小为$W\times H=2400$，那么我们一共生成了$WHk$个锚框。可以看到，生成的锚框数量非常多，有大量的重复区域。RPN输出时不应该使用所有锚框，所以采用NMS    来去除大量重复的锚框，而只选择一些得分较高的锚框作为RoI输出。其实，RPN在训练时也进行了采样，这个后面具体介绍。RPN生成的锚框如下图所示：</font>
+
+<p><img src="https://raw.githubusercontent.com/JJXiangJiaoJun/blog_images/master/faster_rcnn/3.png" alt="Fig.1 锚框的生成示意图"></p>
+<font size="4">MXNet中，生成锚框的类源码如下所示：</font>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RPNAnchorGenerator</span><span class="params">(gluon.Block)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    @输入参数</span></span><br><span class="line"><span class="string">    stride:int              </span></span><br><span class="line"><span class="string">        特征图的每个像素感受野大小，通常为原图和特征图尺寸比例</span></span><br><span class="line"><span class="string">    base_size:int           </span></span><br><span class="line"><span class="string">        默认大小</span></span><br><span class="line"><span class="string">    ratios:int              </span></span><br><span class="line"><span class="string">        宽高比</span></span><br><span class="line"><span class="string">    scales:int              </span></span><br><span class="line"><span class="string">        大小比例</span></span><br><span class="line"><span class="string">        </span></span><br><span class="line"><span class="string">        每个锚框为   width = base_size*size/sqrt(ratio)  </span></span><br><span class="line"><span class="string">                    height = base_size*size*sqrt(ratio)</span></span><br><span class="line"><span class="string">        </span></span><br><span class="line"><span class="string">    alloc_size:(int,int)          </span></span><br><span class="line"><span class="string">        默认的特征图大小(H,W)，以后每次生成直接索引切片</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, stride, base_size, ratios, scales, alloc_size, **kwargs)</span>:</span></span><br><span class="line">        super(RPNAnchorGenerator, self).__init__(**kwargs)</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> base_size:</span><br><span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">"Invalid base_size: &#123;&#125;"</span>.format(base_size))</span><br><span class="line">        <span class="comment"># 防止非法输入</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> isinstance(ratios, (tuple, list)):</span><br><span class="line">            ratios = [ratios]</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> isinstance(scales, (tuple, list)):</span><br><span class="line">            scales = [scales]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 每个像素的锚框数</span></span><br><span class="line">        self._num_depth = len(ratios) * len(scales)</span><br><span class="line">        <span class="comment"># 预生成锚框</span></span><br><span class="line">        anchors = self._generate_anchors(stride, base_size, ratios, scales, alloc_size)</span><br><span class="line">        self.anchors = self.params.get_constant(<span class="string">'anchor_'</span>, anchors)</span><br><span class="line"></span><br><span class="line"><span class="meta">    @property</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">num_depth</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self._num_depth</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_generate_anchors</span><span class="params">(self, stride, base_size, ratios, scales, alloc_size)</span>:</span></span><br><span class="line">        <span class="comment"># 计算中心点坐标</span></span><br><span class="line">        px, py = (base_size - <span class="number">1</span>) * <span class="number">0.5</span>, (base_size - <span class="number">1</span>) * <span class="number">0.5</span></span><br><span class="line">        base_sizes = []</span><br><span class="line">        <span class="keyword">for</span> r <span class="keyword">in</span> ratios:</span><br><span class="line">            <span class="keyword">for</span> s <span class="keyword">in</span> scales:</span><br><span class="line">                size = base_size * base_size / r</span><br><span class="line">                ws = np.round(np.sqrt(size))</span><br><span class="line">                w = (ws * s - <span class="number">1</span>) * <span class="number">0.5</span></span><br><span class="line">                h = (np.round(ws * r) * s - <span class="number">1</span>) * <span class="number">0.5</span></span><br><span class="line">                base_sizes.append([px - w, py - h, px + w, py + h])</span><br><span class="line">        <span class="comment"># 每个像素的锚框</span></span><br><span class="line">        base_sizes = np.array(base_sizes)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 下面进行偏移量的生成</span></span><br><span class="line">        width, height = alloc_size</span><br><span class="line">        offset_x = np.arange(<span class="number">0</span>, width * stride, stride)</span><br><span class="line">        offset_y = np.arange(<span class="number">0</span>, height * stride, stride)</span><br><span class="line">        offset_x, offset_y = np.meshgrid(offset_x, offset_x)</span><br><span class="line">        <span class="comment"># 生成(H*W,4)</span></span><br><span class="line">        offset = np.stack((offset_x.ravel(), offset_y.ravel(),</span><br><span class="line">                           offset_x.ravel(), offset_y.ravel()), axis=<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 下面广播到每一个anchor中    (1,N,4) + (M,1,4)</span></span><br><span class="line">        anchors = base_sizes.reshape((<span class="number">1</span>, <span class="number">-1</span>, <span class="number">4</span>)) + offset.reshape((<span class="number">-1</span>, <span class="number">1</span>, <span class="number">4</span>))</span><br><span class="line">        anchors = anchors.reshape((<span class="number">1</span>, <span class="number">1</span>, width, height, <span class="number">-1</span>)).astype(np.float32)</span><br><span class="line">        <span class="keyword">return</span> anchors</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 对原始生成的锚框进行切片操作</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        <span class="comment"># 切片索引</span></span><br><span class="line">        anchors = self.anchors.value</span><br><span class="line">        a = nd.slice_like(anchors, x * <span class="number">0</span>, axes=(<span class="number">2</span>, <span class="number">3</span>))</span><br><span class="line">        <span class="keyword">return</span> a.reshape((<span class="number">1</span>, <span class="number">-1</span>, <span class="number">4</span>))</span><br></pre></td></tr></table></figure>
+<h3 id="用conv3x3卷积进一步提取特征图"><a href="#用conv3x3卷积进一步提取特征图" class="headerlink" title="用conv3x3卷积进一步提取特征图"></a>用conv3x3卷积进一步提取特征图</h3><p>&emsp;&emsp;<font size="4">这一步中就是RPN进一步抽取特征，生成的RPN-feature map提供给之后的类别预测和回归预测。该步骤中使用的是<code>kernel_size=3x3，strides=1,padding=1,Activation=&#39;relu&#39;</code>的卷积层，不改变特征图的尺寸，这也是为了之后的1x1卷积层预测时，空间位置能够一一对应，而用通道数来表示预测的类别分数和偏移量。这一步的代码很简单，就是单独的构建了一个<code>3x3 Conv2D</code>的卷积层。</font></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># 第一个提取特征的3x3卷积</span></span><br><span class="line">self.conv1 = nn.Sequential()</span><br><span class="line">self.conv1.add(nn.Conv2D(channels, kernel_size=<span class="number">3</span>, strides=<span class="number">1</span>, padding=<span class="number">1</span>, </span><br><span class="line">						 weight_initializer=weight_initializer), nn.Activation(<span class="string">'relu'</span>))</span><br></pre></td></tr></table></figure>
+<h3 id="用1x1卷积层进行二分类预测以及边界框回归预测"><a href="#用1x1卷积层进行二分类预测以及边界框回归预测" class="headerlink" title="用1x1卷积层进行二分类预测以及边界框回归预测"></a>用1x1卷积层进行二分类预测以及边界框回归预测</h3><p>&emsp;&emsp;<font size="4">我们在第一步中生成了固定的默认锚框，这一步我们需要用两个1x1卷积层对<strong>每个锚框</strong>分别预测（1）类别分数（背景or物体）$score$（2）锚框偏移量$offset$。而这些预测值$score、offset$将用于后面的NMS操作，可以去除一些得分低，或者有大量重复区域的锚框，从而最终输出良好的Region Proposal给后面网络进行处理。</font></p>
+<ul>
+<li><font size="4">类别分数$score$，RPN中只关心是否有物体，所以是个二分类问题（背景、物体）。</font></li>
+<li><font size="4">锚框的坐标偏移量$offset$，一般为4个值，$\boldsymbol\Delta xcenter、\boldsymbol\Delta ycenter、\boldsymbol\Delta width、\boldsymbol\Delta height$。</font>
+
+</li>
+</ul>
+<p>&emsp;&emsp;<font size="4">上面介绍了，两个1x1卷积层的输入为RPN-feature map，1x1卷积并不改变特征图尺寸，我们采用通道数来表示对应cell锚框的预测值。假设输入RPN-feature map 形状为$(C，H，W)$,每个cell生成了$k$个锚框。输出的锚框分数和偏移量在空间位置上一一对应（也就是尺寸不变）。</font></p>
+<ul>
+<li>类别分数，输出通道应为$(k\times2,H,W)$，不同通道表示每个类别的分数</li>
+<li>偏移量预测，输出通道应为$(k\times4,H,W)$，不同通道表示锚框的坐标偏移量</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/JJXiangJiaoJun/blog_images/master/faster_rcnn/4.png" alt="图片失效啦~"></p>
+<p>&emsp;&emsp;<font size="4">代码很简单，就是添加两个卷积层并前向运算：</font></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 预测偏移量和预测类别的卷积层</span></span><br><span class="line"> <span class="comment"># 使用sigmoid预测，减少通道数</span></span><br><span class="line"> self.score = nn.Conv2D(anchor_depth, kernel_size=<span class="number">1</span>, strides=<span class="number">1</span>, padding=<span class="number">0</span>,</span><br><span class="line">                        weight_initializer=weight_initializer)</span><br><span class="line"> self.loc = nn.Conv2D(anchor_depth * <span class="number">4</span>, kernel_size=<span class="number">1</span>, strides=<span class="number">1</span>, padding=<span class="number">0</span>,</span><br><span class="line">                      weight_initializer=weight_initializer)</span><br></pre></td></tr></table></figure>
+<h3 id="使用预测的score和offset对锚框处理，输出Region-Proposal"><a href="#使用预测的score和offset对锚框处理，输出Region-Proposal" class="headerlink" title="使用预测的score和offset对锚框处理，输出Region Proposal"></a>使用预测的score和offset对锚框处理，输出Region Proposal</h3><p>&emsp;&emsp;<font size="4">上面的步骤中，我们会对feature map的每个cell都生成多个锚框，并且预测$score、offset$，我们生成了$WHk$个锚框（大约有2W个），不难想象，大量的锚框其实都是背景，而且有着大量的重叠锚框，我们不可能将所有的锚框都当做Region Proposal输出给RoI Pooling层，提供给Fast-RCNN进行后面的进一步运算。第一个原因是会造成计算量过大，第二个原因是大量的背景框，重复的锚框是没有意义的，我们应该输出得分最高的<strong>topk</strong>个锚框。最后一步的Region Proposal具体处理过程如下：</font></p>
+<ul>
+<li>将上一步预测的偏移量加到生成的默认锚框中，我们把这些区域称作RoI</li>
+<li>对超出图像边界的RoI进行剪切，保证所有RoI都在原始图像内部</li>
+<li>丢弃小于我们设定最小尺寸的锚框</li>
+<li>根据我们预测的$score$，对RoI进行<strong>非极大值抑制操作（NMS）</strong>，去除得分较低以及重复区域的RoI</li>
+<li>最后我们选择得分为topk的RoI输出，作为最终输出的Region Proposal（比如说前2000个）</li>
+</ul>
+<p>&emsp;&emsp;<font size="4">通过这一步，我们筛选出了置信度最高的Region Proposal，也就是我们认为最有可能有物体的区域，输入到后面的Fast-RCNN网络中，进行最终的分类以及再一次的边界框回归预测。MXNet GluonCV 中生成Region Proposal的类源码如下：</font></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RPNProposal</span><span class="params">(gluon.Block)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    @:parameter</span></span><br><span class="line"><span class="string">    ------------------</span></span><br><span class="line"><span class="string">    clip : float</span></span><br><span class="line"><span class="string">        如果提供，将bbox剪切到这个值</span></span><br><span class="line"><span class="string">    num_thresh : float</span></span><br><span class="line"><span class="string">        nms的阈值，用于去除重复的框</span></span><br><span class="line"><span class="string">   train_pre_nms : int</span></span><br><span class="line"><span class="string">        训练时对前 train_pre_nms 进行 NMS操作</span></span><br><span class="line"><span class="string">    train_post_nms : int</span></span><br><span class="line"><span class="string">        训练时进行NMS后，返回前 train_post_nms 个region proposal</span></span><br><span class="line"><span class="string">    test_pre_nms : int</span></span><br><span class="line"><span class="string">        测试时对前 test_pre_nms 进行 NMS操作</span></span><br><span class="line"><span class="string">    test_post_nms : int</span></span><br><span class="line"><span class="string">        测试时进行NMS后，返回前 test_post_nms 个region proposal</span></span><br><span class="line"><span class="string">    min_size : int</span></span><br><span class="line"><span class="string">        小于 min_size 的 proposal将会被舍弃</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    stds : tuple of int </span></span><br><span class="line"><span class="string">        计算偏移量用的标准差</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, clip, nms_thresh, train_pre_nms, train_post_nms,</span></span></span><br><span class="line"><span class="function"><span class="params">                 test_pre_nms, test_post_nms, min_size, stds, **kwargs)</span>:</span></span><br><span class="line">        super(RPNProposal, self).__init__(**kwargs)</span><br><span class="line">        self._clip = clip</span><br><span class="line">        self._nms_thresh = nms_thresh</span><br><span class="line">        self._train_pre_nms = train_pre_nms</span><br><span class="line">        self._train_post_nms = train_post_nms</span><br><span class="line">        self._test_pre_nms = test_pre_nms</span><br><span class="line">        self._test_post_nms = test_post_nms</span><br><span class="line">        self._min_size = min_size</span><br><span class="line">        self._bbox_decoder = NormalizedBoxCenterDecoder(stds=stds, clip=clip)</span><br><span class="line">        self._cliper = BBoxClipToImage()</span><br><span class="line">        self._bbox_tocenter = BBoxCornerToCenter(axis=<span class="number">-1</span>, split=<span class="keyword">False</span>)</span><br><span class="line"></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    @:parameter</span></span><br><span class="line"><span class="string">    scores : （B,N,1) </span></span><br><span class="line"><span class="string">        通过RPN预测的得分输出(sigmoid之后) (0,1)</span></span><br><span class="line"><span class="string">    offsets : ndarray (B,N,4)</span></span><br><span class="line"><span class="string">        通过RPN预测的锚框偏移量</span></span><br><span class="line"><span class="string">    anchors : ndarray (B,N,4)</span></span><br><span class="line"><span class="string">        生成的默认锚框，坐标编码方式为 Corner</span></span><br><span class="line"><span class="string">    img : ndarray (B,C,H,W)</span></span><br><span class="line"><span class="string">        图像的张量，用来剪切锚框</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    @:returns</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, scores, offsets, anchors, img)</span>:</span></span><br><span class="line">        <span class="comment"># 训练和预测的处理流程不同</span></span><br><span class="line">        <span class="keyword">if</span> autograd.is_training():</span><br><span class="line">            pre_nms = self._train_pre_nms</span><br><span class="line">            post_nms = self._train_post_nms</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            pre_nms = self._test_pre_nms</span><br><span class="line">            post_nms = self._test_post_nms</span><br><span class="line">        <span class="keyword">with</span> autograd.pause():</span><br><span class="line">            <span class="comment"># 将预测的偏移量加到anchors中</span></span><br><span class="line">            rois = self._bbox_decoder(offsets, self._bbox_tocenter(anchors))</span><br><span class="line">            rois = self._cliper(rois, img)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 下面将所有尺寸小于设定最小值的ROI去除</span></span><br><span class="line">            x_min, y_min, x_max, y_max = nd.split(rois, num_outputs=<span class="number">4</span>, axis=<span class="number">-1</span>)</span><br><span class="line">            width = x_max - x_min</span><br><span class="line">            height = y_max - y_min</span><br><span class="line">            invalid_mask = (width &lt; self._min_size) + (height &lt; self._min_size)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 将对应位置的score 设为-1</span></span><br><span class="line">            scores = nd.where(invalid_mask, nd.ones_like(scores) * <span class="number">-1</span>, scores)</span><br><span class="line">            invalid_mask = nd.repeat(invalid_mask, repeats=<span class="number">4</span>, axis=<span class="number">-1</span>)</span><br><span class="line">            rois = nd.where(invalid_mask, nd.ones_like(rois) * <span class="number">-1</span>, rois)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 下面进行NMS操作</span></span><br><span class="line">            pre = nd.concat(scores, rois, dim=<span class="number">-1</span>)</span><br><span class="line">            pre = nd.contrib.box_nms(pre, overlap_thresh=self._nms_thresh, topk=pre_nms,</span><br><span class="line">                                     coord_start=<span class="number">1</span>, score_index=<span class="number">0</span>, id_index=<span class="number">-1</span>, force_suppress=<span class="keyword">True</span>)</span><br><span class="line">            <span class="comment"># 下面进行采样</span></span><br><span class="line">            result = nd.slice_axis(pre,axis=<span class="number">1</span>, begin=<span class="number">0</span>, end=post_nms)</span><br><span class="line">            rpn_score = nd.slice_axis(result, axis=<span class="number">-1</span>, begin=<span class="number">0</span>, end=<span class="number">1</span>)</span><br><span class="line">            rpn_bbox = nd.slice_axis(result, axis=<span class="number">-1</span>, begin=<span class="number">1</span>, end=<span class="keyword">None</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> rpn_score, rpn_bbox</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;<font size="4">RPN最终输出的Region Proposal 如图所示，去除了大量的重复锚框，和得分低的背景区域：</font></p>
+<p><img src="https://raw.githubusercontent.com/JJXiangJiaoJun/blog_images/master/faster_rcnn/5.png" alt="图片失效啦~"></p>
+<h3 id="RPN整体代码"><a href="#RPN整体代码" class="headerlink" title="RPN整体代码"></a>RPN整体代码</h3><p>&emsp;&emsp;RPN的处理流程如上所述，下面是RPN层的整体代码：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 定义RPN网络</span></span><br><span class="line"><span class="comment"># RPN网络输出应为一系列 region proposal  默认为 2000个</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RPN</span><span class="params">(nn.Block)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    @输入参数</span></span><br><span class="line"><span class="string">    channels : int</span></span><br><span class="line"><span class="string">        卷积层的输出通道</span></span><br><span class="line"><span class="string">    stride:int              </span></span><br><span class="line"><span class="string">        特征图的每个像素感受野大小，通常为原图和特征图尺寸比例</span></span><br><span class="line"><span class="string">    base_size:int           </span></span><br><span class="line"><span class="string">        默认大小</span></span><br><span class="line"><span class="string">    ratios:int              </span></span><br><span class="line"><span class="string">        宽高比</span></span><br><span class="line"><span class="string">    scales:int              </span></span><br><span class="line"><span class="string">        大小比例</span></span><br><span class="line"><span class="string">        </span></span><br><span class="line"><span class="string">        每个锚框为   width = base_size*size/sqrt(ratio)  </span></span><br><span class="line"><span class="string">                    height = base_size*size*sqrt(ratio)</span></span><br><span class="line"><span class="string">        </span></span><br><span class="line"><span class="string">    alloc_size:(int,int)          </span></span><br><span class="line"><span class="string">        默认的特征图大小(H,W)，以后每次生成直接索引切片</span></span><br><span class="line"><span class="string">        </span></span><br><span class="line"><span class="string">    clip : float</span></span><br><span class="line"><span class="string">        如果设置则将边界框剪切到该值</span></span><br><span class="line"><span class="string">    nms_thresh : float</span></span><br><span class="line"><span class="string">        非极大值抑制的阈值</span></span><br><span class="line"><span class="string">    train_pre_nms : int</span></span><br><span class="line"><span class="string">        训练时对前 train_pre_nms 进行 NMS操作</span></span><br><span class="line"><span class="string">    train_post_nms : int</span></span><br><span class="line"><span class="string">        训练时进行NMS后，返回前 train_post_nms 个region proposal</span></span><br><span class="line"><span class="string">    test_pre_nms : int</span></span><br><span class="line"><span class="string">        测试时对前 test_pre_nms 进行 NMS操作</span></span><br><span class="line"><span class="string">    test_post_nms : int</span></span><br><span class="line"><span class="string">        测试时进行NMS后，返回前 test_post_nms 个region proposal</span></span><br><span class="line"><span class="string">    min_size : int</span></span><br><span class="line"><span class="string">        小于 min_size 的 proposal将会被舍弃</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, channels, stride, base_size, ratios,</span></span></span><br><span class="line"><span class="function"><span class="params">                 scales, alloc_size, clip, nms_thresh,</span></span></span><br><span class="line"><span class="function"><span class="params">                 train_pre_nms, train_post_nms, test_pre_nms, test_post_nms</span></span></span><br><span class="line"><span class="function"><span class="params">                 , min_size, **kwargs)</span>:</span></span><br><span class="line">        super(RPN, self).__init__(**kwargs)</span><br><span class="line">        weight_initializer = mx.init.Normal(sigma=<span class="number">0.01</span>)</span><br><span class="line">        <span class="comment"># 锚框生成器</span></span><br><span class="line">        self._anchor_generator = RPNAnchorGenerator(stride, base_size, ratios, scales, alloc_size)</span><br><span class="line">        anchor_depth = self._anchor_generator.num_depth</span><br><span class="line">        self._rpn_proposal = RPNProposal(clip, nms_thresh, train_pre_nms,</span><br><span class="line">                                         train_post_nms, test_pre_nms, test_post_nms, min_size, stds=(<span class="number">1.</span>, <span class="number">1.</span>, <span class="number">1.</span>, <span class="number">1.</span>))</span><br><span class="line">        <span class="comment"># 第一个提取特征的3x3卷积</span></span><br><span class="line">        self.conv1 = nn.Sequential()</span><br><span class="line">        self.conv1.add(nn.Conv2D(channels, kernel_size=<span class="number">3</span>, strides=<span class="number">1</span>, padding=<span class="number">1</span>, weight_initializer=weight_initializer),</span><br><span class="line">                       nn.Activation(<span class="string">'relu'</span>))</span><br><span class="line">        <span class="comment"># 预测偏移量和预测类别的卷积层</span></span><br><span class="line">        <span class="comment"># 使用sigmoid预测，减少通道数</span></span><br><span class="line">        self.score = nn.Conv2D(anchor_depth, kernel_size=<span class="number">1</span>, strides=<span class="number">1</span>, padding=<span class="number">0</span>,</span><br><span class="line">                               weight_initializer=weight_initializer)</span><br><span class="line">        self.loc = nn.Conv2D(anchor_depth * <span class="number">4</span>, kernel_size=<span class="number">1</span>, strides=<span class="number">1</span>, padding=<span class="number">0</span>,</span><br><span class="line">                             weight_initializer=weight_initializer)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 前向运算函数</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x, img)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">         产生锚框，并且对每个锚框进行二分类，以及回归预测</span></span><br><span class="line"><span class="string">        ************************</span></span><br><span class="line"><span class="string">         </span></span><br><span class="line"><span class="string">         注意，这一阶段只是进行了粗采样，在RCNN中还要进行一次采样</span></span><br><span class="line"><span class="string">         </span></span><br><span class="line"><span class="string">         @:parameter</span></span><br><span class="line"><span class="string">          -------------</span></span><br><span class="line"><span class="string">          x : (B,C,H,W）</span></span><br><span class="line"><span class="string">             由basenet提取出的特征图</span></span><br><span class="line"><span class="string">         img : (B,C,H,W）</span></span><br><span class="line"><span class="string">             图像tensor，用来剪切超出边框的锚框</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">         @:returns</span></span><br><span class="line"><span class="string">         -----------------</span></span><br><span class="line"><span class="string">         (1)训练阶段</span></span><br><span class="line"><span class="string">         rpn_score : ndarray (B,train_post_nms,1)</span></span><br><span class="line"><span class="string">             输出的region proposal 分数 (用来给RCNN采样)</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">         rpn_box : ndarray (B,train_post_nms,4)</span></span><br><span class="line"><span class="string">             输出的region proposal坐标 Corner</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">         raw_score : ndarray (B,N,1)</span></span><br><span class="line"><span class="string">             卷积层的原始输出，用来训练RPN</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">         rpn_bbox_pred : ndarray (B,N,4)</span></span><br><span class="line"><span class="string">             卷积层的原始输出，用来训练RPN</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">         anchors : ndarray (1,N,4)</span></span><br><span class="line"><span class="string">             生成的锚框</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">         (2)预测阶段</span></span><br><span class="line"><span class="string">         </span></span><br><span class="line"><span class="string">         rpn_score : ndarray (B,train_post_nms,1)</span></span><br><span class="line"><span class="string">         输出的region proposal 分数 (用来给RCNN采样)</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">         rpn_box : ndarray (B,train_post_nms,4)</span></span><br><span class="line"><span class="string">             输出的region proposal坐标 Corner</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">         """</span></span><br><span class="line">        anchors = self._anchor_generator(x)</span><br><span class="line">        <span class="comment"># 提取特征</span></span><br><span class="line">        feat = self.conv1(x)</span><br><span class="line">        <span class="comment"># 预测</span></span><br><span class="line">        raw_score = self.score(feat)</span><br><span class="line">        raw_score = raw_score.transpose((<span class="number">0</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>)).reshape(<span class="number">0</span>, <span class="number">-1</span>, <span class="number">1</span>)</span><br><span class="line">        rpn_scores = mx.nd.sigmoid(mx.nd.stop_gradient(raw_score))</span><br><span class="line">        rpn_bbox_pred = self.loc(feat)</span><br><span class="line">        rpn_bbox_pred = rpn_bbox_pred.transpose((<span class="number">0</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>)).reshape(<span class="number">0</span>, <span class="number">-1</span>, <span class="number">4</span>)</span><br><span class="line">        <span class="comment"># 下面生成region proposal</span></span><br><span class="line">        rpn_score, rpn_box = self._rpn_proposal(</span><br><span class="line">           rpn_scores, mx.nd.stop_gradient(rpn_bbox_pred), anchors,img)</span><br><span class="line">        <span class="comment"># 处于训练阶段</span></span><br><span class="line">        <span class="keyword">if</span> autograd.is_training():</span><br><span class="line">            <span class="comment"># raw_score, rpn_bbox_pred 用于 RPN 的训练</span></span><br><span class="line">            <span class="keyword">return</span> rpn_score, rpn_box, raw_score, rpn_bbox_pred, anchors</span><br><span class="line">        <span class="comment"># 处于预测阶段</span></span><br><span class="line">        <span class="keyword">return</span> rpn_score, rpn_box</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h1 id="3、对RPN输出的Region-Proposal采样处理"><a href="#3、对RPN输出的Region-Proposal采样处理" class="headerlink" title="3、对RPN输出的Region Proposal采样处理"></a>3、对RPN输出的Region Proposal采样处理</h1><p>&emsp;&emsp;<font size="4">上面说道通过<strong>RPN</strong>层后，我们进行了粗采样，输出了大约2000个Region Proposal，然而我们并不会将这个2000个Region Proposal全部送入RoI Pooling中进行计算，这样效率很低、计算很慢。论文作者对这些Region Proposal进行了<strong>采样处理</strong>，只采样了一小部分的Region Proposal送入之后的网络运算，而且训练过程的采样和预测过程的采样是不一样的。下面详细介绍一下处理流程。</font></p>
+<h2 id="训练过程中的Region-Proposal采样"><a href="#训练过程中的Region-Proposal采样" class="headerlink" title="训练过程中的Region Proposal采样"></a>训练过程中的Region Proposal采样</h2><p><img src="https://raw.githubusercontent.com/JJXiangJiaoJun/blog_images/master/faster_rcnn/6.png" alt="图片失效啦~"></p>
+<font size="4">&emsp;&emsp;训练过程的采样在Fast-RCNN论文中有提到，由于要考虑训练过程中**正负样本均衡**的问题，最终输出了128个Region Proposal，其中正样本的比例为0.25。正负样本的定义如下：</font>
+* 如果一个Region Proposal与任意一个ground truth的 IoU 大于设定阈值（默认为0.5），那么标记其为正样本，否则为负样本。
+
+* &emsp;&emsp;将所有Region Proposal打上标记后，进行随机采样，其中采样正样本的比例为0.25，其余的为负样本。最终采样输出128个Region Proposal，送入之后的网络进行处理计算。
+
+
+## 测试过程中的Region Proposal采样
+<font size="4">&emsp;&emsp;测试过程中的采样很简单，直接采样Region Proposal中，$scores$为前topk个（比如300）的样本，目的就是提取最有可能为物体的区域输入到后面的网络了。</font>
+
+<h2 id="Region-Proposal采样代码"><a href="#Region-Proposal采样代码" class="headerlink" title="Region Proposal采样代码"></a>Region Proposal采样代码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RCNNTargetSampler</span><span class="params">(gluon.Block)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    @:parameter</span></span><br><span class="line"><span class="string">    ------------</span></span><br><span class="line"><span class="string">    num_images : int</span></span><br><span class="line"><span class="string">        每个batch的图片数，目前仅支持1</span></span><br><span class="line"><span class="string">    num_inputs : int</span></span><br><span class="line"><span class="string">        输入的RoI 数量</span></span><br><span class="line"><span class="string">    num_samples : int</span></span><br><span class="line"><span class="string">        输出的采样 RoI 数量</span></span><br><span class="line"><span class="string">    pos_thresh : float</span></span><br><span class="line"><span class="string">        正类样本阈值</span></span><br><span class="line"><span class="string">        </span></span><br><span class="line"><span class="string">    pos_ratio : float</span></span><br><span class="line"><span class="string">        采样正样本的比例</span></span><br><span class="line"><span class="string">        </span></span><br><span class="line"><span class="string">    max_gt_box : int</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, num_images, num_inputs, num_samples, pos_thresh, pos_ratio, max_gt_box, **kwargs)</span>:</span></span><br><span class="line">        super(RCNNTargetSampler, self).__init__(**kwargs)</span><br><span class="line">        self._num_images = num_images</span><br><span class="line">        self._num_inputs = num_inputs</span><br><span class="line">        self._num_samples = num_samples</span><br><span class="line">        self._pos_thresh = pos_thresh</span><br><span class="line">        self._pos_ratios = pos_ratio</span><br><span class="line">        self._max_pos = int(np.round(num_samples * pos_ratio))</span><br><span class="line">        self._max_gt_box = max_gt_box</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, rois, scores, gt_bboxes)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        @:parameter</span></span><br><span class="line"><span class="string">        -----------</span></span><br><span class="line"><span class="string">        rois : ndarray (B,self._num_inputs,4)</span></span><br><span class="line"><span class="string">            RPN输出的roi区域坐标，Corner</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        scores : ndarray (B,self._num_inputs,1)</span></span><br><span class="line"><span class="string">            RPN输出的roi区域分数，(0,1) -1表示忽略</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        gt_bboxes:ndarray (B,M,4)</span></span><br><span class="line"><span class="string">            ground truth box 坐标</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        @:returns</span></span><br><span class="line"><span class="string">        -----------</span></span><br><span class="line"><span class="string">        new_rois : ndarray (B,self._num_samples,4)</span></span><br><span class="line"><span class="string">            采样后的RoI区域</span></span><br><span class="line"><span class="string">        new_samples : ndarray (B,self._num_samples,1)</span></span><br><span class="line"><span class="string">            采样后RoI区域的标签 1:pos -1:neg 0:ignore</span></span><br><span class="line"><span class="string">        new_matches : ndarray (B,self._num_samples,1)</span></span><br><span class="line"><span class="string">            采样后的RoI匹配的锚框编号 [0,M)</span></span><br><span class="line"><span class="string">        </span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line"></span><br><span class="line">        new_rois, new_samples, new_matches = [], [], []</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 对每个batch分别进行处理</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(self._num_images):</span><br><span class="line">            roi = nd.squeeze(nd.slice_axis(rois, axis=<span class="number">0</span>, begin=i, end=i + <span class="number">1</span>), axis=<span class="number">0</span>)</span><br><span class="line">            score = nd.squeeze(nd.slice_axis(scores, axis=<span class="number">0</span>, begin=i, end=i + <span class="number">1</span>), axis=<span class="number">0</span>)</span><br><span class="line">            gt_bbox = nd.squeeze(nd.slice_axis(gt_bboxes, axis=<span class="number">0</span>, begin=i, end=i + <span class="number">1</span>), axis=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 将ground truth的分数设置为1 形状为(M,1)</span></span><br><span class="line">            gt_score = nd.ones_like(nd.sum(gt_bbox, axis=<span class="number">-1</span>, keepdims=<span class="keyword">True</span>))</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 将ground truth 和 roi 拼接 (N+M,4) (N+m,1)</span></span><br><span class="line">            roi = nd.concat(roi, gt_bbox, dim=<span class="number">0</span>)</span><br><span class="line">            score = nd.concat(score, gt_score, dim=<span class="number">0</span>).squeeze(axis=<span class="number">-1</span>)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 计算iou   (N+M,M)</span></span><br><span class="line">            iou = nd.contrib.box_iou(roi, gt_bbox, format=<span class="string">'corner'</span>)</span><br><span class="line">            <span class="comment"># (N+M,)</span></span><br><span class="line">            iou_max = nd.max(iou, axis=<span class="number">-1</span>)</span><br><span class="line">            <span class="comment"># (N+M,)  与哪个ground truth 匹配</span></span><br><span class="line">            iou_argmax = nd.argmax(iou, axis=<span class="number">-1</span>)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 将所有的标记为 2 neg</span></span><br><span class="line">            mask = nd.ones_like(iou_argmax) * <span class="number">2</span></span><br><span class="line">            <span class="comment"># 标记ignore 为 0</span></span><br><span class="line">            mask = nd.where(score &lt; <span class="number">0</span>, nd.zeros_like(mask), mask)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 将正类标记为 3 pos</span></span><br><span class="line">            pos_idx = (iou_max &gt;= self._pos_thresh)</span><br><span class="line"></span><br><span class="line">            mask = nd.where(pos_idx, nd.ones_like(mask) * <span class="number">3</span>, mask)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 下面进行shuffle操作</span></span><br><span class="line">            rand = nd.random.uniform(<span class="number">0</span>, <span class="number">1</span>, shape=(self._num_inputs + self._max_gt_box,))</span><br><span class="line">            <span class="comment"># 取前面 N+M 个 对mask 做shuffle操作</span></span><br><span class="line">            rand = nd.slice_like(rand, mask)</span><br><span class="line">            <span class="comment"># shuffle 操作后的 index</span></span><br><span class="line">            index = nd.argsort(rand)</span><br><span class="line">            <span class="comment"># 将三个结果进行shuffle</span></span><br><span class="line">            mask = nd.take(mask, index)</span><br><span class="line">            iou_argmax = nd.take(iou_argmax, index)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 下面进行采样</span></span><br><span class="line">            <span class="comment"># 排序 3:pos 2:neg 0:ignore</span></span><br><span class="line">            order = nd.argsort(mask, is_ascend=<span class="keyword">False</span>)</span><br><span class="line">            <span class="comment"># 取topk个作为正例</span></span><br><span class="line">            topk = nd.slice_axis(order, axis=<span class="number">0</span>, begin=<span class="number">0</span>, end=self._max_pos)</span><br><span class="line">            <span class="comment"># 下面取出相对应的值</span></span><br><span class="line">            pos_indices = nd.take(index, topk)</span><br><span class="line">            pos_samples = nd.take(mask, topk)</span><br><span class="line">            pos_matches = nd.take(iou_argmax, topk)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 下面将原来的标签改了</span></span><br><span class="line">            pos_samples = nd.where(pos_samples == <span class="number">3</span>, nd.ones_like(pos_samples), pos_samples)</span><br><span class="line">            pos_samples = nd.where(pos_samples == <span class="number">2</span>, nd.ones_like(pos_samples) * <span class="number">-1</span>, pos_samples)</span><br><span class="line"></span><br><span class="line">            index = nd.slice_axis(index, axis=<span class="number">0</span>, begin=self._max_pos, end=<span class="keyword">None</span>)</span><br><span class="line">            mask = nd.slice_axis(mask, axis=<span class="number">0</span>, begin=self._max_pos, end=<span class="keyword">None</span>)</span><br><span class="line">            iou_argmax = nd.slice_axis(iou_argmax, axis=<span class="number">0</span>, begin=self._max_pos, end=<span class="keyword">None</span>)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 对负样本进行采样</span></span><br><span class="line">            <span class="comment"># neg 2----&gt;4</span></span><br><span class="line">            mask = nd.where(mask == <span class="number">2</span>, nd.ones_like(mask) * <span class="number">4</span>, mask)</span><br><span class="line">            order = nd.argsort(mask, is_ascend=<span class="keyword">False</span>)</span><br><span class="line">            num_neg = self._num_samples - self._max_pos</span><br><span class="line">            bottomk = nd.slice_axis(order, axis=<span class="number">0</span>, begin=<span class="number">0</span>, end=num_neg)</span><br><span class="line"></span><br><span class="line">            neg_indices = nd.take(index, bottomk)</span><br><span class="line">            neg_samples = nd.take(mask, bottomk)</span><br><span class="line">            neg_matches = nd.take(iou_argmax, topk)</span><br><span class="line"></span><br><span class="line">            neg_samples = nd.where(neg_samples == <span class="number">3</span>, nd.ones_like(neg_samples), neg_samples)</span><br><span class="line">            neg_samples = nd.where(neg_samples == <span class="number">4</span>, nd.ones_like(neg_samples) * <span class="number">-1</span>, neg_samples)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 输出</span></span><br><span class="line">            new_idx = nd.concat(pos_indices, neg_indices, dim=<span class="number">0</span>)</span><br><span class="line">            new_sample = nd.concat(pos_samples, neg_samples, dim=<span class="number">0</span>)</span><br><span class="line">            new_match = nd.concat(pos_matches, neg_matches, dim=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">            new_rois.append(roi.take(new_idx))</span><br><span class="line">            new_samples.append(new_sample)</span><br><span class="line">            new_matches.append(new_match)</span><br><span class="line"></span><br><span class="line">        new_rois = nd.stack(*new_rois, axis=<span class="number">0</span>)</span><br><span class="line">        new_samples = nd.stack(*new_samples, axis=<span class="number">0</span>)</span><br><span class="line">        new_matches = nd.stack(*new_matches, axis=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> new_rois, new_samples, new_matches</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="4、RoI-Pooling层"><a href="#4、RoI-Pooling层" class="headerlink" title="4、RoI Pooling层"></a>4、RoI Pooling层</h1><p>&emsp;&emsp;<font size="4">通过上一步的采样后，我们得到了一堆没有class score的Region Proposal，这些Region Proposal是对应于我们第一步base net 提取出来 feature map上的区域。可以从网络图中看到，我们最终将Region Proposal又输出回我们feature map，我们可以将RPN看做是一个额外的中间过程，这也是Faster-RCNN被称为two-stage的原因。由于输出的Region Proposal大小并不一致，而Fast-RCNN最后为全连接层，需要输出固定尺寸的特征，所以<strong>RoI Pooling层的作用就是将这些大小不同的Region Proposal，映射输出为统一大小的特征图</strong>。比如我设置RoI Pooling层的输出大小为(14,14)，那么无论输入的特征图尺寸是什么，输出的特征图均为（14,14）。</font><br><img src="https://raw.githubusercontent.com/JJXiangJiaoJun/blog_images/master/faster_rcnn/7.png" alt="图片失效啦~"></p>
+<p>&emsp;&emsp;<font size="4">代码的话直接使用<code>nd.ROIPooling()</code>就能实现了。</font></p>
+<hr>
+<h1 id="5、后续Fast-RCNN处理"><a href="#5、后续Fast-RCNN处理" class="headerlink" title="5、后续Fast-RCNN处理"></a>5、后续Fast-RCNN处理</h1><h2 id="处理流程-1"><a href="#处理流程-1" class="headerlink" title="处理流程"></a>处理流程</h2><p>&emsp;&emsp;<font size="4">到了这一步我们的处理已经到了尾声了，我们通过RoI Pooling已经得到了固定尺寸的feature map，最后一步就是用Fast-RCNN，进行预测类别分数以及边界框的回归。具体的处理流程如下：</font></p>
+<ol>
+<li>使用卷积层再提取一次特征</li>
+<li>进行全局池化，将特征图尺寸变为(channel，1，1)</li>
+<li>通过两个不同的全连接层，分别预测类别分数和进行坐标回归<ul>
+<li>类别预测全连接层有<strong>num_classes+1</strong>个神经元，其中包括所有类别和背景</li>
+<li>坐标回归全连接层有<strong>4*num_classes</strong>个神经元，它会为每一个类别预测4个坐标回归值$\boldsymbol\Delta xcenter、\boldsymbol\Delta ycenter、\boldsymbol\Delta width、\boldsymbol\Delta height$</li>
+</ul>
+</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/JJXiangJiaoJun/blog_images/master/faster_rcnn/8.png" alt="图片失效啦~"></p>
+<p>&emsp;&emsp;<font size="4">最后如果是测试的话，那么将输入的Region Proposal加上我们预测的偏移量，然后根据预测得分再进行一次NMS操作，那么就可以得到我们最终输出的物体框。并且我们可以设定一个阈值（如0.5），得分大于阈值的物体框我们才进行输出。</font></p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FasterRCNN</span><span class="params">(RCNN)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    @:parameter</span></span><br><span class="line"><span class="string">    -------------</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, features, top_features, classes,</span></span></span><br><span class="line"><span class="function"><span class="params">                 short=<span class="number">600</span>, max_size=<span class="number">1000</span>, train_patterns=None,</span></span></span><br><span class="line"><span class="function"><span class="params">                 nms_thresh=<span class="number">0.3</span>, nms_topk=<span class="number">400</span>, post_nms=<span class="number">100</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">                 roi_mode=<span class="string">'align'</span>, roi_size=<span class="params">(<span class="number">14</span>, <span class="number">14</span>)</span>, stride=<span class="number">16</span>, clip=None,</span></span></span><br><span class="line"><span class="function"><span class="params">                 rpn_channel=<span class="number">1024</span>, base_size=<span class="number">16</span>, scales=<span class="params">(<span class="number">8</span>, <span class="number">16</span>, <span class="number">32</span>)</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">                 ratios=<span class="params">(<span class="number">0.5</span>, <span class="number">1</span>, <span class="number">2</span>)</span>, alloc_size=<span class="params">(<span class="number">128</span>, <span class="number">128</span>)</span>, rpn_nms_thresh=<span class="number">0.7</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">                 rpn_train_pre_nms=<span class="number">12000</span>, rpn_train_post_nms=<span class="number">2000</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">                 rpn_test_pre_nms=<span class="number">6000</span>, rpn_test_post_nms=<span class="number">300</span>, rpn_min_size=<span class="number">16</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">                 num_sample=<span class="number">128</span>, pos_iou_thresh=<span class="number">0.5</span>, pos_ratio=<span class="number">0.25</span>, max_num_gt=<span class="number">300</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">                 **kwargs)</span>:</span></span><br><span class="line"></span><br><span class="line">        super(FasterRCNN, self).__init__(</span><br><span class="line">            features=features, top_features=top_features, classes=classes,</span><br><span class="line">            short=short, max_size=max_size, train_patterns=train_patterns,</span><br><span class="line">            nms_thresh=nms_thresh, nms_topk=nms_topk, post_nms=post_nms,</span><br><span class="line">            roi_mode=roi_mode, roi_size=roi_size, stride=stride, clip=clip, **kwargs)</span><br><span class="line"></span><br><span class="line">        self._max_batch = <span class="number">1</span>  <span class="comment"># 最大支持batch=1</span></span><br><span class="line">        self._num_sample = num_sample</span><br><span class="line">        self._rpn_test_post_nms = rpn_test_post_nms</span><br><span class="line">        self._target_generator = &#123;RCNNTargetGenerator(self.num_class)&#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">with</span> self.name_scope():</span><br><span class="line">            <span class="comment"># Faster-RCNN的RPN</span></span><br><span class="line">            self.rpn = RPN(</span><br><span class="line">                channels=rpn_channel, stride=stride, base_size=base_size,</span><br><span class="line">                scales=scales, ratios=ratios, alloc_size=alloc_size,</span><br><span class="line">                clip=clip, nms_thresh=rpn_nms_thresh, train_pre_nms=rpn_train_pre_nms,</span><br><span class="line">                train_post_nms=rpn_train_post_nms, test_pre_nms=rpn_test_pre_nms,</span><br><span class="line">                test_post_nms=rpn_test_post_nms, min_size=rpn_min_size)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 用来给训练时Region Proposal采样，正负样本比例为0.25</span></span><br><span class="line">            self.sampler = RCNNTargetSampler(</span><br><span class="line">                num_images=self._max_batch, num_inputs=rpn_train_post_nms,</span><br><span class="line">                num_samples=self._num_sample, pos_thresh=pos_iou_thresh,</span><br><span class="line">                pos_ratio=pos_ratio, max_gt_box=max_num_gt)</span><br><span class="line"></span><br><span class="line"><span class="meta">    @property</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">target_generator</span><span class="params">(self)</span>:</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> list(self._target_generator)[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x, gt_boxes=None)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :param x: ndarray (B,C,H,W)</span></span><br><span class="line"><span class="string">        :return: </span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">_split_box</span><span class="params">(x, num_outputs, axis, squeeze_axis=False)</span>:</span></span><br><span class="line">            a = nd.split(x, axis=axis, num_outputs=num_outputs, squeeze_axis=squeeze_axis)</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> isinstance(a, (list, tuple)):</span><br><span class="line">                <span class="keyword">return</span> [a]</span><br><span class="line">            <span class="keyword">return</span> a</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 首先用basenet抽取特征</span></span><br><span class="line">        feat = self.features(x)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 输入RPN网络</span></span><br><span class="line">        <span class="keyword">if</span> autograd.is_training():</span><br><span class="line">            <span class="comment"># 训练过程</span></span><br><span class="line">            rpn_score, rpn_box, raw_rpn_score, raw_rpn_box, anchors = self.rpn(feat, nd.zeros_like(x))</span><br><span class="line">            <span class="comment"># 采样输出</span></span><br><span class="line">            rpn_box, samples, matches = self.sampler(rpn_box, rpn_score, gt_boxes)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># 预测过程</span></span><br><span class="line">            <span class="comment"># output shape (B,N,4)</span></span><br><span class="line">            _, rpn_box = self.rpn(feat, x)</span><br><span class="line">        <span class="comment"># 对输出的Region Proposal 进行采样</span></span><br><span class="line">        <span class="comment"># 输出送到后面运算的RoI</span></span><br><span class="line">        <span class="comment"># rois shape = (B,self._num_sampler,4),</span></span><br><span class="line"></span><br><span class="line">        num_roi = self._num_sample <span class="keyword">if</span> autograd.is_training() <span class="keyword">else</span> self._rpn_test_post_nms</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 将rois变为2D，加上batch_index</span></span><br><span class="line">        <span class="keyword">with</span> autograd.pause():</span><br><span class="line">            roi_batchid = nd.arange(<span class="number">0</span>, self._max_batch, repeat=num_roi)</span><br><span class="line"></span><br><span class="line">            rpn_roi = nd.concat(*[roi_batchid.reshape((<span class="number">-1</span>, <span class="number">1</span>)), rpn_box.reshape((<span class="number">-1</span>, <span class="number">4</span>))], dim=<span class="number">-1</span>)</span><br><span class="line">            rpn_roi = nd.stop_gradient(rpn_roi)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># RoI Pooling 层</span></span><br><span class="line">        <span class="keyword">if</span> self._roi_mode == <span class="string">'pool'</span>:</span><br><span class="line">            <span class="comment"># (Batch*num_roi,channel,H,W)</span></span><br><span class="line">            pool_feat = nd.ROIPooling(feat, rpn_roi, self._roi_size, <span class="number">1</span> / self._stride)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">elif</span> self._roi_mode == <span class="string">'align'</span>:</span><br><span class="line">            pool_feat = nd.contrib.ROIAlign(feat, rpn_roi, self._roi_size,</span><br><span class="line">                                            <span class="number">1</span> / self._stride, sample_ratio=<span class="number">2</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">"Invalid roi mode: &#123;&#125;"</span>.format(self._roi_mode))</span><br><span class="line"></span><br><span class="line">        top_feat = self.top_features(pool_feat)</span><br><span class="line">        avg_feat = self.global_avg_pool(top_feat)</span><br><span class="line">        <span class="comment"># 类别预测，回归预测</span></span><br><span class="line">        <span class="comment"># output shape (B*num_roi,(num_cls+1)) -&gt; (B,N,C)</span></span><br><span class="line">        cls_pred = self.class_predictor(avg_feat)</span><br><span class="line">        <span class="comment"># output shape (B*num_roi,(num_cls)*4) -&gt; (B,N,C,4)</span></span><br><span class="line">        box_pred = self.bbox_predictor(avg_feat)</span><br><span class="line"></span><br><span class="line">        cls_pred = cls_pred.reshape((self._max_batch, num_roi, self.num_class + <span class="number">1</span>))</span><br><span class="line">        box_pred = box_pred.reshape((self._max_batch, num_roi, self.num_class, <span class="number">4</span>))</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 训练过程</span></span><br><span class="line">        <span class="keyword">if</span> autograd.is_training():</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> (cls_pred, box_pred, rpn_box, samples, matches,</span><br><span class="line">                    raw_rpn_score, raw_rpn_box, anchors)</span><br><span class="line">        <span class="comment"># 预测过程</span></span><br><span class="line">        <span class="comment"># 还要进行的步骤，将预测的类别和预测的偏移量加到输入的RoI中</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># 直接输出所有类别的信息</span></span><br><span class="line">            <span class="comment"># cls_id (B,N,C) scores(B,N,C)</span></span><br><span class="line">            cls_ids, scores = self.cls_decoder(nd.softmax(cls_pred, axis=<span class="number">-1</span>))</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 将所有的C调换到第一维</span></span><br><span class="line">            <span class="comment"># (B,N,C)  -----&gt; (B,N,C,1) -------&gt; (B,C,N,1)</span></span><br><span class="line">            cls_ids = cls_ids.transpose((<span class="number">0</span>, <span class="number">2</span>, <span class="number">1</span>)).reshape((<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>))</span><br><span class="line">            <span class="comment"># (B,N,C)  -----&gt; (B,N,C,1) -------&gt; (B,C,N,1)</span></span><br><span class="line">            scores = scores.transpose((<span class="number">0</span>, <span class="number">2</span>, <span class="number">1</span>)).reshape((<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>))</span><br><span class="line">            <span class="comment"># (B,N,C,4) -----&gt; (B,C,N,4),</span></span><br><span class="line">            box_pred = box_pred.transpose((<span class="number">0</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">3</span>))</span><br><span class="line"></span><br><span class="line">            rpn_boxes = _split_box(rpn_box, num_outputs=self._max_batch, axis=<span class="number">0</span>, squeeze_axis=<span class="keyword">False</span>)</span><br><span class="line">            cls_ids = _split_box(cls_ids, num_outputs=self._max_batch, axis=<span class="number">0</span>, squeeze_axis=<span class="keyword">True</span>)</span><br><span class="line">            scores = _split_box(scores, num_outputs=self._max_batch, axis=<span class="number">0</span>, squeeze_axis=<span class="keyword">True</span>)</span><br><span class="line">            box_preds = _split_box(box_pred, num_outputs=self._max_batch, axis=<span class="number">0</span>, squeeze_axis=<span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line">            results = []</span><br><span class="line">            <span class="comment"># 对每个batch分别进行decoder nms</span></span><br><span class="line">            <span class="keyword">for</span> cls_id, score, box_pred, rpn_box <span class="keyword">in</span> zip(cls_ids, scores, box_preds, rpn_boxes):</span><br><span class="line">                <span class="comment"># box_pred(C,N,4)   rpn_box(1,N,4)   box (C,N,4)</span></span><br><span class="line">                box = self.box_decoder(box_pred, self.box_to_center(rpn_box))</span><br><span class="line"></span><br><span class="line">                <span class="comment"># cls_id (C,N,1) score (C,N,1) box (C,N,4)</span></span><br><span class="line">                <span class="comment"># result (C,N,6)</span></span><br><span class="line">                res = nd.concat(*[cls_id, score, box], dim=<span class="number">-1</span>)</span><br><span class="line">                <span class="comment"># nms操作 (C,self.nms_topk,6)</span></span><br><span class="line">                res = nd.contrib.box_nms(res, overlap_thresh=self.nms_thresh, valid_thresh=<span class="number">0.0001</span>,</span><br><span class="line">                                         topk=self.nms_topk, coord_start=<span class="number">2</span>, score_index=<span class="number">1</span>, id_index=<span class="number">0</span>,</span><br><span class="line">                                         force_suppress=<span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line">                res = res.reshape((<span class="number">-3</span>, <span class="number">0</span>))</span><br><span class="line">                results.append(res)</span><br><span class="line"></span><br><span class="line">            results = nd.stack(*results, axis=<span class="number">0</span>)</span><br><span class="line">            ids = nd.slice_axis(results, axis=<span class="number">-1</span>, begin=<span class="number">0</span>, end=<span class="number">1</span>)</span><br><span class="line">            scores = nd.slice_axis(results, axis=<span class="number">-1</span>, begin=<span class="number">1</span>, end=<span class="number">2</span>)</span><br><span class="line">            bboxes = nd.slice_axis(results, axis=<span class="number">-1</span>, begin=<span class="number">2</span>, end=<span class="number">6</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 输出为score,bbox</span></span><br><span class="line">        <span class="keyword">return</span> ids, scores, bboxes</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="6、总结"><a href="#6、总结" class="headerlink" title="6、总结"></a>6、总结</h1><p>&emsp;&emsp;<font size="4">总的来说Faster-RCNN主要的改进地方在于用RPN来生成候选区域，使整个预测，训练过程都能用深度学习的方法完成。Faster-RCNN达到了这一系列算法的巅峰，并且在论文中提出的基于anchor的物体检测方法，更是被之后的state-of-the-art的框架广泛采用。Faster-RCNN 在 COCO和PASCAL数据集上都取得了当时最好的成绩，感兴趣的话，具体数据在论文中都有详细提到。Faster-RCNN比SSD处理流程要复杂许多，其中还涉及到非常多的细节，例如如何对anchor进行标记，如何对整个网络进行训练等等，这些我会另外写一篇博客来记录Faster-RCNN的训练过程。</font></p>
+<h1 id="7、题外话"><a href="#7、题外话" class="headerlink" title="7、题外话"></a>7、题外话</h1><p>&emsp;&emsp;<font size="4">Faster-RCNN我也是学习了很久了，从读论文到看源码，最深的一个感受就是“纸上得来终觉浅，绝知此事要躬行”。论文上始终都是宏观的东西，看完之后觉得自己似乎是懂了，但是当写代码时，才会发现有许多许多问题。我想只有当把代码和论文同时完全理解，才能算真正的看懂了吧。现在我的水平还完全不够，还停留在能看懂，稍微改改能用的阶段，如果是一篇新论文，要自己从零开始复现，目前的我还做不到，不过坚持下去多看多想多学多写，每天进步一点点，我想在毕业之前应该能达到我想要的目标吧~</font></p>
+<p>&emsp;&emsp;<font size="4">学习过程中还有一个很深的体会就是多看底层源码，我就是通过看GluonCV中Faster-RCNN源码才理解了论文中的许多细节，总之多向这些优秀的代码学习吧，特别是深度学习框架的一些高级API使用，只有看了源码才会想到，原来代码还可以这样编~</font></p>
+<p>&emsp;&emsp;<font size="4">以上Faster-RCNN都是我的个人浅薄理解，欢迎大家指出我存在的问题~</font></p>
+
+    </div>
+</article>
+
+
+<div id="comments-template"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script>
+	if(!window.commentConfig) {
+      window.commentConfig = {}
+      window.commentConfig.title = 'Faster-RCNN论文细节原理解读+代码实现gluoncv(MXNet)'
+    }
+</script>
+
+                </div>
+                <aside class="col-md-4 gal-left" id="sidebar">
+    <!-- 此为sidebar的搜索框, 非搜索结果页面 -->
+<aside id="sidebar-search">
+    <div class="search hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <form class="form-inline clearfix" id="search-form" method="get" action="/search/index.html">
+            <input type="text" name="s" class="form-control" id="searchInput" placeholder="搜索文章~" autocomplete="off">
+            <button class="btn btn-danger btn-gal" type="submit">
+                <i class="fa fa-search"></i>
+            </button>
+        </form>
+    </div>
+</aside>
+    <aside id="sidebar-author">
+    <div class="panel panel-gal" data-aos="flip-right" data-aos-duration="3000">
+        <div class="panel-heading" style="text-align: center">
+            <i class="fa fa-quote-left"></i>
+            Labmem No.1
+            <i class="fa fa-quote-right"></i>
+        </div>
+        <div class="author-panel text-center">
+            <img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3485132381,143374086&fm=26&gp=0.jpg" width="140" height="140" alt="个人头像" class="author-image">
+            <p class="author-description"></p><p>一切都是命运石之门的选择</p>
+<p></p>
+        </div>
+    </div>
+</aside>
+    
+    <aside id="sidebar-recent_comments">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-comments"></i>
+            最新评论
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush"></ul>
+    </div>
+</aside>
+    
+    <!-- 要配置好leancloud才能开启此小工具 -->
+    
+    <aside id="sidebar-hot_posts">
+    <div class="panel panel-gal hot hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-fire"></i>
+            最热文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush"></ul>
+    </div>
+</aside>
+    
+    
+    <aside id="sidebar-recent_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            近期文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/22/UbuntuToDo/">安装Ubuntu系统必做的事情（常用软件安装＋系统配置）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/mxnet-hrbrid-forward/">MXNet学习笔记：HybridBlock类hybrid_forwar()函数解析</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/mxnet-set-learning-rate/">MXNet使用技巧：单独设置网络中每层的学习率</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/python-argparse/">python常用库总结：argparse库</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/faster-rcnn/">Faster-RCNN论文细节原理解读+代码实现gluoncv(MXNet)</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/traits/">C++ Traits简介（OpenCV中DataType类分析）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode4/">LeetCode 第四题 Median of Two Sorted Arrays（计算两个有序数组的中位数）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode5/">LeetCode 第5题 Longest Palindromic Substring 最长回文子串</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/mxnetAPIobjectdetection/">MXNet中目标检测API使用总结：MultiBoxDetection、MultiBoxPrior、MultiBoxTarget</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode2/">LeetCode 第2题 Add Two Numbers</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    <aside id="sidebar-rand_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            随机文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/22/UbuntuToDo/">安装Ubuntu系统必做的事情（常用软件安装＋系统配置）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/faster-rcnn/">Faster-RCNN论文细节原理解读+代码实现gluoncv(MXNet)</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/jsp/">JSP实现网页的自动登录(session+cookie)实现</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode2/">LeetCode 第2题 Add Two Numbers</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode5/">LeetCode 第5题 Longest Palindromic Substring 最长回文子串</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/object-detection-note1/">物体检测Object Detection学习笔记（MXNet）（一）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/object-detection-note3/">物体检测Object Detection学习笔记（MXNet）（三）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/paper-note/">论文笔记 Deep Learning for Generic Object Detection A Survey （一）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/traits/">C++ Traits简介（OpenCV中DataType类分析）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/深度学习论文汇总/">深度学习论文汇总</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    <aside id="gal-sets">
+        <div class="panel panel-gal hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+            <ul class="nav nav-pills pills-gal">
+
+                
+                <li>
+                    <a href="/2019/01/18/faster-rcnn/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                </li>
+                
+                
+                <li>
+                    <a href="/2019/01/18/faster-rcnn/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                </li>
+                
+                
+                <li>
+                    <a href="/2019/01/18/faster-rcnn/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                </li>
+                
+            </ul>
+            <div class="tab-content">
+                
+                <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
+    
+    <a href="/tags/暴力枚举/" style="font-size: 13.062061478703548px;" class="tag-cloud-link">暴力枚举</a>
+    
+    <a href="/tags/剪枝/" style="font-size: 18.85309732730693px;" class="tag-cloud-link">剪枝</a>
+    
+    <a href="/tags/线段树/" style="font-size: 17.501825701437397px;" class="tag-cloud-link">线段树</a>
+    
+    <a href="/tags/前缀和/" style="font-size: 19.08227411743149px;" class="tag-cloud-link">前缀和</a>
+    
+    <a href="/tags/二分法/" style="font-size: 10.902642088057092px;" class="tag-cloud-link">二分法</a>
+    
+    <a href="/tags/git命令/" style="font-size: 13.425065769810159px;" class="tag-cloud-link">git命令</a>
+    
+    <a href="/tags/mxnet/" style="font-size: 19.101930204229028px;" class="tag-cloud-link">mxnet</a>
+    
+    <a href="/tags/faster-rcnn/" style="font-size: 12.578444759957666px;" class="tag-cloud-link">faster_rcnn</a>
+    
+    <a href="/tags/java/" style="font-size: 8.179546987277115px;" class="tag-cloud-link">java</a>
+    
+    <a href="/tags/jsp/" style="font-size: 10.615872464822818px;" class="tag-cloud-link">jsp</a>
+    
+    <a href="/tags/servlet/" style="font-size: 12.233273832387603px;" class="tag-cloud-link">servlet</a>
+    
+    <a href="/tags/物体检测/" style="font-size: 16.459762238092082px;" class="tag-cloud-link">物体检测</a>
+    
+    <a href="/tags/论文/" style="font-size: 13.972055893601015px;" class="tag-cloud-link">论文</a>
+    
+    <a href="/tags/python/" style="font-size: 12.536894915528574px;" class="tag-cloud-link">python</a>
+    
+    <a href="/tags/深度学习/" style="font-size: 18.48123028582541px;" class="tag-cloud-link">深度学习</a>
+    
+</div>
+                
+                
+                <div class="friend-links tab-pane nav bs-sidenav fade" id="sidebar-friend-links">
+    
+    <li>
+        <a href="http://baidu.com/" target="_blank">百度</a>
+    </li>
+    
+    <li>
+        <a href="http://www.google.com/" target="_blank">谷歌</a>
+    </li>
+    
+    <li>
+        <a href="http://www.moe123.com/" target="_blank">木有啊</a>
+    </li>
+    
+</div>
+                
+                
+                <div class="links tab-pane nav bs-sidenav fade" id="sidebar-links">
+    
+    <li>
+        <a href="https://github.com/JJXiangJiaoJun/" target="_blank">Github</a>
+    </li>
+    
+    <li>
+        <a href="https://blog.csdn.net/XiangJiaoJun_/" target="_blank">CSDN</a>
+    </li>
+    
+    <li>
+        <a href="https://www.zhihu.com/people/ye-xiao-bai-11-96/activities" target="_blank">知乎</a>
+    </li>
+    
+</div>
+                
+            </div>
+        </div>
+    </aside>
+    
+</aside>
+            </div>
+        </div>
+    </div>
+    <footer id="gal-footer">
+    <div class="container">
+        Copyright © 2018 Labmem No.1 Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>.&nbsp;Theme by <a href="https://github.com/ZEROKISEKI" target="_blank">AONOSORA</a>
+    </div>
+</footer>
+
+<!-- 回到顶端 -->
+<div id="gal-gotop">
+    <i class="fa fa-angle-up"></i>
+</div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"pluginJsPath":"lib/","pluginRootPath":"live2dw/"});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+<script src="/js/activate-power-mode.js"></script>
+<script>
+
+    // 配置highslide
+	hs.graphicsDir = '/js/highslide/graphics/'
+    hs.outlineType = "rounded-white";
+    hs.dimmingOpacity = 0.8;
+    hs.outlineWhileAnimating = true;
+    hs.showCredits = false;
+    hs.captionEval = "this.thumb.alt";
+    hs.numberPosition = "caption";
+    hs.align = "center";
+    hs.transitions = ["expand", "crossfade"];
+    hs.lang.number = '共%2张图, 当前是第%1张';
+    hs.addSlideshow({
+      interval: 5000,
+      repeat: true,
+      useControls: true,
+      fixedControls: "fit",
+      overlayOptions: {
+        opacity: 0.75,
+        position: "bottom center",
+        hideOnMouseOut: true
+      }
+    })
+
+    // 初始化aos
+    AOS.init({
+      duration: 1000,
+      delay: 0,
+      easing: 'ease-out-back'
+    });
+
+</script>
+<script>
+	POWERMODE.colorful = 'true';    // make power mode colorful
+	POWERMODE.shake = 'true';       // turn off shake
+	// TODO 这里根据具体情况修改
+	document.body.addEventListener('input', POWERMODE);
+</script>
+<script>
+    window.slideConfig = {
+      prefix: '/imgs/slide/background',
+      ext: 'jpg',
+      maxCount: '21'
+    }
+</script>
+<script src="/js/hs.js"></script>
+<script src="/js/blog.js"></script>
+
+
+<script>
+    window.hot_posts_count = '10'
+    // window.use_leancloud = 'true'
+</script>
+<script src="/js/comment/leancloud.js"></script>
+
+
+<script src="https://myau.moe/js/comment/gitment.browser.js"></script>
+<script>
+    if(window.commentConfig) {
+      window.commentConfig.id = 'Fri Jan 18 2019 19:26:42 GMT+0800'
+      window.commentConfig.owner = 'JJXiangJiaoJun'
+      window.commentConfig.repo = 'comment_page'
+      window.commentConfig.client_id = 'd7df3d5d159f81371d76'
+      window.commentConfig.client_secret = '3794527fca067871d3795782ae7fd14f94ce3a74'
+      window.commentConfig.redirect_uri = 'https://hongbb.top'
+    } else {
+      window.commentConfig = {
+      	id: 'Fri Jan 18 2019 19:26:42 GMT+0800',
+        owner: 'JJXiangJiaoJun',
+        repo: 'comment_page',
+        client_id: 'd7df3d5d159f81371d76',
+        client_secret: '3794527fca067871d3795782ae7fd14f94ce3a74',
+        redirect_uri: 'https://hongbb.top'
+      }
+    }
+</script>
+<script src="/js/comment/gitment.js"></script>
+
+</html>

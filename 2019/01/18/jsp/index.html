@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Labmem No.1">
+    
+    <meta name="description" content="一切都是命运石之门的选择">
+    
+    
+    
+    
+    
+    
+    <title>JSP实现网页的自动登录(session+cookie)实现 | 爱吃咸鱼的喵の无名小站</title>
+    <link href="”https://github.com/JJXiangJiaoJun“" rel="”prefetch”">
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/aos.css">
+<link rel="stylesheet" href="/css/style.css">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/aos.js"></script>
+    <script src="/js/highslide/highslide-full.min.js"></script>
+    <link rel="stylesheet" href="/js/highslide/highslide.css">
+    <style type="text/css">
+        @media (max-width: 768px) {
+            body {
+                background-color: #f0f0f0;
+                background: url('/imgs/mobile.jpg');
+                background-attachment: fixed;
+            }
+        }
+    </style>
+    
+    <script src="//cdn1.lncld.net/static/js/3.4.2/av-min.js"></script>
+    <script>
+      AV.init({
+        appId: 'uJUp6NroM9R4yTpnGYBF7hhw-gzGzoHsz',
+        appKey: 'w5Qtn48qXMY1nyCSf7oahEM7'
+      })
+    </script>
+    
+    <!--<script type="text/javascript">
+      if (document.images) {
+        var avatar = new Image();
+        avatar.src = '/imgs/https:/ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3485132381,143374086&fm=26&gp=0.jpg'
+        var previews = 'preview1.jpg,preview2.jpg,preview12.jpeg,preview3.jpg,preview4.jpg,preview5.jpg,preview6.jpeg,preview7.png,preview8.jpeg,preview9.jpeg,preview10.jpg,preview11.jpg,preview12.jpeg,preview13.jpg,preview14.jpeg,preview15.jpeg,preview16.png'.split(',')
+        var previewsPreLoad = []
+        for(var i = 0; i < length; i++) {
+          previewsPreLoad.push(new Image())
+          previewsPreLoad[previewsPreLoad.length - 1].src = '/imgs/preview' + previews[i]
+        }
+      }
+    </script>--><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head></html>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- 背景轮播图功能 -->
+    <section class="hidden-xs">
+    <ul class="cb-slideshow">
+        <li><span>天若</span></li>
+        <li><span>有情</span></li>
+        <li><span>天亦老</span></li>
+        <li><span>我为</span></li>
+        <li><span>长者</span></li>
+        <li><span>续一秒</span></li>
+    </ul>
+</section>
+    <!-- 欧尼酱功能, 谁用谁知道 -->
+    
+    <header class="navbar navbar-inverse" id="gal-header">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".bs-navbar-collapse" aria-expanded="false">
+                <span class="fa fa-lg fa-reorder"></span>
+            </button>
+            <a href="https://github.com/JJXiangJiaoJun">
+                
+                <!-- 这里background使用imgs/${logo_image}(路径文件名) -->
+                <style>
+                    #gal-header .navbar-brand {
+                        width: 200px;
+                        height: 50px;
+                        display: block;
+                        background: url('/imgs/minilogo.jpeg') no-repeat;
+                    }
+                </style>
+                    
+                <div class="navbar-brand"></div>
+                
+            </a>
+        </div>
+        <div class="collapse navbar-collapse bs-navbar-collapse">
+            <ul class="nav navbar-nav" id="menu-gal">
+                
+                
+                <li class="">
+                    <a href="/">
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/archives">
+                        <i class="fa fa-archive"></i>归档
+                    </a>
+                </li>
+                
+                
+                
+                
+                <li class="dropdown">
+                    <!-- TODO 添加hover dropdown效果 -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-hover="dropdown">
+                        <i class="fa fa-list"></i>分类
+                    </a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        <li>
+                            <a href="/categories/算法与数据结构/">算法与数据结构</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/git/">git</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/Ubuntu系统/">Ubuntu系统</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/深度学习/">深度学习</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/Java后端/">Java后端</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/深度学习论文/">深度学习论文</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/python常用库/">python常用库</a>
+                        </li>
+                        
+                        
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                
+                
+                <li class="dropdown">
+                    <!-- TODO 添加hover dropdown效果 -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-hover="dropdown">
+                        <i class="fa fa-tags"></i>标签
+                    </a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        <li>
+                            <a href="/tags/暴力枚举/">暴力枚举</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/剪枝/">剪枝</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/线段树/">线段树</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/前缀和/">前缀和</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/二分法/">二分法</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/git命令/">git命令</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/mxnet/">mxnet</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/faster-rcnn/">faster_rcnn</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/java/">java</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/jsp/">jsp</a>
+                        </li>
+                        
+                        
+                        <li>
+                            <a href="/tags">...</a>
+                        </li>
+                        
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                
+                <li class="">
+                    <a href="/message">
+                        <i class="fa fa-commenting"></i>留言板
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/about">
+                        <i class="fa fa-user"></i>关于我
+                    </a>
+                </li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</header>
+    <div id="gal-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 gal-right" id="mainstay">
+                    
+<article class="article well article-body" id="article">
+    <div class="breadcrumb">
+        <i class="fa fa-home"></i>
+        <a href="https://github.com/JJXiangJiaoJun">爱吃咸鱼的喵の无名小站</a>
+        >
+        <span>JSP实现网页的自动登录(session+cookie)实现</span>
+    </div>
+    <!-- 大型设备详细文章 -->
+    <div class="hidden-xs">
+        <div class="title-article">
+            <h1>
+                <a href="/2019/01/18/jsp/">JSP实现网页的自动登录(session+cookie)实现</a>
+            </h1>
+        </div>
+        <div class="tag-article">
+            
+            <span class="label label-gal">
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/java/">java</a>, 
+                
+                <a href="/tags/jsp/">jsp</a>, 
+                
+                <a href="/tags/servlet/">servlet</a>
+                
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2019-01-18
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-eye"></i>
+            </span>
+            
+        </div>
+    </div>
+    <!-- 小型设备详细文章 -->
+    <div class="visible-xs">
+        <center>
+            <div class="title-article">
+                <h4>
+                    <a href="/2019/01/18/jsp/">JSP实现网页的自动登录(session+cookie)实现</a>
+                </h4>
+            </div>
+            <p>
+                <i class="fa fa-calendar"></i> 2019-01-18
+            </p>
+            <p>
+                
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/java/">java</a>, 
+                
+                <a href="/tags/jsp/">jsp</a>, 
+                
+                <a href="/tags/servlet/">servlet</a>
+                
+                
+                
+                <i class="fa fa-eye"></i>
+                
+            </p>
+        </center>
+    </div>
+    <div class="content-article">
+        <h1 id="1、session的作用"><a href="#1、session的作用" class="headerlink" title="1、session的作用"></a>1、session的作用</h1><p>&emsp;&emsp;用户用浏览器访问web服务器时，会为每个用户创建一个<strong>session(会话)</strong>，session在用户关闭浏览器之前都是有效的，所以我们可以在session中保存用户的一些信息，以供使用。这里我们用session保存用户的账号名称，以表示用户已经登录，可以直接访问后台页面。</p>
+<h1 id="2、cookie的作用"><a href="#2、cookie的作用" class="headerlink" title="2、cookie的作用"></a>2、cookie的作用</h1><p>&emsp;&emsp;cookie是客户端保存的一些少量数据，每次用户通过浏览器访问web服务器时，cookie可以通过request一起传送至服务器端，这里我们使用cookie保存用户的账号密码，以便实现自动登录功能。</p>
+<p>说明:实现过程分为两个页面</p>
+<ol>
+<li>login.jsp 是前台登录界面分别有<strong>账号、密码输入区</strong>，以及一个是否<strong>自动登录的复选框</strong>，一个选择<strong>保存时长的下拉列表框</strong>，如下图所示:</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/JJXiangJiaoJun/blog_images/master/jsp/1.png" alt="在这里插入图片描述"></p>
+<ol>
+<li>mypage.jsp是登录后的显示界面，有一个注销按钮，以便用户登出。</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/JJXiangJiaoJun/blog_images/master/jsp/2.png" alt="在这里插入图片描述"></p>
+<h1 id="3、流程"><a href="#3、流程" class="headerlink" title="3、流程"></a>3、流程</h1><ul>
+<li>用户访问login.jsp进行第一次登录，对应的servlet将提交的用户名与密码和数据库中的记录进行匹配，如果：<ul>
+<li>匹配失败（要考虑用户名和密码为空的情况），则返回login.jsp进行再次登录，并且报告错误信息(记住提交URL参数中的中文需要用URLEncoder进行编码，不然会乱码)</li>
+<li>匹配成功 <strong>（cookie是保存在客户端的，程序中进行配置之后一定需要用response.addCookies将cookie添加至response从而发回客户端浏览器）</strong><ul>
+<li>如果选择了未自动登录，此时从request中取出原来的cookies,将有效时间设为0，表示不再进行自动登录。</li>
+<li>如果选择了自动登录，那么就要创建两个新的cookie，一个保存username，一个保存passwd（安全的做法是用MD5等加密算法加密后保存），并根据选择的有效时间设置cookie的有效时间 </li>
+<li>之后用reque.getsession.setAttribute()设置username属性表示用户已经登录，最后将页面重定向至mypage.jsp   </li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>代码如下所示：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br></pre></td><td class="code"><pre><span class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doPost</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">		String command= request.getParameter(<span class="string">"command"</span>);</span><br><span class="line">		<span class="comment">//这里是用户登录的界面，需要处理逻辑关系，考虑</span></span><br><span class="line">		<span class="keyword">if</span>(command.equals(<span class="string">"login"</span>))</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="comment">//1、没有输入用户名 2、用户名错误 3、密码错误</span></span><br><span class="line">			String username = request.getParameter(<span class="string">"username"</span>);</span><br><span class="line">			String passwd = request.getParameter(<span class="string">"passwd"</span>);</span><br><span class="line">			<span class="comment">//如果未输入用户名</span></span><br><span class="line">			<span class="keyword">if</span>(username.equals(<span class="string">""</span>)||passwd.equals(<span class="string">""</span>))</span><br><span class="line">			&#123;	</span><br><span class="line">				System.out.println(<span class="string">"未输入用户名"</span>);</span><br><span class="line">				String error_msg = <span class="string">"请输入用户名和密码"</span>;</span><br><span class="line">				String error =URLEncoder.encode(error_msg, <span class="string">"utf-8"</span>);</span><br><span class="line">				response.setCharacterEncoding(<span class="string">"utf-8"</span>);</span><br><span class="line">				response.sendRedirect(<span class="string">"/MyDBtest/login.jsp?error="</span>+error);	</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="comment">//对用户名进行查询</span></span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">			&#123;</span><br><span class="line">			   String real_passwd = loginChecker.getPasswd(username);</span><br><span class="line">			   <span class="comment">//没有此用户</span></span><br><span class="line">			   <span class="keyword">if</span>(real_passwd.equals(<span class="string">""</span>))</span><br><span class="line">			   &#123;</span><br><span class="line">					System.out.println(<span class="string">"没有此用户"</span>);</span><br><span class="line">					String error_msg = <span class="string">"没有此用户，请重新输入用户名"</span>;</span><br><span class="line">					String error =URLEncoder.encode(error_msg, <span class="string">"utf-8"</span>);</span><br><span class="line">					response.setCharacterEncoding(<span class="string">"utf-8"</span>);</span><br><span class="line">					response.sendRedirect(<span class="string">"/MyDBtest/login.jsp?error="</span>+error);	</span><br><span class="line">			   &#125;</span><br><span class="line">			   </span><br><span class="line">			   <span class="comment">//查询成功  检查用户是否设置自动登录，如果是则发送cookies</span></span><br><span class="line">			   <span class="keyword">else</span> <span class="keyword">if</span>(real_passwd.equals(passwd))</span><br><span class="line">			   &#123;</span><br><span class="line">				   <span class="comment">//设置session username属性表示用户已经登录</span></span><br><span class="line">				   request.getSession().setAttribute(<span class="string">"username"</span>, username);</span><br><span class="line">				   </span><br><span class="line">				   <span class="comment">//检查用户是否选择自动登录</span></span><br><span class="line">				   <span class="comment">//如果选择了自动登录，则需要保存cookies</span></span><br><span class="line">				   </span><br><span class="line">				   <span class="keyword">if</span>(<span class="string">"on"</span>.equals(request.getParameter(<span class="string">"autologin"</span>)))</span><br><span class="line">				   &#123;</span><br><span class="line">					   <span class="keyword">int</span> saveTime = Integer.parseInt(request.getParameter(<span class="string">"maxage"</span>));</span><br><span class="line">					   saveTime =<span class="number">24</span>*<span class="number">60</span>*<span class="number">60</span>*saveTime;</span><br><span class="line">					   Cookie user_cookie = <span class="keyword">new</span> Cookie(<span class="string">"username"</span>, username);</span><br><span class="line">					    Cookie passwd_cookie = <span class="keyword">new</span> Cookie(<span class="string">"passwd"</span>, passwd);</span><br><span class="line">					    user_cookie.setMaxAge(saveTime);</span><br><span class="line">					    passwd_cookie.setMaxAge(saveTime);</span><br><span class="line">					    response.addCookie(user_cookie);</span><br><span class="line">					    response.addCookie(passwd_cookie);</span><br><span class="line">					    </span><br><span class="line">				   &#125;</span><br><span class="line">				   <span class="comment">//如果没有选择自动登录</span></span><br><span class="line">				   <span class="keyword">else</span> </span><br><span class="line">				   &#123;</span><br><span class="line">					  Cookie[] cookies = request.getCookies();</span><br><span class="line">					  <span class="keyword">for</span>(Cookie cookie:cookies)</span><br><span class="line">					  &#123;</span><br><span class="line">						  System.out.println(<span class="string">"删除 cookie"</span>);</span><br><span class="line">						  <span class="keyword">if</span>(cookie.getName().equals(<span class="string">"username"</span>))</span><br><span class="line">						  &#123;</span><br><span class="line">							  cookie.setMaxAge(<span class="number">0</span>);</span><br><span class="line">							  response.addCookie(cookie);  <span class="comment">//添加生成的新的cookie</span></span><br><span class="line">						  &#125;</span><br><span class="line">						  <span class="keyword">else</span> <span class="keyword">if</span>(cookie.getName().equals(<span class="string">"passwd"</span>))</span><br><span class="line">						  &#123;</span><br><span class="line">							  cookie.setMaxAge(<span class="number">0</span>);</span><br><span class="line">							  response.addCookie(cookie);  <span class="comment">//添加生成的新的cookie</span></span><br><span class="line">						  &#125;</span><br><span class="line">					  &#125;</span><br><span class="line">					  </span><br><span class="line">				   &#125;				   </span><br><span class="line">				   <span class="comment">//重定向到后台界面</span></span><br><span class="line">				   response.sendRedirect(<span class="string">"/MyDBtest/mypage.jsp"</span>);</span><br><span class="line">			   &#125;</span><br><span class="line">			   <span class="comment">//密码错误</span></span><br><span class="line">			   <span class="keyword">else</span> &#123;</span><br><span class="line">					System.out.println(<span class="string">"密码错误"</span>);</span><br><span class="line">					String error_msg = <span class="string">"密码错误，请重新输入密码"</span>;</span><br><span class="line">					String error =URLEncoder.encode(error_msg, <span class="string">"utf-8"</span>);</span><br><span class="line">					response.setCharacterEncoding(<span class="string">"utf-8"</span>);</span><br><span class="line">					response.sendRedirect(<span class="string">"/MyDBtest/login.jsp?error="</span>+error);	</span><br><span class="line">			 &#125;</span><br><span class="line">		 &#125;		</span><br><span class="line">     &#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(command.equals(<span class="string">"deleteCookies"</span>))</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="comment">//用户主动注销，那么不用再保存Cookies</span></span><br><span class="line">            Cookie[] cookies = request.getCookies();</span><br><span class="line">            <span class="keyword">for</span>(Cookie cookie:cookies)</span><br><span class="line">            &#123;</span><br><span class="line">            	<span class="keyword">if</span>(cookie.getName().equals(<span class="string">"username"</span>))</span><br><span class="line">            	&#123;</span><br><span class="line">            		cookie.setMaxAge(<span class="number">0</span>);</span><br><span class="line">            		response.addCookie(cookie);  <span class="comment">//设置失效</span></span><br><span class="line">            	&#125;</span><br><span class="line">            	<span class="keyword">else</span> <span class="keyword">if</span>(cookie.getName().equals(<span class="string">"passwd"</span>))</span><br><span class="line">            	&#123;</span><br><span class="line">            		cookie.setMaxAge(<span class="number">0</span>);</span><br><span class="line">            		response.addCookie(cookie); <span class="comment">//设置失效</span></span><br><span class="line">            	&#125;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">//重定向到登录界面</span></span><br><span class="line">            request.getSession().removeAttribute(<span class="string">"username"</span>);</span><br><span class="line">            response.sendRedirect(<span class="string">"/MyDBtest/login.jsp"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>对于访问mypage.jsp，步骤如下：<ul>
+<li>首先检查session是否有username属性，如果存在那么可以直接访问mypage.jsp，若不存在则进行下一步判断</li>
+<li>取出request中的cookie(考虑为空的情况)，取出用户名和密码，与数据库中记录进行匹配，若匹配成功，则设置session的username属性，表示已经登录成功，然后跳转至mypage.jsp</li>
+<li>若与数据库匹配失败或者cookie为空，那么可将页面重定向至错误页面，提示用户进行登录后才能访问。</li>
+</ul>
+</li>
+</ul>
+<p>不难想到，应该为 mypage.jsp设置一个<strong>过滤器</strong>，每次访问该页面，先由过滤器完成上述流程，过滤器配置如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">filter</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>LoginFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>Filter.LoginFilter<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>LoginFilter<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/mypage.jsp<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>过滤器代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doFilter</span><span class="params">(ServletRequest request, ServletResponse response, FilterChain chain)</span> <span class="keyword">throws</span> IOException, ServletException </span>&#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">		<span class="comment">// place your code here</span></span><br><span class="line">		</span><br><span class="line">		<span class="comment">//访问 mypage 页面前需要经过此过滤器</span></span><br><span class="line">		<span class="comment">//System.out.println("进入到后台登录过滤器");</span></span><br><span class="line">		HttpServletRequest req = (HttpServletRequest)request;</span><br><span class="line">		HttpServletResponse res = (HttpServletResponse)response;</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line"></span><br><span class="line">		<span class="comment">//这里说明用户未登录，那么获取cookies并验证是否能登录</span></span><br><span class="line">		<span class="keyword">if</span>(req.getSession().getAttribute(<span class="string">"username"</span>)==<span class="keyword">null</span> )</span><br><span class="line">		&#123;</span><br><span class="line">			</span><br><span class="line">			System.out.println(<span class="string">"进入到后台登录过滤器"</span>);</span><br><span class="line">			Cookie[] cookies = req.getCookies();</span><br><span class="line">			String username=<span class="keyword">null</span>;</span><br><span class="line">			String passwd=<span class="keyword">null</span>;</span><br><span class="line">			<span class="keyword">if</span>(cookies!=<span class="keyword">null</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">for</span>(Cookie cookie:cookies)</span><br><span class="line">				&#123;</span><br><span class="line">					<span class="keyword">if</span>(cookie.getName().equals(<span class="string">"username"</span>))</span><br><span class="line">					&#123;</span><br><span class="line">						username = cookie.getValue();</span><br><span class="line">					&#125;</span><br><span class="line">					<span class="keyword">else</span> <span class="keyword">if</span>(cookie.getName().equals(<span class="string">"passwd"</span>))</span><br><span class="line">					&#123;</span><br><span class="line">						passwd =cookie.getValue();</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span>(username!=<span class="keyword">null</span>&amp;&amp;passwd!=<span class="keyword">null</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="comment">//匹配数据中的用户名以及密码</span></span><br><span class="line">				<span class="comment">//匹配成功则设置登录，否则退出登录</span></span><br><span class="line">				<span class="keyword">if</span>(loginChecker.getPasswd(username).equals(passwd))</span><br><span class="line">                      req.getSession().setAttribute(<span class="string">"username"</span>, username);</span><br><span class="line">			&#125;</span><br><span class="line">			</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// pass the request along the filter chain</span></span><br><span class="line">		chain.doFilter(req, res);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure></p>
+<p>mypage.jsp页面还有一个注销按钮，用户注销后,servlet应该主动删除用户的cookie信息。</p>
+
+    </div>
+</article>
+
+
+<div id="comments-template"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script>
+	if(!window.commentConfig) {
+      window.commentConfig = {}
+      window.commentConfig.title = 'JSP实现网页的自动登录(session+cookie)实现'
+    }
+</script>
+
+                </div>
+                <aside class="col-md-4 gal-left" id="sidebar">
+    <!-- 此为sidebar的搜索框, 非搜索结果页面 -->
+<aside id="sidebar-search">
+    <div class="search hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <form class="form-inline clearfix" id="search-form" method="get" action="/search/index.html">
+            <input type="text" name="s" class="form-control" id="searchInput" placeholder="搜索文章~" autocomplete="off">
+            <button class="btn btn-danger btn-gal" type="submit">
+                <i class="fa fa-search"></i>
+            </button>
+        </form>
+    </div>
+</aside>
+    <aside id="sidebar-author">
+    <div class="panel panel-gal" data-aos="flip-right" data-aos-duration="3000">
+        <div class="panel-heading" style="text-align: center">
+            <i class="fa fa-quote-left"></i>
+            Labmem No.1
+            <i class="fa fa-quote-right"></i>
+        </div>
+        <div class="author-panel text-center">
+            <img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3485132381,143374086&fm=26&gp=0.jpg" width="140" height="140" alt="个人头像" class="author-image">
+            <p class="author-description"></p><p>一切都是命运石之门的选择</p>
+<p></p>
+        </div>
+    </div>
+</aside>
+    
+    <aside id="sidebar-recent_comments">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-comments"></i>
+            最新评论
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush"></ul>
+    </div>
+</aside>
+    
+    <!-- 要配置好leancloud才能开启此小工具 -->
+    
+    <aside id="sidebar-hot_posts">
+    <div class="panel panel-gal hot hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-fire"></i>
+            最热文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush"></ul>
+    </div>
+</aside>
+    
+    
+    <aside id="sidebar-recent_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            近期文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/22/UbuntuToDo/">安装Ubuntu系统必做的事情（常用软件安装＋系统配置）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/mxnet-hrbrid-forward/">MXNet学习笔记：HybridBlock类hybrid_forwar()函数解析</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/mxnet-set-learning-rate/">MXNet使用技巧：单独设置网络中每层的学习率</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/python-argparse/">python常用库总结：argparse库</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/faster-rcnn/">Faster-RCNN论文细节原理解读+代码实现gluoncv(MXNet)</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/traits/">C++ Traits简介（OpenCV中DataType类分析）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode4/">LeetCode 第四题 Median of Two Sorted Arrays（计算两个有序数组的中位数）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode5/">LeetCode 第5题 Longest Palindromic Substring 最长回文子串</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/mxnetAPIobjectdetection/">MXNet中目标检测API使用总结：MultiBoxDetection、MultiBoxPrior、MultiBoxTarget</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode2/">LeetCode 第2题 Add Two Numbers</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    <aside id="sidebar-rand_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            随机文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/HDU6344/">2018百度之星程序设计大赛（资格赛） 调查问卷 HDU6344 解题思路</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/UVa11536/">UVa11536 Smallest Sub-Array</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/UbuntSSH/">Ubuntu系统生成SSH秘钥并添加到github远程仓库(解决git push被拒绝的问题)</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/22/UbuntuToDo/">安装Ubuntu系统必做的事情（常用软件安装＋系统配置）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode2/">LeetCode 第2题 Add Two Numbers</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/mxnet-hrbrid-forward/">MXNet学习笔记：HybridBlock类hybrid_forwar()函数解析</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/mxnet-set-learning-rate/">MXNet使用技巧：单独设置网络中每层的学习率</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/object-detection-note1/">物体检测Object Detection学习笔记（MXNet）（一）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/object-detection-note3/">物体检测Object Detection学习笔记（MXNet）（三）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/traits/">C++ Traits简介（OpenCV中DataType类分析）</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    <aside id="gal-sets">
+        <div class="panel panel-gal hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+            <ul class="nav nav-pills pills-gal">
+
+                
+                <li>
+                    <a href="/2019/01/18/jsp/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                </li>
+                
+                
+                <li>
+                    <a href="/2019/01/18/jsp/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                </li>
+                
+                
+                <li>
+                    <a href="/2019/01/18/jsp/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                </li>
+                
+            </ul>
+            <div class="tab-content">
+                
+                <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
+    
+    <a href="/tags/暴力枚举/" style="font-size: 11.364574979552879px;" class="tag-cloud-link">暴力枚举</a>
+    
+    <a href="/tags/剪枝/" style="font-size: 8.504373215486742px;" class="tag-cloud-link">剪枝</a>
+    
+    <a href="/tags/线段树/" style="font-size: 12.072086020393588px;" class="tag-cloud-link">线段树</a>
+    
+    <a href="/tags/前缀和/" style="font-size: 8.549461927535411px;" class="tag-cloud-link">前缀和</a>
+    
+    <a href="/tags/二分法/" style="font-size: 8.467140276916663px;" class="tag-cloud-link">二分法</a>
+    
+    <a href="/tags/git命令/" style="font-size: 17.600270089506136px;" class="tag-cloud-link">git命令</a>
+    
+    <a href="/tags/mxnet/" style="font-size: 16.22023300618313px;" class="tag-cloud-link">mxnet</a>
+    
+    <a href="/tags/faster-rcnn/" style="font-size: 16.250971406963515px;" class="tag-cloud-link">faster_rcnn</a>
+    
+    <a href="/tags/java/" style="font-size: 19.551435983731025px;" class="tag-cloud-link">java</a>
+    
+    <a href="/tags/jsp/" style="font-size: 18.607552271485822px;" class="tag-cloud-link">jsp</a>
+    
+    <a href="/tags/servlet/" style="font-size: 13.522044293663196px;" class="tag-cloud-link">servlet</a>
+    
+    <a href="/tags/物体检测/" style="font-size: 18.422164219611055px;" class="tag-cloud-link">物体检测</a>
+    
+    <a href="/tags/论文/" style="font-size: 16.53309930997689px;" class="tag-cloud-link">论文</a>
+    
+    <a href="/tags/python/" style="font-size: 13.198408084564237px;" class="tag-cloud-link">python</a>
+    
+    <a href="/tags/深度学习/" style="font-size: 8.198656323402847px;" class="tag-cloud-link">深度学习</a>
+    
+</div>
+                
+                
+                <div class="friend-links tab-pane nav bs-sidenav fade" id="sidebar-friend-links">
+    
+    <li>
+        <a href="http://baidu.com/" target="_blank">百度</a>
+    </li>
+    
+    <li>
+        <a href="http://www.google.com/" target="_blank">谷歌</a>
+    </li>
+    
+    <li>
+        <a href="http://www.moe123.com/" target="_blank">木有啊</a>
+    </li>
+    
+</div>
+                
+                
+                <div class="links tab-pane nav bs-sidenav fade" id="sidebar-links">
+    
+    <li>
+        <a href="https://github.com/JJXiangJiaoJun/" target="_blank">Github</a>
+    </li>
+    
+    <li>
+        <a href="https://blog.csdn.net/XiangJiaoJun_/" target="_blank">CSDN</a>
+    </li>
+    
+    <li>
+        <a href="https://www.zhihu.com/people/ye-xiao-bai-11-96/activities" target="_blank">知乎</a>
+    </li>
+    
+</div>
+                
+            </div>
+        </div>
+    </aside>
+    
+</aside>
+            </div>
+        </div>
+    </div>
+    <footer id="gal-footer">
+    <div class="container">
+        Copyright © 2018 Labmem No.1 Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>.&nbsp;Theme by <a href="https://github.com/ZEROKISEKI" target="_blank">AONOSORA</a>
+    </div>
+</footer>
+
+<!-- 回到顶端 -->
+<div id="gal-gotop">
+    <i class="fa fa-angle-up"></i>
+</div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"pluginJsPath":"lib/","pluginRootPath":"live2dw/"});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+<script src="/js/activate-power-mode.js"></script>
+<script>
+
+    // 配置highslide
+	hs.graphicsDir = '/js/highslide/graphics/'
+    hs.outlineType = "rounded-white";
+    hs.dimmingOpacity = 0.8;
+    hs.outlineWhileAnimating = true;
+    hs.showCredits = false;
+    hs.captionEval = "this.thumb.alt";
+    hs.numberPosition = "caption";
+    hs.align = "center";
+    hs.transitions = ["expand", "crossfade"];
+    hs.lang.number = '共%2张图, 当前是第%1张';
+    hs.addSlideshow({
+      interval: 5000,
+      repeat: true,
+      useControls: true,
+      fixedControls: "fit",
+      overlayOptions: {
+        opacity: 0.75,
+        position: "bottom center",
+        hideOnMouseOut: true
+      }
+    })
+
+    // 初始化aos
+    AOS.init({
+      duration: 1000,
+      delay: 0,
+      easing: 'ease-out-back'
+    });
+
+</script>
+<script>
+	POWERMODE.colorful = 'true';    // make power mode colorful
+	POWERMODE.shake = 'true';       // turn off shake
+	// TODO 这里根据具体情况修改
+	document.body.addEventListener('input', POWERMODE);
+</script>
+<script>
+    window.slideConfig = {
+      prefix: '/imgs/slide/background',
+      ext: 'jpg',
+      maxCount: '21'
+    }
+</script>
+<script src="/js/hs.js"></script>
+<script src="/js/blog.js"></script>
+
+
+<script>
+    window.hot_posts_count = '10'
+    // window.use_leancloud = 'true'
+</script>
+<script src="/js/comment/leancloud.js"></script>
+
+
+<script src="https://myau.moe/js/comment/gitment.browser.js"></script>
+<script>
+    if(window.commentConfig) {
+      window.commentConfig.id = 'Fri Jan 18 2019 18:59:24 GMT+0800'
+      window.commentConfig.owner = 'JJXiangJiaoJun'
+      window.commentConfig.repo = 'comment_page'
+      window.commentConfig.client_id = 'd7df3d5d159f81371d76'
+      window.commentConfig.client_secret = '3794527fca067871d3795782ae7fd14f94ce3a74'
+      window.commentConfig.redirect_uri = 'https://hongbb.top'
+    } else {
+      window.commentConfig = {
+      	id: 'Fri Jan 18 2019 18:59:24 GMT+0800',
+        owner: 'JJXiangJiaoJun',
+        repo: 'comment_page',
+        client_id: 'd7df3d5d159f81371d76',
+        client_secret: '3794527fca067871d3795782ae7fd14f94ce3a74',
+        redirect_uri: 'https://hongbb.top'
+      }
+    }
+</script>
+<script src="/js/comment/gitment.js"></script>
+
+</html>

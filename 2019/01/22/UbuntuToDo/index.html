@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Labmem No.1">
+    
+    <meta name="description" content="一切都是命运石之门的选择">
+    
+    
+    
+    
+    
+    
+    <title>安装Ubuntu系统必做的事情（常用软件安装＋系统配置） | 爱吃咸鱼的喵の无名小站</title>
+    <link href="”https://github.com/JJXiangJiaoJun“" rel="”prefetch”">
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/aos.css">
+<link rel="stylesheet" href="/css/style.css">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/aos.js"></script>
+    <script src="/js/highslide/highslide-full.min.js"></script>
+    <link rel="stylesheet" href="/js/highslide/highslide.css">
+    <style type="text/css">
+        @media (max-width: 768px) {
+            body {
+                background-color: #f0f0f0;
+                background: url('/imgs/mobile.jpg');
+                background-attachment: fixed;
+            }
+        }
+    </style>
+    
+    <script src="//cdn1.lncld.net/static/js/3.4.2/av-min.js"></script>
+    <script>
+      AV.init({
+        appId: 'uJUp6NroM9R4yTpnGYBF7hhw-gzGzoHsz',
+        appKey: 'w5Qtn48qXMY1nyCSf7oahEM7'
+      })
+    </script>
+    
+    <!--<script type="text/javascript">
+      if (document.images) {
+        var avatar = new Image();
+        avatar.src = '/imgs/https:/ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3485132381,143374086&fm=26&gp=0.jpg'
+        var previews = 'preview1.jpg,preview2.jpg,preview12.jpeg,preview3.jpg,preview4.jpg,preview5.jpg,preview6.jpeg,preview7.png,preview8.jpeg,preview9.jpeg,preview10.jpg,preview11.jpg,preview12.jpeg,preview13.jpg,preview14.jpeg,preview15.jpeg,preview16.png'.split(',')
+        var previewsPreLoad = []
+        for(var i = 0; i < length; i++) {
+          previewsPreLoad.push(new Image())
+          previewsPreLoad[previewsPreLoad.length - 1].src = '/imgs/preview' + previews[i]
+        }
+      }
+    </script>--><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head></html>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- 背景轮播图功能 -->
+    <section class="hidden-xs">
+    <ul class="cb-slideshow">
+        <li><span>天若</span></li>
+        <li><span>有情</span></li>
+        <li><span>天亦老</span></li>
+        <li><span>我为</span></li>
+        <li><span>长者</span></li>
+        <li><span>续一秒</span></li>
+    </ul>
+</section>
+    <!-- 欧尼酱功能, 谁用谁知道 -->
+    
+    <header class="navbar navbar-inverse" id="gal-header">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".bs-navbar-collapse" aria-expanded="false">
+                <span class="fa fa-lg fa-reorder"></span>
+            </button>
+            <a href="https://github.com/JJXiangJiaoJun">
+                
+                <!-- 这里background使用imgs/${logo_image}(路径文件名) -->
+                <style>
+                    #gal-header .navbar-brand {
+                        width: 200px;
+                        height: 50px;
+                        display: block;
+                        background: url('/imgs/minilogo.jpeg') no-repeat;
+                    }
+                </style>
+                    
+                <div class="navbar-brand"></div>
+                
+            </a>
+        </div>
+        <div class="collapse navbar-collapse bs-navbar-collapse">
+            <ul class="nav navbar-nav" id="menu-gal">
+                
+                
+                <li class="">
+                    <a href="/">
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/archives">
+                        <i class="fa fa-archive"></i>归档
+                    </a>
+                </li>
+                
+                
+                
+                
+                <li class="dropdown">
+                    <!-- TODO 添加hover dropdown效果 -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-hover="dropdown">
+                        <i class="fa fa-list"></i>分类
+                    </a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        <li>
+                            <a href="/categories/算法与数据结构/">算法与数据结构</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/git/">git</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/Ubuntu系统/">Ubuntu系统</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/深度学习/">深度学习</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/Java后端/">Java后端</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/深度学习论文/">深度学习论文</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/python常用库/">python常用库</a>
+                        </li>
+                        
+                        
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                
+                
+                <li class="dropdown">
+                    <!-- TODO 添加hover dropdown效果 -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-hover="dropdown">
+                        <i class="fa fa-tags"></i>标签
+                    </a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        <li>
+                            <a href="/tags/暴力枚举/">暴力枚举</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/剪枝/">剪枝</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/线段树/">线段树</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/前缀和/">前缀和</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/二分法/">二分法</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/git命令/">git命令</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/mxnet/">mxnet</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/faster-rcnn/">faster_rcnn</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/java/">java</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/jsp/">jsp</a>
+                        </li>
+                        
+                        
+                        <li>
+                            <a href="/tags">...</a>
+                        </li>
+                        
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                
+                <li class="">
+                    <a href="/message">
+                        <i class="fa fa-commenting"></i>留言板
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/about">
+                        <i class="fa fa-user"></i>关于我
+                    </a>
+                </li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</header>
+    <div id="gal-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 gal-right" id="mainstay">
+                    
+<article class="article well article-body" id="article">
+    <div class="breadcrumb">
+        <i class="fa fa-home"></i>
+        <a href="https://github.com/JJXiangJiaoJun">爱吃咸鱼的喵の无名小站</a>
+        >
+        <span>安装Ubuntu系统必做的事情（常用软件安装＋系统配置）</span>
+    </div>
+    <!-- 大型设备详细文章 -->
+    <div class="hidden-xs">
+        <div class="title-article">
+            <h1>
+                <a href="/2019/01/22/UbuntuToDo/">安装Ubuntu系统必做的事情（常用软件安装＋系统配置）</a>
+            </h1>
+        </div>
+        <div class="tag-article">
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2019-01-22
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-eye"></i>
+            </span>
+            
+        </div>
+    </div>
+    <!-- 小型设备详细文章 -->
+    <div class="visible-xs">
+        <center>
+            <div class="title-article">
+                <h4>
+                    <a href="/2019/01/22/UbuntuToDo/">安装Ubuntu系统必做的事情（常用软件安装＋系统配置）</a>
+                </h4>
+            </div>
+            <p>
+                <i class="fa fa-calendar"></i> 2019-01-22
+            </p>
+            <p>
+                
+                
+                <i class="fa fa-eye"></i>
+                
+            </p>
+        </center>
+    </div>
+    <div class="content-article">
+        <p>&emsp;&emsp;如果你是一个程序员，那你会爱上Linux系统～相比Windows，在Linux系统下，我们更能享受强大的命令行带给我们的高效，以及一些软件环境配置的方便、简介。然而原装Ubuntu系统并不是那么的好用，我们进行一些必要软件的安装和配置之后，才能让Ubuntu性能MAX~</p>
+<p>&emsp;&emsp;作为一个经常把操作系统弄坏的人，感觉每次重装玩系统之后配置都是一件繁琐的工作，每次都是配置那么些个东西，命令也就是那么几个，没错说的就是(<del>sudo apt-get</del>、<del>git clone</del>)。网上很多博客都有一些常用软件的安装教程，不过找的时候比较混乱，这里总结一下Ubuntu安装后，一些必要软件的安装和系统的配置，希望教程能方便重装系统后需要配置的小伙伴，跟着这篇教程一步步配置，你就能打造一个专属你的强大的Ubuntu系统啦</p>
+<p><strong>注意:</strong></p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="addition">+本教程在 Ubuntu18.04LTS 进行安装测试</span></span><br><span class="line"><span class="deletion">-电脑型号为联想拯救者R720</span></span><br></pre></td></tr></table></figure>
+<h1 id="修改国内镜像源"><a href="#修改国内镜像源" class="headerlink" title="修改国内镜像源"></a>修改国内镜像源</h1><p>&emsp;&emsp;不解释，这个必须第一步就做，Ubuntu系统官方的源服务器在国外，下载速度对于我们国内用户简直就是噩梦，而我们之后安装软件，更新软件都是从镜像源下载，如果不更换源，就会获得龟速下载debuff，谁也不想用2kb/s的下载速度去下载配置软件吧。我们第一步就需要把源更换为国内镜像，享受国内的高速下载，配置很简单如下：</p>
+<ol>
+<li><p>首先备份source.list文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo cp /etc/apt/sources.list /etc/apt/sources.list.bkp</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>用gedit打开sources.list</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo gedit /etc/apt/sources.list</span><br></pre></td></tr></table></figure>
+<ol>
+<li>将source.list内容全部替换为清华源</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic main restricted universe multiverse</span><br><span class="line">deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic main restricted universe multiverse</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse</span><br><span class="line">deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-backports main restricted universe multiverse</span><br><span class="line">deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-backports main restricted universe multiverse</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-security main restricted universe multiverse</span><br><span class="line">deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-security main restricted universe multiverse</span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse</span><br><span class="line">deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse</span><br></pre></td></tr></table></figure>
+<ol>
+<li>最后运行命令更新系统源</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get upgrade</span><br></pre></td></tr></table></figure>
+<h1 id="安装必备的软件和工具"><a href="#安装必备的软件和工具" class="headerlink" title="安装必备的软件和工具"></a>安装必备的软件和工具</h1><h2 id="Vim"><a href="#Vim" class="headerlink" title="Vim"></a>Vim</h2><blockquote>
+<p>vim是Linux系统下一款常用的文本编辑工具，可以安装各种插件从而配置为强大的IDE</p>
+</blockquote>
+<p>高手都直接用Vim编写代码，必装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install vim</span><br></pre></td></tr></table></figure>
+<h2 id="wget"><a href="#wget" class="headerlink" title="wget"></a>wget</h2><blockquote>
+<p>wget是Linux系统下一款强大的命令行下载工具，支持通过 HTTP、HTTPS、FTP 三个最常见的 TCP/IP协议 下载，并可以使用 HTTP 代理</p>
+</blockquote>
+<p>超好用的下载工具，很方便，必装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install wget</span><br><span class="line">wget --version　　＃查看版本是否安装成功</span><br></pre></td></tr></table></figure>
+<h2 id="curl"><a href="#curl" class="headerlink" title="curl"></a>curl</h2><blockquote>
+<p>cURL是一个利用URL语法在命令行下工作的文件传输工具，1997年首次发行。它支持文件上传和下载，所以是综合传输工具，但按传统，习惯称cURL为下载工具</p>
+</blockquote>
+<p>和wget差不多,也是一个命令行下载工具</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install curl</span><br></pre></td></tr></table></figure>
+<h2 id="cmake"><a href="#cmake" class="headerlink" title="cmake"></a>cmake</h2><blockquote>
+<p>CMake是一个跨平台的安装(编译)工具,可以用简单的语句来描述所有平台的安装(编译过程)。他能够输出各种各样的makefile或者project文件,能测试编译器所支持的C++特性,类似UNIX下的automake。</p>
+</blockquote>
+<p>这里直接用apt安装，也可以从源码安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install cmake</span><br></pre></td></tr></table></figure></p>
+<h2 id="g"><a href="#g" class="headerlink" title="g++"></a>g++</h2><blockquote>
+<p>C++编译器</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install g++</span><br></pre></td></tr></table></figure>
+<h1 id="安装搜狗输入法"><a href="#安装搜狗输入法" class="headerlink" title="安装搜狗输入法"></a>安装搜狗输入法</h1><p>&emsp;&emsp;下一步我们要安装一个好用的中文输入法，没错就是搜狗输入法，Ubuntu默认的输入法框架ibus不怎么好用，我们首先要安装fcitx输入法框架</p>
+<ol>
+<li>安装fcitx输入法框架</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install fcitx-bin      #安装fcitx-bin</span><br><span class="line"></span><br><span class="line">sudo apt-get update --fix-missing   #修复fcitx-bin安装失败的情况</span><br><span class="line"></span><br><span class="line">sudo apt-get install fcitx-bin      #重新安装fcitx-bin</span><br><span class="line"></span><br><span class="line">sudo apt-get install fcitx-table    #安装fcitx-table</span><br></pre></td></tr></table></figure>
+<ol>
+<li>安装搜狗输入法linux版本</li>
+</ol>
+<p>首先去官网下载搜狗输入法Linux版本.deb包,链接如下<a href="https://pinyin.sogou.com/linux/?r=pinyin" target="_blank" rel="noopener">搜狗输入法下载</a>，然后进入到下载目录，运行如下命令:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo dpkg -i sogoupinyin*.deb       #安装搜狗拼音</span><br><span class="line"></span><br><span class="line">sudo apt-get install -f             #修复搜狗拼音安装的错误</span><br><span class="line"></span><br><span class="line">sudo dpkg -i sogoupinyin*.deb       #重新安装搜狗拼音</span><br></pre></td></tr></table></figure>
+<ol>
+<li>配置搜狗输入法</li>
+</ol>
+<p>安装完成之后还不能直接使用输入法，我们需要在系统中进行配置，具体参考这篇博客<a href="https://blog.csdn.net/lupengCSDN/article/details/80279177" target="_blank" rel="noopener">Ubuntu18.04下安装搜狗输入法</a></p>
+<h1 id="安装Chrome"><a href="#安装Chrome" class="headerlink" title="安装Chrome"></a>安装Chrome</h1><p>&emsp;&emsp;我个人比较喜欢Chrome浏览器，如果你习惯用firefox浏览器那就不用安装啦。我们首先到<a href="https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" target="_blank" rel="noopener">Chrome官网</a>下载最新的.deb安装包，然后运行如下命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install libappindicator1 libindicator7</span><br><span class="line">sudo dpkg -i Downloads/google-chrome-stable_current_amd64.deb</span><br><span class="line">sudo apt-get -f install</span><br></pre></td></tr></table></figure>
+<h1 id="Ubuntu桌面美化（unity-tweak-tool）"><a href="#Ubuntu桌面美化（unity-tweak-tool）" class="headerlink" title="Ubuntu桌面美化（unity-tweak-tool）"></a>Ubuntu桌面美化（unity-tweak-tool）</h1><p>&emsp;&emsp;Ubuntu原生的主题和终端很丑有木有，一点都不想在这么丑的界面上工作。安装gnome-tweak-tool能真正的打造属于我们自己的Ubuntu系统，实现各种系统美化和主题替换。</p>
+<ol>
+<li><p>首先安装gnome软件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install gnome-tweak-tool</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置gname-tweaks</p>
+</li>
+</ol>
+<p>安装好之后我们可以在终端输入 <code>gnome-tweaks</code>　或者直接在软件中查找tweaks打开。配置如下，我们可以在<code>Themes</code>中配置主题，还有Shell，另外还有许多其他的选项，这里就不详细说了。更多细节请参考这篇博客<a href="https://blog.csdn.net/hnshhshjq/article/details/80216951" target="_blank" rel="noopener">利用gnome美化Ubuntu18.04</a>,但此时shell主题的切换默认是加锁的，我们还需要安装扩展。</p>
+<p><img src="" alt="插入图片"></p>
+<ol>
+<li>安装chrome-gnome-shell</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install chrome-gnome-shell</span><br></pre></td></tr></table></figure>
+<p>安装这个是为了在浏览器里面能一键安装插件（方便）,进入这个网站就可以直接安装了<a href="https://extensions.gnome.org/" target="_blank" rel="noopener">https://extensions.gnome.org/</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install gnome-shell-extensions</span><br></pre></td></tr></table></figure>
+<p>这里直接安装8-10个扩展，然后我们需要重启一下系统就可以使用了。</p>
+<ol>
+<li>替换主题</li>
+</ol>
+<p>我们可以在<a href="https://www.gnome-look.org/" target="_blank" rel="noopener">https://www.gnome-look.org/</a>这个网站上下载主题，然后进行替换，具体操作请参考博客<a href="https://blog.csdn.net/github_36498175/article/details/80161362" target="_blank" rel="noopener">Linux也可以这样美——Ubuntu18.04安装、配置、美化-踩坑记</a></p>
+<h1 id="安装WPS"><a href="#安装WPS" class="headerlink" title="安装WPS"></a>安装WPS</h1><p>&emsp;&emsp;我们要在Ubuntu上看PPT和Word的话，用WPS最合适了。首先到<a href="http://wps-community.org/downloads" target="_blank" rel="noopener">WPS官网</a>下载最新安装包，然后运行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo dpkg -i ~/Downloads/wps-office*.deb</span><br><span class="line">sudo apt-get -f install</span><br></pre></td></tr></table></figure>
+<h1 id="安装截图工具shutter"><a href="#安装截图工具shutter" class="headerlink" title="安装截图工具shutter"></a>安装截图工具shutter</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install shutter</span><br></pre></td></tr></table></figure>
+<h1 id="安装网易云音乐"><a href="#安装网易云音乐" class="headerlink" title="安装网易云音乐"></a>安装网易云音乐</h1><p>&emsp;&emsp;首先到<a href="https://music.163.com/#/download" target="_blank" rel="noopener">网易云音乐官网</a>下载最新安装包，然后运行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dpkg -i ~/Downloads/netease-cloud-music*.deb</span><br></pre></td></tr></table></figure>
+<h1 id="安装vscode"><a href="#安装vscode" class="headerlink" title="安装vscode"></a>安装vscode</h1><p>&emsp;&emsp;超级好用的代码编辑器，可以安装各种插件，功能非常强大。首先到<a href="https://code.visualstudio.com/" target="_blank" rel="noopener">vscode官网</a>下载最新安装包，然后运行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dpkg -i ~/Downloads/code*.deb</span><br></pre></td></tr></table></figure>
+<h1 id="安装系统指示器syspeek"><a href="#安装系统指示器syspeek" class="headerlink" title="安装系统指示器syspeek"></a>安装系统指示器syspeek</h1><p>&emsp;&emsp;可以监控系统运行的状态<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo add-apt-repository ppa:nilarimogard/webupd8</span><br><span class="line">sudo apt-get update &amp;&amp;　sudo apt-get install -y syspeek</span><br></pre></td></tr></table></figure></p>
+<h1 id="科学上网安装ssr"><a href="#科学上网安装ssr" class="headerlink" title="科学上网安装ssr"></a>科学上网安装ssr</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">wget http://www.djangoz.com/ssr</span><br><span class="line">sudo mv ssr /usr/local/bin</span><br><span class="line">sudo chmod 766 /usr/local/bin/ssr</span><br><span class="line">ssr install</span><br><span class="line">ssr config</span><br></pre></td></tr></table></figure>
+<h1 id="Privoxy配置-实现终端翻墙"><a href="#Privoxy配置-实现终端翻墙" class="headerlink" title="Privoxy配置(实现终端翻墙)"></a>Privoxy配置(实现终端翻墙)</h1><ol>
+<li><p>安装Privoxy</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install -y privoxy</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置Privoxy</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 添加本地ssr服务到配置文件</span><br><span class="line">echo &apos;forward-socks5 / 127.0.0.1:1080 .&apos; &gt;&gt; /etc/privoxy/config</span><br><span class="line"># Privoxy 默认监听端口是是8118</span><br><span class="line">export http_proxy=http://127.0.0.1:8118</span><br><span class="line">export https_proxy=http://127.0.0.1:8118</span><br><span class="line">export no_proxy=localhost</span><br><span class="line"># 启动服务</span><br><span class="line">systemctl start privoxy.service</span><br></pre></td></tr></table></figure>
+<ol>
+<li>proxy 环境变量</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># privoxy默认监听端口为8118</span><br><span class="line">export http_proxy=http://127.0.0.1:8118</span><br><span class="line">export https_proxy=http://127.0.0.1:8118</span><br><span class="line">export no_proxy=localhost</span><br><span class="line"># no_proxy是不经过privoxy代理的地址</span><br><span class="line"># 只能填写具体的ip、域名后缀，多个条目之间使用&apos;,&apos;逗号隔开</span><br><span class="line"># 比如: export no_proxy=&quot;localhost, 192.168.1.1, ip.cn, chinaz.com&quot;</span><br><span class="line"># 访问 localhost、192.168.1.1、ip.cn、*.ip.cn、chinaz.com、*.chinaz.com 将不使用代理</span><br></pre></td></tr></table></figure>
+<ol>
+<li>管理脚本</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"># Author Samzong.lu</span><br><span class="line">case $1 in</span><br><span class="line">	start)</span><br><span class="line">		ssr start &amp;&gt; /var/log/ssr-local.log</span><br><span class="line">		systemctl start privoxy.service</span><br><span class="line">		export http_proxy=http://127.0.0.1:8118</span><br><span class="line">		export https_proxy=http://127.0.0.1:8118</span><br><span class="line">		export no_proxy=&quot;localhost, ip.cn, chinaz.com&quot;</span><br><span class="line">		;;</span><br><span class="line">	stop)</span><br><span class="line">		unset http_proxy https_proxy no_proxy</span><br><span class="line">		systemctl stop privoxy.service</span><br><span class="line">		ssr stop &amp;&gt; /var/log/ssr-log.log</span><br><span class="line">		;;</span><br><span class="line">	autostart)</span><br><span class="line">		echo &quot;ssr start&quot; &gt;&gt; /etc/rc.local</span><br><span class="line">		systemctl enable privoxy.service</span><br><span class="line">		echo &quot;http_proxy=http://127.0.0.1:8118&quot; &gt;&gt; /etc/bashrc</span><br><span class="line">		echo &quot;https_proxy=http://127.0.0.1:8118&quot; &gt;&gt; /etc/bashrc</span><br><span class="line">		echo &quot;no_proxy=&apos;localhost, ip.cn, chinaz.com&apos;&quot; &gt;&gt; /etc/bashrc</span><br><span class="line">		;;</span><br><span class="line">	*)</span><br><span class="line">		echo &quot;usage: source $0 start|stop|autostart&quot;</span><br><span class="line">		exit 1</span><br><span class="line">		;;</span><br><span class="line">esac</span><br></pre></td></tr></table></figure>
+<ol>
+<li>使用</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mv gfwlist2privoxy/ssr_manager /usr/local/bin</span><br><span class="line">chmod +x ssr_manager</span><br><span class="line"># 启动服务</span><br><span class="line">ssr_manager start</span><br><span class="line"># 关闭服务</span><br><span class="line">ssr_manager stop </span><br><span class="line"># 添加开机自启动</span><br><span class="line">ssr_manager autostart</span><br></pre></td></tr></table></figure>
+<h1 id="卸载firefox浏览器"><a href="#卸载firefox浏览器" class="headerlink" title="卸载firefox浏览器"></a>卸载firefox浏览器</h1><p>&emsp;&emsp;如果你已经安装了chrome那就可以卸载firefox浏览器啦<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get purge firefox*</span><br></pre></td></tr></table></figure></p>
+<h1 id="卸载一些用不到的自带软件"><a href="#卸载一些用不到的自带软件" class="headerlink" title="卸载一些用不到的自带软件"></a>卸载一些用不到的自带软件</h1><p>&emsp;&emsp;如果你已经安装了chrome那就可以卸载firefox浏览器啦<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get remove thunderbird totem rhythmbox empathy brasero simple-scan gnome-mahjongg aisleriot gnome-mines cheese transmission-common gnome-orca webbrowser-app gnome-sudoku landscape-client-ui-install  </span><br><span class="line">sudo apt-get remove onboard deja-dup</span><br></pre></td></tr></table></figure></p>
+<h1 id="删除libreoffice，Amazon的链接"><a href="#删除libreoffice，Amazon的链接" class="headerlink" title="删除libreoffice，Amazon的链接"></a>删除libreoffice，Amazon的链接</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get remove libreoffice-common unity-webapps-common</span><br></pre></td></tr></table></figure>
+
+    </div>
+</article>
+
+
+<div id="comments-template"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script>
+	if(!window.commentConfig) {
+      window.commentConfig = {}
+      window.commentConfig.title = '安装Ubuntu系统必做的事情（常用软件安装＋系统配置）'
+    }
+</script>
+
+                </div>
+                <aside class="col-md-4 gal-left" id="sidebar">
+    <!-- 此为sidebar的搜索框, 非搜索结果页面 -->
+<aside id="sidebar-search">
+    <div class="search hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <form class="form-inline clearfix" id="search-form" method="get" action="/search/index.html">
+            <input type="text" name="s" class="form-control" id="searchInput" placeholder="搜索文章~" autocomplete="off">
+            <button class="btn btn-danger btn-gal" type="submit">
+                <i class="fa fa-search"></i>
+            </button>
+        </form>
+    </div>
+</aside>
+    <aside id="sidebar-author">
+    <div class="panel panel-gal" data-aos="flip-right" data-aos-duration="3000">
+        <div class="panel-heading" style="text-align: center">
+            <i class="fa fa-quote-left"></i>
+            Labmem No.1
+            <i class="fa fa-quote-right"></i>
+        </div>
+        <div class="author-panel text-center">
+            <img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3485132381,143374086&fm=26&gp=0.jpg" width="140" height="140" alt="个人头像" class="author-image">
+            <p class="author-description"></p><p>一切都是命运石之门的选择</p>
+<p></p>
+        </div>
+    </div>
+</aside>
+    
+    <aside id="sidebar-recent_comments">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-comments"></i>
+            最新评论
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush"></ul>
+    </div>
+</aside>
+    
+    <!-- 要配置好leancloud才能开启此小工具 -->
+    
+    <aside id="sidebar-hot_posts">
+    <div class="panel panel-gal hot hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-fire"></i>
+            最热文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush"></ul>
+    </div>
+</aside>
+    
+    
+    <aside id="sidebar-recent_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            近期文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/22/UbuntuToDo/">安装Ubuntu系统必做的事情（常用软件安装＋系统配置）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/mxnet-hrbrid-forward/">MXNet学习笔记：HybridBlock类hybrid_forwar()函数解析</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/mxnet-set-learning-rate/">MXNet使用技巧：单独设置网络中每层的学习率</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/python-argparse/">python常用库总结：argparse库</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/faster-rcnn/">Faster-RCNN论文细节原理解读+代码实现gluoncv(MXNet)</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/traits/">C++ Traits简介（OpenCV中DataType类分析）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode4/">LeetCode 第四题 Median of Two Sorted Arrays（计算两个有序数组的中位数）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode5/">LeetCode 第5题 Longest Palindromic Substring 最长回文子串</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/mxnetAPIobjectdetection/">MXNet中目标检测API使用总结：MultiBoxDetection、MultiBoxPrior、MultiBoxTarget</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode2/">LeetCode 第2题 Add Two Numbers</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    <aside id="sidebar-rand_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            随机文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/HDU6345/">2018百度之星程序设计大赛（资格赛） 子串查询 HDU6345 解题思路</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/UVa11536/">UVa11536 Smallest Sub-Array</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/22/UbuntuToDo/">安装Ubuntu系统必做的事情（常用软件安装＋系统配置）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/faster-rcnn/">Faster-RCNN论文细节原理解读+代码实现gluoncv(MXNet)</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode2/">LeetCode 第2题 Add Two Numbers</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode5/">LeetCode 第5题 Longest Palindromic Substring 最长回文子串</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/mxnet-set-learning-rate/">MXNet使用技巧：单独设置网络中每层的学习率</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/object-detection-note1/">物体检测Object Detection学习笔记（MXNet）（一）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/object-detection-note2/">物体检测Object Detection学习笔记（MXNet）（二）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/paper-note/">论文笔记 Deep Learning for Generic Object Detection A Survey （一）</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    <aside id="gal-sets">
+        <div class="panel panel-gal hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+            <ul class="nav nav-pills pills-gal">
+
+                
+                <li>
+                    <a href="/2019/01/22/UbuntuToDo/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                </li>
+                
+                
+                <li>
+                    <a href="/2019/01/22/UbuntuToDo/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                </li>
+                
+                
+                <li>
+                    <a href="/2019/01/22/UbuntuToDo/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                </li>
+                
+            </ul>
+            <div class="tab-content">
+                
+                <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
+    
+    <a href="/tags/暴力枚举/" style="font-size: 13.141105029052856px;" class="tag-cloud-link">暴力枚举</a>
+    
+    <a href="/tags/剪枝/" style="font-size: 19.769869936328064px;" class="tag-cloud-link">剪枝</a>
+    
+    <a href="/tags/线段树/" style="font-size: 19.61822028673796px;" class="tag-cloud-link">线段树</a>
+    
+    <a href="/tags/前缀和/" style="font-size: 15.658226533716036px;" class="tag-cloud-link">前缀和</a>
+    
+    <a href="/tags/二分法/" style="font-size: 10.550792908312445px;" class="tag-cloud-link">二分法</a>
+    
+    <a href="/tags/git命令/" style="font-size: 11.953700897280585px;" class="tag-cloud-link">git命令</a>
+    
+    <a href="/tags/mxnet/" style="font-size: 18.463286951960892px;" class="tag-cloud-link">mxnet</a>
+    
+    <a href="/tags/faster-rcnn/" style="font-size: 13.629469398682595px;" class="tag-cloud-link">faster_rcnn</a>
+    
+    <a href="/tags/java/" style="font-size: 8.42548516305457px;" class="tag-cloud-link">java</a>
+    
+    <a href="/tags/jsp/" style="font-size: 15.518314729564427px;" class="tag-cloud-link">jsp</a>
+    
+    <a href="/tags/servlet/" style="font-size: 13.2402781032623px;" class="tag-cloud-link">servlet</a>
+    
+    <a href="/tags/物体检测/" style="font-size: 9.078053052165702px;" class="tag-cloud-link">物体检测</a>
+    
+    <a href="/tags/论文/" style="font-size: 15.86910768840404px;" class="tag-cloud-link">论文</a>
+    
+    <a href="/tags/python/" style="font-size: 15.289474762376486px;" class="tag-cloud-link">python</a>
+    
+    <a href="/tags/深度学习/" style="font-size: 14.52561093029589px;" class="tag-cloud-link">深度学习</a>
+    
+</div>
+                
+                
+                <div class="friend-links tab-pane nav bs-sidenav fade" id="sidebar-friend-links">
+    
+    <li>
+        <a href="http://baidu.com/" target="_blank">百度</a>
+    </li>
+    
+    <li>
+        <a href="http://www.google.com/" target="_blank">谷歌</a>
+    </li>
+    
+    <li>
+        <a href="http://www.moe123.com/" target="_blank">木有啊</a>
+    </li>
+    
+</div>
+                
+                
+                <div class="links tab-pane nav bs-sidenav fade" id="sidebar-links">
+    
+    <li>
+        <a href="https://github.com/JJXiangJiaoJun/" target="_blank">Github</a>
+    </li>
+    
+    <li>
+        <a href="https://blog.csdn.net/XiangJiaoJun_/" target="_blank">CSDN</a>
+    </li>
+    
+    <li>
+        <a href="https://www.zhihu.com/people/ye-xiao-bai-11-96/activities" target="_blank">知乎</a>
+    </li>
+    
+</div>
+                
+            </div>
+        </div>
+    </aside>
+    
+</aside>
+            </div>
+        </div>
+    </div>
+    <footer id="gal-footer">
+    <div class="container">
+        Copyright © 2018 Labmem No.1 Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>.&nbsp;Theme by <a href="https://github.com/ZEROKISEKI" target="_blank">AONOSORA</a>
+    </div>
+</footer>
+
+<!-- 回到顶端 -->
+<div id="gal-gotop">
+    <i class="fa fa-angle-up"></i>
+</div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"pluginJsPath":"lib/","pluginRootPath":"live2dw/"});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+<script src="/js/activate-power-mode.js"></script>
+<script>
+
+    // 配置highslide
+	hs.graphicsDir = '/js/highslide/graphics/'
+    hs.outlineType = "rounded-white";
+    hs.dimmingOpacity = 0.8;
+    hs.outlineWhileAnimating = true;
+    hs.showCredits = false;
+    hs.captionEval = "this.thumb.alt";
+    hs.numberPosition = "caption";
+    hs.align = "center";
+    hs.transitions = ["expand", "crossfade"];
+    hs.lang.number = '共%2张图, 当前是第%1张';
+    hs.addSlideshow({
+      interval: 5000,
+      repeat: true,
+      useControls: true,
+      fixedControls: "fit",
+      overlayOptions: {
+        opacity: 0.75,
+        position: "bottom center",
+        hideOnMouseOut: true
+      }
+    })
+
+    // 初始化aos
+    AOS.init({
+      duration: 1000,
+      delay: 0,
+      easing: 'ease-out-back'
+    });
+
+</script>
+<script>
+	POWERMODE.colorful = 'true';    // make power mode colorful
+	POWERMODE.shake = 'true';       // turn off shake
+	// TODO 这里根据具体情况修改
+	document.body.addEventListener('input', POWERMODE);
+</script>
+<script>
+    window.slideConfig = {
+      prefix: '/imgs/slide/background',
+      ext: 'jpg',
+      maxCount: '21'
+    }
+</script>
+<script src="/js/hs.js"></script>
+<script src="/js/blog.js"></script>
+
+
+<script>
+    window.hot_posts_count = '10'
+    // window.use_leancloud = 'true'
+</script>
+<script src="/js/comment/leancloud.js"></script>
+
+
+<script src="https://myau.moe/js/comment/gitment.browser.js"></script>
+<script>
+    if(window.commentConfig) {
+      window.commentConfig.id = 'Tue Jan 22 2019 15:41:19 GMT+0800'
+      window.commentConfig.owner = 'JJXiangJiaoJun'
+      window.commentConfig.repo = 'comment_page'
+      window.commentConfig.client_id = 'd7df3d5d159f81371d76'
+      window.commentConfig.client_secret = '3794527fca067871d3795782ae7fd14f94ce3a74'
+      window.commentConfig.redirect_uri = 'https://hongbb.top'
+    } else {
+      window.commentConfig = {
+      	id: 'Tue Jan 22 2019 15:41:19 GMT+0800',
+        owner: 'JJXiangJiaoJun',
+        repo: 'comment_page',
+        client_id: 'd7df3d5d159f81371d76',
+        client_secret: '3794527fca067871d3795782ae7fd14f94ce3a74',
+        redirect_uri: 'https://hongbb.top'
+      }
+    }
+</script>
+<script src="/js/comment/gitment.js"></script>
+
+</html>

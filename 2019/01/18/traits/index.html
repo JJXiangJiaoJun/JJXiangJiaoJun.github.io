@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Labmem No.1">
+    
+    <meta name="description" content="一切都是命运石之门的选择">
+    
+    
+    
+    
+    
+    
+    <title>C++ Traits简介（OpenCV中DataType类分析） | 爱吃咸鱼的喵の无名小站</title>
+    <link href="”https://github.com/JJXiangJiaoJun“" rel="”prefetch”">
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/aos.css">
+<link rel="stylesheet" href="/css/style.css">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/aos.js"></script>
+    <script src="/js/highslide/highslide-full.min.js"></script>
+    <link rel="stylesheet" href="/js/highslide/highslide.css">
+    <style type="text/css">
+        @media (max-width: 768px) {
+            body {
+                background-color: #f0f0f0;
+                background: url('/imgs/mobile.jpg');
+                background-attachment: fixed;
+            }
+        }
+    </style>
+    
+    <script src="//cdn1.lncld.net/static/js/3.4.2/av-min.js"></script>
+    <script>
+      AV.init({
+        appId: 'uJUp6NroM9R4yTpnGYBF7hhw-gzGzoHsz',
+        appKey: 'w5Qtn48qXMY1nyCSf7oahEM7'
+      })
+    </script>
+    
+    <!--<script type="text/javascript">
+      if (document.images) {
+        var avatar = new Image();
+        avatar.src = '/imgs/https:/ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3485132381,143374086&fm=26&gp=0.jpg'
+        var previews = 'preview1.jpg,preview2.jpg,preview12.jpeg,preview3.jpg,preview4.jpg,preview5.jpg,preview6.jpeg,preview7.png,preview8.jpeg,preview9.jpeg,preview10.jpg,preview11.jpg,preview12.jpeg,preview13.jpg,preview14.jpeg,preview15.jpeg,preview16.png'.split(',')
+        var previewsPreLoad = []
+        for(var i = 0; i < length; i++) {
+          previewsPreLoad.push(new Image())
+          previewsPreLoad[previewsPreLoad.length - 1].src = '/imgs/preview' + previews[i]
+        }
+      }
+    </script>--><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head></html>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- 背景轮播图功能 -->
+    <section class="hidden-xs">
+    <ul class="cb-slideshow">
+        <li><span>天若</span></li>
+        <li><span>有情</span></li>
+        <li><span>天亦老</span></li>
+        <li><span>我为</span></li>
+        <li><span>长者</span></li>
+        <li><span>续一秒</span></li>
+    </ul>
+</section>
+    <!-- 欧尼酱功能, 谁用谁知道 -->
+    
+    <header class="navbar navbar-inverse" id="gal-header">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".bs-navbar-collapse" aria-expanded="false">
+                <span class="fa fa-lg fa-reorder"></span>
+            </button>
+            <a href="https://github.com/JJXiangJiaoJun">
+                
+                <!-- 这里background使用imgs/${logo_image}(路径文件名) -->
+                <style>
+                    #gal-header .navbar-brand {
+                        width: 200px;
+                        height: 50px;
+                        display: block;
+                        background: url('/imgs/minilogo.jpeg') no-repeat;
+                    }
+                </style>
+                    
+                <div class="navbar-brand"></div>
+                
+            </a>
+        </div>
+        <div class="collapse navbar-collapse bs-navbar-collapse">
+            <ul class="nav navbar-nav" id="menu-gal">
+                
+                
+                <li class="">
+                    <a href="/">
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/archives">
+                        <i class="fa fa-archive"></i>归档
+                    </a>
+                </li>
+                
+                
+                
+                
+                <li class="dropdown">
+                    <!-- TODO 添加hover dropdown效果 -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-hover="dropdown">
+                        <i class="fa fa-list"></i>分类
+                    </a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        <li>
+                            <a href="/categories/算法与数据结构/">算法与数据结构</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/git/">git</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/Ubuntu系统/">Ubuntu系统</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/深度学习/">深度学习</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/Java后端/">Java后端</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/深度学习论文/">深度学习论文</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/python常用库/">python常用库</a>
+                        </li>
+                        
+                        
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                
+                
+                <li class="dropdown">
+                    <!-- TODO 添加hover dropdown效果 -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-hover="dropdown">
+                        <i class="fa fa-tags"></i>标签
+                    </a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        <li>
+                            <a href="/tags/暴力枚举/">暴力枚举</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/剪枝/">剪枝</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/线段树/">线段树</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/前缀和/">前缀和</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/二分法/">二分法</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/git命令/">git命令</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/mxnet/">mxnet</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/faster-rcnn/">faster_rcnn</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/java/">java</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/jsp/">jsp</a>
+                        </li>
+                        
+                        
+                        <li>
+                            <a href="/tags">...</a>
+                        </li>
+                        
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                
+                <li class="">
+                    <a href="/message">
+                        <i class="fa fa-commenting"></i>留言板
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/about">
+                        <i class="fa fa-user"></i>关于我
+                    </a>
+                </li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</header>
+    <div id="gal-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 gal-right" id="mainstay">
+                    
+<article class="article well article-body" id="article">
+    <div class="breadcrumb">
+        <i class="fa fa-home"></i>
+        <a href="https://github.com/JJXiangJiaoJun">爱吃咸鱼的喵の无名小站</a>
+        >
+        <span>C++ Traits简介（OpenCV中DataType类分析）</span>
+    </div>
+    <!-- 大型设备详细文章 -->
+    <div class="hidden-xs">
+        <div class="title-article">
+            <h1>
+                <a href="/2019/01/18/traits/">C++ Traits简介（OpenCV中DataType类分析）</a>
+            </h1>
+        </div>
+        <div class="tag-article">
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2019-01-18
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-eye"></i>
+            </span>
+            
+        </div>
+    </div>
+    <!-- 小型设备详细文章 -->
+    <div class="visible-xs">
+        <center>
+            <div class="title-article">
+                <h4>
+                    <a href="/2019/01/18/traits/">C++ Traits简介（OpenCV中DataType类分析）</a>
+                </h4>
+            </div>
+            <p>
+                <i class="fa fa-calendar"></i> 2019-01-18
+            </p>
+            <p>
+                
+                
+                <i class="fa fa-eye"></i>
+                
+            </p>
+        </center>
+    </div>
+    <div class="content-article">
+        <p>&emsp;&emsp;如果你能看完这篇博客，并且能初步了解C++中Trait编程技巧的用法，那么恭喜你！你对于C++的理解已经比别人更深一层次了~O(∩_∩)O。不过Traits技巧我也只是略懂皮毛，这篇博客主要也是说说我的浅显理解，如有错误，敬请谅解 ~</p>
+<ul>
+<li><a href="#traits%E7%AE%80%E4%BB%8B">Traits简介</a></li>
+<li><a href="#%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E4%BE%8B%E5%AD%90">一个简单的例子</a></li>
+<li><a href="#opencv%E4%B8%AD%E7%9A%84datatype%E7%B1%BB">OpenCV中的DataType类</a></li>
+<li><a href="#%E6%80%BB%E7%BB%93">总结</a></li>
+</ul>
+<h1 id="Traits简介"><a href="#Traits简介" class="headerlink" title="Traits简介"></a>Traits简介</h1><p>&emsp;&emsp;初次接触到 _Traits_ 是在学习OpenCV的过程中，OpenCV中有一个DataType类，当时很不理解这个类到底是做什么用的，下面是关于它的描述：</p>
+<blockquote>
+<p>When OpenCV library functions need to communicate the concept of a particular data type, they do so by creating an object of type cv::DataType&lt;&gt;. cv::DataType&lt;&gt; itself is a template, and so the actual objects passed around are specializations of this template. This is an example of what in C++ are generally called traits.This allows the cv::DataType&lt;&gt; object to contain both runtime information about the type, as well as typedef statements in its own definition that allow it to refer to the same type at compile time.</p>
+</blockquote>
+<p>&emsp;&emsp;我对这段话的理解是，cv::DataType&lt;&gt;是一个模板类，当OpenCV中<strong>库函数</strong>需要传递<strong>特定数据类型</strong>的某些概念信息时，那么就可以通过创建cv::DataType&lt;&gt; 类型的对象来实现。我们使用的不是它本身，而是它特定的实例化对象。C++中这种用法叫做<strong>Traits</strong>。</p>
+<p>&emsp;&emsp;说实话，第一次看这一篇章，我也没有看懂cv::DataType&lt;&gt;到底是做什么用的，不过下面讲解一下<strong>Traits</strong>后，就能明白上面说意思了。</p>
+<p>&emsp;&emsp;简单来说，如果我们封装了一个算法，这个算法可能会由于输入数据类型的不同导致算法内部处理逻辑的不同（比如说传入的是int类型我们做一种操作，而传入的是double类型我们将进行另外一种操作），而我们并不想由于这种原因修改算法的封装时，<strong>Traits</strong>就派上用场了，它可以帮我们很方便的实现功能，而又不破坏函数的封装。<br>&emsp;&emsp;<strong>Traits</strong>在开发者中运用特别多，主要也就是为了解决用户的负担，让一些复杂逻辑处理留给开发者来做，用户只需要根据要求调用API函数即可。</p>
+<hr>
+<h1 id="一个简单的例子"><a href="#一个简单的例子" class="headerlink" title="一个简单的例子"></a>一个简单的例子</h1><p>&emsp;&emsp;比如我们编写了一个模板类，其中有一个sort函数，我们有以下需求：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">输入类型参数</th>
+<th style="text-align:center">操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">int类型</td>
+<td style="text-align:center">将所有的数加5后排序</td>
+</tr>
+<tr>
+<td style="text-align:center">double类型</td>
+<td style="text-align:center">将所有的数减去2.0后排序</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> _Tp&gt; <span class="class"><span class="keyword">class</span> <span class="title">algorithm</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"> </span><br><span class="line">   _<span class="function">Tp* <span class="title">sort</span><span class="params">(_Tp *<span class="built_in">array</span>)</span></span></span><br><span class="line"><span class="function">   </span>&#123;</span><br><span class="line">     <span class="comment">//do something ......</span></span><br><span class="line">   &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;程序在编译时，并不知道模板T是什么类型的参数，这个参数需要在程序运行实例化创建一个对象时，才具体知道T是什么。所以我们不能直接通过<code>if T is xxx</code>，这种方式来处理我们的逻辑。</p>
+<p>&emsp;&emsp;一种naive的处理方式为再为类模板添加一个参数，指明传入的参数是什么类型。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TYPE_INT 1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TYPE_DOUBLE 2</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ..........</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> _Tp,<span class="keyword">int</span> type&gt; <span class="class"><span class="keyword">class</span> <span class="title">algorithm</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">   <span class="comment">//do something ......</span></span><br><span class="line">   _<span class="function">Tp* <span class="title">sort</span><span class="params">(_Tp *<span class="built_in">array</span>)</span></span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;我们实例化时方式如下<code>algorithm&lt;int,1&gt;</code>，这样我们的确能实现功能，不过这样就变成了，由用户来指明输入的参数类型。当我们可能有许多的类型需要判断时，我们的输入模板可能会变成这样<code>template&lt;typename _Tp,int type,bool isxxx,int size............&gt;</code>，这样严重的破坏了函数的封装性，用户也并不关心<code>sort()</code>函数内部实现的逻辑，这种判断工作应该交给开发者完成。</p>
+<p>&emsp;&emsp;这时候就轮到我们的<strong>Traits</strong>技巧登场啦，看如下代码所示：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TYPE_DEFAULT 0</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TYPE_INT 1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TYPE_DOUBLE 2</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ..........</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> _Tp&gt; <span class="class"><span class="keyword">class</span> <span class="title">traits</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"></span><br><span class="line">   <span class="keyword">static</span> <span class="keyword">int</span> data_type = TYPE_DEFAULT;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;&gt; <span class="class"><span class="keyword">class</span> <span class="title">traits</span>&lt;int&gt;</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">   </span><br><span class="line">   <span class="keyword">static</span> <span class="keyword">int</span> data_type = TYPE_INT;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;&gt; <span class="class"><span class="keyword">class</span> <span class="title">traits</span>&lt;double&gt;</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"> </span><br><span class="line">   <span class="keyword">static</span> <span class="keyword">int</span> data_type = TYPE_DOUBLE;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;上面我们定义的模板类<strong>traits</strong>都是同一个类，其中第一个没有给定类型参数的为默认的实例化模板，但是后面两个给定了参数（int、double）的为显示具体化，<strong>显示具体化优先于常规模板</strong>，简单来说也就是如果给定了一个显示具体化的模板，当输入类型为该类型时，它会执行显示具体化模板中的代码，上面<code>traits&lt;int&gt;::data_type = TPYE_INT</code>，<code>traits&lt;double&gt;::data_type = TYPE_DOUBLE</code>。有了<strong>traits</strong>我们上面定义的函数中可以这样写，而不用修改函数的任何封装。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TYPE_INT 1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> TYPE_DOUBLE 2</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ..........</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> _Tp,<span class="keyword">int</span> type&gt; <span class="class"><span class="keyword">class</span> <span class="title">algorithm</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">   <span class="comment">//do something ......</span></span><br><span class="line">   _<span class="function">Tp* <span class="title">sort</span><span class="params">(_Tp *<span class="built_in">array</span>)</span></span></span><br><span class="line"><span class="function">   </span>&#123;</span><br><span class="line">   		<span class="keyword">switch</span>(traits&lt;_Tp&gt;::data_type)</span><br><span class="line">   		&#123;</span><br><span class="line">   			<span class="keyword">case</span> TYPE_INT:</span><br><span class="line">   			<span class="comment">//do something</span></span><br><span class="line">   			<span class="keyword">case</span> TYPE_DOUBLE:</span><br><span class="line">   			<span class="comment">//do something</span></span><br><span class="line">   			........</span><br><span class="line">   		&#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;通过上面这种技术，我们将<strong>程序在运行时候的信息</strong>和<strong>程序编译时候的信息</strong>绑定在了一起，这也就是OpenCV中的描述。我们可以很巧妙的判断，一个模板类输入参数类型到底是什么。C++ STL库中的泛型算法就广泛用到了这种编程技巧。</p>
+<blockquote>
+<p>This allows the cv::DataType&lt;&gt; object to contain both runtime information about the type, as well as typedef statements in its own definition that allow it to refer to the same type at compile time.</p>
+</blockquote>
+<hr>
+<h1 id="OpenCV中的DataType类"><a href="#OpenCV中的DataType类" class="headerlink" title="OpenCV中的DataType类"></a>OpenCV中的DataType类</h1><p>&emsp;&emsp;Datatype类正是实现了<strong>Traits</strong>的功能，我们知道OpenCV中的库函数都支持我们输入各种类型的数据，即使数据类型与不是OpenCV的原生数据类型，比如说下面代码，我们通过<code>STL</code>中的复数类型来初始化我们的矩阵，而其并不是OpenCV原生数据类型，这是由于OpenCV定义了<code>DataType&lt;std::complex&lt;_Tp&gt; &gt;</code>这样的一个显示具体化模板。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Mat B = Mat_&lt;<span class="built_in">std</span>::<span class="keyword">complex</span>&lt;<span class="keyword">double</span>&gt; &gt;(<span class="number">3</span>, <span class="number">3</span>);</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;OpenCV中DataType类的定义如下,我们知道数据类型不同时枚举体中的各个属性值都不一样，比如说uchar类型的数据channels=1，而Point类型的channels=2。<br>&emsp;&emsp;我们在调用OpenCV库函数时，不同数据类型的处理过程可能会不一样，所以OpenCV为每一个数据类型都定义其显示具体化模板，通过<code>typedef</code>语句，我们可以很方便的通过调用<code>DataType&lt;_Tp&gt;::value_type</code>来获取当前实例化模板的数据类型。<br>&emsp;&emsp;OpenCV中的库函数也是通过这样对不同的数据类型进行不同的处理。而我们用户调用时，只需要给定输入类型就OK了，并不需要我们输入一些额外的参数。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> _Tp&gt; <span class="class"><span class="keyword">class</span> <span class="title">DataType</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">typedef</span> _Tp         value_type;</span><br><span class="line">    <span class="keyword">typedef</span> value_type  work_type;</span><br><span class="line">    <span class="keyword">typedef</span> value_type  channel_type;</span><br><span class="line">    <span class="keyword">typedef</span> value_type  vec_type;</span><br><span class="line">    <span class="keyword">enum</span> &#123; generic_type = <span class="number">1</span>,</span><br><span class="line">           depth        = <span class="number">-1</span>,</span><br><span class="line">           channels     = <span class="number">1</span>,</span><br><span class="line">           fmt          = <span class="number">0</span>,</span><br><span class="line">           type = CV_MAKETYPE(depth, channels)</span><br><span class="line">         &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;OpenCV中一些显示具体化的类模板如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;&gt; <span class="class"><span class="keyword">class</span> <span class="title">DataType</span>&lt;bool&gt;</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">typedef</span> <span class="keyword">bool</span>        value_type;</span><br><span class="line">    <span class="keyword">typedef</span> <span class="keyword">int</span>         work_type;</span><br><span class="line">    <span class="keyword">typedef</span> value_type  channel_type;</span><br><span class="line">    <span class="keyword">typedef</span> value_type  vec_type;</span><br><span class="line">    <span class="keyword">enum</span> &#123; generic_type = <span class="number">0</span>,</span><br><span class="line">           depth        = CV_8U,</span><br><span class="line">           channels     = <span class="number">1</span>,</span><br><span class="line">           fmt          = (<span class="keyword">int</span>)<span class="string">'u'</span>,</span><br><span class="line">           type         = CV_MAKETYPE(depth, channels)</span><br><span class="line">         &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> _Tp&gt; <span class="class"><span class="keyword">class</span> <span class="title">DataType</span>&lt; Complex&lt;_Tp&gt; &gt;</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">typedef</span> Complex&lt;_Tp&gt; value_type;</span><br><span class="line">    <span class="keyword">typedef</span> value_type   work_type;</span><br><span class="line">    <span class="keyword">typedef</span> _Tp          channel_type;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">enum</span> &#123; generic_type = <span class="number">0</span>,</span><br><span class="line">           depth        = DataType&lt;channel_type&gt;::depth,</span><br><span class="line">           channels     = <span class="number">2</span>,</span><br><span class="line">           fmt          = DataType&lt;channel_type&gt;::fmt + ((channels - <span class="number">1</span>) &lt;&lt; <span class="number">8</span>),</span><br><span class="line">           type         = CV_MAKETYPE(depth, channels) &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">typedef</span> Vec&lt;channel_type, channels&gt; vec_type;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;&gt; <span class="class"><span class="keyword">class</span> <span class="title">DataType</span>&lt;Range&gt;</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">typedef</span> Range      value_type;</span><br><span class="line">    <span class="keyword">typedef</span> value_type work_type;</span><br><span class="line">    <span class="keyword">typedef</span> <span class="keyword">int</span>        channel_type;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">enum</span> &#123; generic_type = <span class="number">0</span>,</span><br><span class="line">           depth        = DataType&lt;channel_type&gt;::depth,</span><br><span class="line">           channels     = <span class="number">2</span>,</span><br><span class="line">           fmt          = DataType&lt;channel_type&gt;::fmt + ((channels - <span class="number">1</span>) &lt;&lt; <span class="number">8</span>),</span><br><span class="line">           type         = CV_MAKETYPE(depth, channels)</span><br><span class="line">         &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">typedef</span> Vec&lt;channel_type, channels&gt; vec_type;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;最后我们回头看一下最先说的OpenCV中对于DataType数据结构的描述，我们的确是使用了其各种类型实例化对象，也正如OpenCV中描述的那样，我们将编译时的类型信息转换为了与OpenCV兼容的数据类型标识符。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// allocates a 30x40 floating-point matrix</span></span><br><span class="line"><span class="function">Mat <span class="title">A</span><span class="params">(<span class="number">30</span>, <span class="number">40</span>, DataType&lt;<span class="keyword">float</span>&gt;::type)</span></span>;</span><br><span class="line"></span><br><span class="line">Mat B = Mat_&lt;<span class="built_in">std</span>::<span class="keyword">complex</span>&lt;<span class="keyword">double</span>&gt; &gt;(<span class="number">3</span>, <span class="number">3</span>);</span><br><span class="line"><span class="comment">// the statement below will print 6, 2 , that is depth == CV_64F, channels == 2</span></span><br><span class="line"><span class="built_in">cout</span> &lt;&lt; B.depth() &lt;&lt; <span class="string">", "</span> &lt;&lt; B.channels() &lt;&lt; <span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
+<hr>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>&emsp;&emsp;C++中的模板用法真是博大精深，正是有了<strong>Traits</strong>技巧，STL中的算法才能够支持各种数据类型，那么如果你想为你的程序写一个通用的算法，而并不想因为要处理不同的输入数据类型而破坏函数的封装时，不妨试试<strong>Traits</strong>吧！</p>
+<p>==参考资料==</p>
+<p><a href="https://blog.csdn.net/my_business/article/details/7891687" target="_blank" rel="noopener">【C++模版之旅】神奇的Traits</a><br><a href="https://blog.csdn.net/erorr/article/details/23569957" target="_blank" rel="noopener">我对C++ Traits编程技法的一点点理解</a></p>
+
+    </div>
+</article>
+
+
+<div id="comments-template"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script>
+	if(!window.commentConfig) {
+      window.commentConfig = {}
+      window.commentConfig.title = 'C++ Traits简介（OpenCV中DataType类分析）'
+    }
+</script>
+
+                </div>
+                <aside class="col-md-4 gal-left" id="sidebar">
+    <!-- 此为sidebar的搜索框, 非搜索结果页面 -->
+<aside id="sidebar-search">
+    <div class="search hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <form class="form-inline clearfix" id="search-form" method="get" action="/search/index.html">
+            <input type="text" name="s" class="form-control" id="searchInput" placeholder="搜索文章~" autocomplete="off">
+            <button class="btn btn-danger btn-gal" type="submit">
+                <i class="fa fa-search"></i>
+            </button>
+        </form>
+    </div>
+</aside>
+    <aside id="sidebar-author">
+    <div class="panel panel-gal" data-aos="flip-right" data-aos-duration="3000">
+        <div class="panel-heading" style="text-align: center">
+            <i class="fa fa-quote-left"></i>
+            Labmem No.1
+            <i class="fa fa-quote-right"></i>
+        </div>
+        <div class="author-panel text-center">
+            <img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3485132381,143374086&fm=26&gp=0.jpg" width="140" height="140" alt="个人头像" class="author-image">
+            <p class="author-description"></p><p>一切都是命运石之门的选择</p>
+<p></p>
+        </div>
+    </div>
+</aside>
+    
+    <aside id="sidebar-recent_comments">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-comments"></i>
+            最新评论
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush"></ul>
+    </div>
+</aside>
+    
+    <!-- 要配置好leancloud才能开启此小工具 -->
+    
+    <aside id="sidebar-hot_posts">
+    <div class="panel panel-gal hot hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-fire"></i>
+            最热文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush"></ul>
+    </div>
+</aside>
+    
+    
+    <aside id="sidebar-recent_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            近期文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/22/UbuntuToDo/">安装Ubuntu系统必做的事情（常用软件安装＋系统配置）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/mxnet-hrbrid-forward/">MXNet学习笔记：HybridBlock类hybrid_forwar()函数解析</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/mxnet-set-learning-rate/">MXNet使用技巧：单独设置网络中每层的学习率</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/python-argparse/">python常用库总结：argparse库</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/faster-rcnn/">Faster-RCNN论文细节原理解读+代码实现gluoncv(MXNet)</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/traits/">C++ Traits简介（OpenCV中DataType类分析）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode4/">LeetCode 第四题 Median of Two Sorted Arrays（计算两个有序数组的中位数）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode5/">LeetCode 第5题 Longest Palindromic Substring 最长回文子串</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/mxnetAPIobjectdetection/">MXNet中目标检测API使用总结：MultiBoxDetection、MultiBoxPrior、MultiBoxTarget</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode2/">LeetCode 第2题 Add Two Numbers</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    <aside id="sidebar-rand_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            随机文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/HDU6344/">2018百度之星程序设计大赛（资格赛） 调查问卷 HDU6344 解题思路</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/UbuntSSH/">Ubuntu系统生成SSH秘钥并添加到github远程仓库(解决git push被拒绝的问题)</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/gitpush_deny/">本地仓库git push命令提交到github远程仓库时，出现 更新被拒绝，因为远程仓库包含您本地尚不存在的提交。解决方案</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/faster-rcnn/">Faster-RCNN论文细节原理解读+代码实现gluoncv(MXNet)</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/jsp/">JSP实现网页的自动登录(session+cookie)实现</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode2/">LeetCode 第2题 Add Two Numbers</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/mxnet-set-learning-rate/">MXNet使用技巧：单独设置网络中每层的学习率</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/mxnetAPIobjectdetection/">MXNet中目标检测API使用总结：MultiBoxDetection、MultiBoxPrior、MultiBoxTarget</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/python-argparse/">python常用库总结：argparse库</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/traits/">C++ Traits简介（OpenCV中DataType类分析）</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    <aside id="gal-sets">
+        <div class="panel panel-gal hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+            <ul class="nav nav-pills pills-gal">
+
+                
+                <li>
+                    <a href="/2019/01/18/traits/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                </li>
+                
+                
+                <li>
+                    <a href="/2019/01/18/traits/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                </li>
+                
+                
+                <li>
+                    <a href="/2019/01/18/traits/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                </li>
+                
+            </ul>
+            <div class="tab-content">
+                
+                <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
+    
+    <a href="/tags/暴力枚举/" style="font-size: 15.60296400476732px;" class="tag-cloud-link">暴力枚举</a>
+    
+    <a href="/tags/剪枝/" style="font-size: 8.8132341694638px;" class="tag-cloud-link">剪枝</a>
+    
+    <a href="/tags/线段树/" style="font-size: 14.33643077698733px;" class="tag-cloud-link">线段树</a>
+    
+    <a href="/tags/前缀和/" style="font-size: 17.194655889372058px;" class="tag-cloud-link">前缀和</a>
+    
+    <a href="/tags/二分法/" style="font-size: 17.338677969320138px;" class="tag-cloud-link">二分法</a>
+    
+    <a href="/tags/git命令/" style="font-size: 15.049620729206348px;" class="tag-cloud-link">git命令</a>
+    
+    <a href="/tags/mxnet/" style="font-size: 8.38696943380491px;" class="tag-cloud-link">mxnet</a>
+    
+    <a href="/tags/faster-rcnn/" style="font-size: 9.45916074481867px;" class="tag-cloud-link">faster_rcnn</a>
+    
+    <a href="/tags/java/" style="font-size: 17.857836650315374px;" class="tag-cloud-link">java</a>
+    
+    <a href="/tags/jsp/" style="font-size: 18.160724268122735px;" class="tag-cloud-link">jsp</a>
+    
+    <a href="/tags/servlet/" style="font-size: 11.21624075856871px;" class="tag-cloud-link">servlet</a>
+    
+    <a href="/tags/物体检测/" style="font-size: 16.91077355666019px;" class="tag-cloud-link">物体检测</a>
+    
+    <a href="/tags/论文/" style="font-size: 14.885862682261147px;" class="tag-cloud-link">论文</a>
+    
+    <a href="/tags/python/" style="font-size: 19.623488777387237px;" class="tag-cloud-link">python</a>
+    
+    <a href="/tags/深度学习/" style="font-size: 17.975392025554918px;" class="tag-cloud-link">深度学习</a>
+    
+</div>
+                
+                
+                <div class="friend-links tab-pane nav bs-sidenav fade" id="sidebar-friend-links">
+    
+    <li>
+        <a href="http://baidu.com/" target="_blank">百度</a>
+    </li>
+    
+    <li>
+        <a href="http://www.google.com/" target="_blank">谷歌</a>
+    </li>
+    
+    <li>
+        <a href="http://www.moe123.com/" target="_blank">木有啊</a>
+    </li>
+    
+</div>
+                
+                
+                <div class="links tab-pane nav bs-sidenav fade" id="sidebar-links">
+    
+    <li>
+        <a href="https://github.com/JJXiangJiaoJun/" target="_blank">Github</a>
+    </li>
+    
+    <li>
+        <a href="https://blog.csdn.net/XiangJiaoJun_/" target="_blank">CSDN</a>
+    </li>
+    
+    <li>
+        <a href="https://www.zhihu.com/people/ye-xiao-bai-11-96/activities" target="_blank">知乎</a>
+    </li>
+    
+</div>
+                
+            </div>
+        </div>
+    </aside>
+    
+</aside>
+            </div>
+        </div>
+    </div>
+    <footer id="gal-footer">
+    <div class="container">
+        Copyright © 2018 Labmem No.1 Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>.&nbsp;Theme by <a href="https://github.com/ZEROKISEKI" target="_blank">AONOSORA</a>
+    </div>
+</footer>
+
+<!-- 回到顶端 -->
+<div id="gal-gotop">
+    <i class="fa fa-angle-up"></i>
+</div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"pluginJsPath":"lib/","pluginRootPath":"live2dw/"});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+<script src="/js/activate-power-mode.js"></script>
+<script>
+
+    // 配置highslide
+	hs.graphicsDir = '/js/highslide/graphics/'
+    hs.outlineType = "rounded-white";
+    hs.dimmingOpacity = 0.8;
+    hs.outlineWhileAnimating = true;
+    hs.showCredits = false;
+    hs.captionEval = "this.thumb.alt";
+    hs.numberPosition = "caption";
+    hs.align = "center";
+    hs.transitions = ["expand", "crossfade"];
+    hs.lang.number = '共%2张图, 当前是第%1张';
+    hs.addSlideshow({
+      interval: 5000,
+      repeat: true,
+      useControls: true,
+      fixedControls: "fit",
+      overlayOptions: {
+        opacity: 0.75,
+        position: "bottom center",
+        hideOnMouseOut: true
+      }
+    })
+
+    // 初始化aos
+    AOS.init({
+      duration: 1000,
+      delay: 0,
+      easing: 'ease-out-back'
+    });
+
+</script>
+<script>
+	POWERMODE.colorful = 'true';    // make power mode colorful
+	POWERMODE.shake = 'true';       // turn off shake
+	// TODO 这里根据具体情况修改
+	document.body.addEventListener('input', POWERMODE);
+</script>
+<script>
+    window.slideConfig = {
+      prefix: '/imgs/slide/background',
+      ext: 'jpg',
+      maxCount: '21'
+    }
+</script>
+<script src="/js/hs.js"></script>
+<script src="/js/blog.js"></script>
+
+
+<script>
+    window.hot_posts_count = '10'
+    // window.use_leancloud = 'true'
+</script>
+<script src="/js/comment/leancloud.js"></script>
+
+
+<script src="https://myau.moe/js/comment/gitment.browser.js"></script>
+<script>
+    if(window.commentConfig) {
+      window.commentConfig.id = 'Fri Jan 18 2019 19:24:39 GMT+0800'
+      window.commentConfig.owner = 'JJXiangJiaoJun'
+      window.commentConfig.repo = 'comment_page'
+      window.commentConfig.client_id = 'd7df3d5d159f81371d76'
+      window.commentConfig.client_secret = '3794527fca067871d3795782ae7fd14f94ce3a74'
+      window.commentConfig.redirect_uri = 'https://hongbb.top'
+    } else {
+      window.commentConfig = {
+      	id: 'Fri Jan 18 2019 19:24:39 GMT+0800',
+        owner: 'JJXiangJiaoJun',
+        repo: 'comment_page',
+        client_id: 'd7df3d5d159f81371d76',
+        client_secret: '3794527fca067871d3795782ae7fd14f94ce3a74',
+        redirect_uri: 'https://hongbb.top'
+      }
+    }
+</script>
+<script src="/js/comment/gitment.js"></script>
+
+</html>

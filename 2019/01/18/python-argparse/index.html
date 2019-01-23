@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="author" content="Labmem No.1">
+    
+    <meta name="description" content="一切都是命运石之门的选择">
+    
+    
+    
+    
+    
+    
+    <title>python常用库总结：argparse库 | 爱吃咸鱼的喵の无名小站</title>
+    <link href="”https://github.com/JJXiangJiaoJun“" rel="”prefetch”">
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/aos.css">
+<link rel="stylesheet" href="/css/style.css">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/aos.js"></script>
+    <script src="/js/highslide/highslide-full.min.js"></script>
+    <link rel="stylesheet" href="/js/highslide/highslide.css">
+    <style type="text/css">
+        @media (max-width: 768px) {
+            body {
+                background-color: #f0f0f0;
+                background: url('/imgs/mobile.jpg');
+                background-attachment: fixed;
+            }
+        }
+    </style>
+    
+    <script src="//cdn1.lncld.net/static/js/3.4.2/av-min.js"></script>
+    <script>
+      AV.init({
+        appId: 'uJUp6NroM9R4yTpnGYBF7hhw-gzGzoHsz',
+        appKey: 'w5Qtn48qXMY1nyCSf7oahEM7'
+      })
+    </script>
+    
+    <!--<script type="text/javascript">
+      if (document.images) {
+        var avatar = new Image();
+        avatar.src = '/imgs/https:/ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3485132381,143374086&fm=26&gp=0.jpg'
+        var previews = 'preview1.jpg,preview2.jpg,preview12.jpeg,preview3.jpg,preview4.jpg,preview5.jpg,preview6.jpeg,preview7.png,preview8.jpeg,preview9.jpeg,preview10.jpg,preview11.jpg,preview12.jpeg,preview13.jpg,preview14.jpeg,preview15.jpeg,preview16.png'.split(',')
+        var previewsPreLoad = []
+        for(var i = 0; i < length; i++) {
+          previewsPreLoad.push(new Image())
+          previewsPreLoad[previewsPreLoad.length - 1].src = '/imgs/preview' + previews[i]
+        }
+      }
+    </script>--><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head></html>
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- 背景轮播图功能 -->
+    <section class="hidden-xs">
+    <ul class="cb-slideshow">
+        <li><span>天若</span></li>
+        <li><span>有情</span></li>
+        <li><span>天亦老</span></li>
+        <li><span>我为</span></li>
+        <li><span>长者</span></li>
+        <li><span>续一秒</span></li>
+    </ul>
+</section>
+    <!-- 欧尼酱功能, 谁用谁知道 -->
+    
+    <header class="navbar navbar-inverse" id="gal-header">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".bs-navbar-collapse" aria-expanded="false">
+                <span class="fa fa-lg fa-reorder"></span>
+            </button>
+            <a href="https://github.com/JJXiangJiaoJun">
+                
+                <!-- 这里background使用imgs/${logo_image}(路径文件名) -->
+                <style>
+                    #gal-header .navbar-brand {
+                        width: 200px;
+                        height: 50px;
+                        display: block;
+                        background: url('/imgs/minilogo.jpeg') no-repeat;
+                    }
+                </style>
+                    
+                <div class="navbar-brand"></div>
+                
+            </a>
+        </div>
+        <div class="collapse navbar-collapse bs-navbar-collapse">
+            <ul class="nav navbar-nav" id="menu-gal">
+                
+                
+                <li class="">
+                    <a href="/">
+                        <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/archives">
+                        <i class="fa fa-archive"></i>归档
+                    </a>
+                </li>
+                
+                
+                
+                
+                <li class="dropdown">
+                    <!-- TODO 添加hover dropdown效果 -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-hover="dropdown">
+                        <i class="fa fa-list"></i>分类
+                    </a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        <li>
+                            <a href="/categories/算法与数据结构/">算法与数据结构</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/git/">git</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/Ubuntu系统/">Ubuntu系统</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/深度学习/">深度学习</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/Java后端/">Java后端</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/深度学习论文/">深度学习论文</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/categories/python常用库/">python常用库</a>
+                        </li>
+                        
+                        
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                
+                
+                <li class="dropdown">
+                    <!-- TODO 添加hover dropdown效果 -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-hover="dropdown">
+                        <i class="fa fa-tags"></i>标签
+                    </a>
+                    <ul class="dropdown-menu">
+                        
+                        
+                        <li>
+                            <a href="/tags/暴力枚举/">暴力枚举</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/剪枝/">剪枝</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/线段树/">线段树</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/前缀和/">前缀和</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/二分法/">二分法</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/git命令/">git命令</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/mxnet/">mxnet</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/faster-rcnn/">faster_rcnn</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/java/">java</a>
+                        </li>
+                        
+                        <li>
+                            <a href="/tags/jsp/">jsp</a>
+                        </li>
+                        
+                        
+                        <li>
+                            <a href="/tags">...</a>
+                        </li>
+                        
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                
+                <li class="">
+                    <a href="/message">
+                        <i class="fa fa-commenting"></i>留言板
+                    </a>
+                </li>
+                
+                
+                
+                <li class="">
+                    <a href="/about">
+                        <i class="fa fa-user"></i>关于我
+                    </a>
+                </li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</header>
+    <div id="gal-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 gal-right" id="mainstay">
+                    
+<article class="article well article-body" id="article">
+    <div class="breadcrumb">
+        <i class="fa fa-home"></i>
+        <a href="https://github.com/JJXiangJiaoJun">爱吃咸鱼的喵の无名小站</a>
+        >
+        <span>python常用库总结：argparse库</span>
+    </div>
+    <!-- 大型设备详细文章 -->
+    <div class="hidden-xs">
+        <div class="title-article">
+            <h1>
+                <a href="/2019/01/18/python-argparse/">python常用库总结：argparse库</a>
+            </h1>
+        </div>
+        <div class="tag-article">
+            
+            <span class="label label-gal">
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/python/">python</a>
+                
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-calendar"></i> 2019-01-18
+            </span>
+            
+            <span class="label label-gal">
+                <i class="fa fa-eye"></i>
+            </span>
+            
+        </div>
+    </div>
+    <!-- 小型设备详细文章 -->
+    <div class="visible-xs">
+        <center>
+            <div class="title-article">
+                <h4>
+                    <a href="/2019/01/18/python-argparse/">python常用库总结：argparse库</a>
+                </h4>
+            </div>
+            <p>
+                <i class="fa fa-calendar"></i> 2019-01-18
+            </p>
+            <p>
+                
+                <i class="fa fa-tags"></i>
+                
+                <a href="/tags/python/">python</a>
+                
+                
+                
+                <i class="fa fa-eye"></i>
+                
+            </p>
+        </center>
+    </div>
+    <div class="content-article">
+        <p>&emsp;&emsp;写深度学习脚本的时候需要设置各种参数，你还在手动在代码里修改？那你就out了，赶紧来学学argparse库的使用吧！</p>
+<h2 id="emsp-emsp-python中argparse库是一个命令行参数的解析工具，利用这个库可以在命令行运行脚本时，设置参数，从而灵活的设置脚本中需要的参数。下面总结一下argparse库的使用方法。"><a href="#emsp-emsp-python中argparse库是一个命令行参数的解析工具，利用这个库可以在命令行运行脚本时，设置参数，从而灵活的设置脚本中需要的参数。下面总结一下argparse库的使用方法。" class="headerlink" title="&emsp;&emsp;python中argparse库是一个命令行参数的解析工具，利用这个库可以在命令行运行脚本时，设置参数，从而灵活的设置脚本中需要的参数。下面总结一下argparse库的使用方法。"></a>&emsp;&emsp;python中argparse库是一个命令行参数的解析工具，利用这个库可以在命令行运行脚本时，设置参数，从而灵活的设置脚本中需要的参数。下面总结一下argparse库的使用方法。</h2><h1 id="创建parse对象"><a href="#创建parse对象" class="headerlink" title="创建parse对象"></a>创建parse对象</h1><p>&emsp;&emsp;argparse库为python自带的库，使用时直接<code>import argparse</code>就可以使用，第一步，我们要创建一个<code>ArgumentParser</code>对象，（设置的参数最终都会作为ArgumentParser对象的属性，调用方法如ArgumentParser.xxxxx），同时在其<code>description</code>参数中，我们可以输入想添加的提示信息。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"></span><br><span class="line">parser = argparse.ArgumentParser(description=<span class="string">'add some useful information here....'</span>)</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h1 id="使用add-argument-方法添加参数"><a href="#使用add-argument-方法添加参数" class="headerlink" title="使用add_argument()方法添加参数"></a>使用add_argument()方法添加参数</h1><p>&emsp;&emsp;创建了<code>ArgumentParser</code>对象之后，就可以使用<code>add_argument()</code>方法来添加参数,其输入参数如下，其中<code>[]</code>中的参数为可选参数，作用为设置参数的一些属性。<code>add_argument()</code>第一个输入参数即为我们添加的参数，当前面没有<code>-</code>前缀，比如<code>&#39;foo&#39;</code>时为位置参数，当带有<code>-</code>前缀时，为可选参数，如<code>--foo</code>。位置参数和可选参数的概念这里就不解释了。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ArgumentParser.add_argument(name <span class="keyword">or</span> flags…[, action][, nargs][, const][, default]</span><br><span class="line">[, type][, choices][, required][, help][, metavar][, dest])</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"></span><br><span class="line">parser = argparse.ArgumentParser(description=<span class="string">'arugment test'</span>)</span><br><span class="line">parser.add_argument(<span class="string">'foo'</span>)  <span class="comment">#位置参数</span></span><br><span class="line">parser.add_argument(<span class="string">'--foo2'</span>)  <span class="comment">#可选参数</span></span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;下面先总结一下，<code>add_argument()</code>方法中常用的一些属性：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">属性值</th>
+<th style="text-align:center">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">type</td>
+<td style="text-align:center">指定参数存储时的类型，可为<code>int、float、str</code>等</td>
+</tr>
+<tr>
+<td style="text-align:center">action</td>
+<td style="text-align:center">指定参数的动作，可为<code>store_const、store_true/store_false、append、count</code>‘</td>
+</tr>
+<tr>
+<td style="text-align:center">default</td>
+<td style="text-align:center">指定参数的默认值</td>
+</tr>
+<tr>
+<td style="text-align:center">dest</td>
+<td style="text-align:center">指定参数的保存位置，如设置<code>&#39;ddd&#39;</code>，则通过<code>parser.ddd</code>获取该参数值</td>
+</tr>
+<tr>
+<td style="text-align:center">choice</td>
+<td style="text-align:center">指定参数的可选项，参数只能从设置值中选择</td>
+</tr>
+<tr>
+<td style="text-align:center">required</td>
+<td style="text-align:center">说明参数是否为必须的，可以设置为<code>True\False</code></td>
+</tr>
+<tr>
+<td style="text-align:center">help</td>
+<td style="text-align:center">参数的说明，用户输入<code>--help\-h</code>时，会显示设置的帮助信息</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="type"><a href="#type" class="headerlink" title="type"></a>type</h2><p>&emsp;&emsp;<code>ArgumentParser</code>添加的参数默认存储类型为<code>str</code>，如果想以其他方式进行存储，就要通过设置<code>type</code>属性来按指定类型存储，代码和运行结果如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">parser = argparse.ArgumentParser(</span><br><span class="line">      formatter_class=argparse.ArgumentDefaultsHelpFormatter,</span><br><span class="line">      description=<span class="string">'Create an image list or \</span></span><br><span class="line"><span class="string">          make a record database by reading from an image list'</span></span><br><span class="line">  )</span><br><span class="line">parser.add_argument(<span class="string">'--foo'</span>)</span><br><span class="line">parser.add_argument(<span class="string">'--foo2'</span>, type=int)</span><br><span class="line">parser.add_argument(<span class="string">'--foo3'</span>, type=float)</span><br><span class="line"></span><br><span class="line">args = parser.parse_args()</span><br><span class="line">print(<span class="string">'foo is'</span>, type(args.foo))</span><br><span class="line">print(<span class="string">'foo2 is'</span>, type(args.foo2))</span><br><span class="line">print(<span class="string">'foo3 is'</span>, type(args.foo3))</span><br><span class="line"></span><br><span class="line">C:\Users\lenovo\Desktop\arg_test&gt;py <span class="number">-3</span> arg_test.py --foo <span class="number">1.1</span> --foo2 <span class="number">1</span> --foo3 <span class="number">0.1</span></span><br><span class="line">foo <span class="keyword">is</span> &lt;<span class="class"><span class="keyword">class</span> '<span class="title">str</span>'&gt;</span></span><br><span class="line"><span class="class"><span class="title">foo2</span> <span class="title">is</span> &lt;<span class="title">class</span> '<span class="title">int</span>'&gt;</span></span><br><span class="line"><span class="class"><span class="title">foo3</span> <span class="title">is</span> &lt;<span class="title">class</span> '<span class="title">float</span>'&gt;</span></span><br></pre></td></tr></table></figure></p>
+<hr>
+<h2 id="action"><a href="#action" class="headerlink" title="action"></a>action</h2><p>&emsp;&emsp;<code>action</code>可以设置参数的动作，也就是当我们输入了该可选参数时，该参数会进行的动作。</p>
+<h3 id="store-const"><a href="#store-const" class="headerlink" title="store_const"></a>store_const</h3><p>&emsp;&emsp;很简单，设置该参数的值为常量，搭配<code>const</code>属性使用，初始化时赋值为<code>const</code>中设置的值，之后程序中不允许更改参数值，这样我们可以限制一些用户的误操作，代码和运行结果如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">parser.add_argument(<span class="string">'--foo'</span>,action=<span class="string">'store_const'</span>,const=<span class="string">'this is a constant'</span>)</span><br><span class="line">args = parser.parse_args()</span><br><span class="line">print(<span class="string">'foo is'</span>, args.foo)</span><br><span class="line"></span><br><span class="line">C:\Users\lenovo\Desktop\arg_test&gt;py <span class="number">-3</span> arg_test.py --foo</span><br><span class="line">foo <span class="keyword">is</span> this <span class="keyword">is</span> a constant</span><br></pre></td></tr></table></figure></p>
+<h3 id="store-true-store-false"><a href="#store-true-store-false" class="headerlink" title="store_true/store_false"></a>store_true/store_false</h3><p>&emsp;&emsp;<code>store_true</code>表示，当该参数出现时，设置该参数的值为<code>true</code>，否则为<code>false</code>。<code>store_false</code>则相反。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">parser.add_argument(<span class="string">'--foo'</span>,action=<span class="string">'store_true'</span>)</span><br><span class="line">args = parser.parse_args()</span><br><span class="line">print(<span class="string">'foo is'</span>, args.foo)</span><br><span class="line"></span><br><span class="line">C:\Users\lenovo\Desktop\arg_test&gt;py <span class="number">-3</span> arg_test.py --foo</span><br><span class="line">foo <span class="keyword">is</span> <span class="keyword">True</span></span><br><span class="line"></span><br><span class="line">C:\Users\lenovo\Desktop\arg_test&gt;py <span class="number">-3</span> arg_test.py</span><br><span class="line">foo <span class="keyword">is</span> <span class="keyword">False</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="append"><a href="#append" class="headerlink" title="append"></a>append</h3><p>&emsp;&emsp;使用<code>append</code>后，命令行中可以为该参数赋多个值，这些值将会保存在一个列表中。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">parser.add_argument(<span class="string">'--foo'</span>,action=<span class="string">'append'</span>)</span><br><span class="line">args = parser.parse_args()</span><br><span class="line">print(<span class="string">'foo is'</span>, args.foo)</span><br><span class="line"></span><br><span class="line">C:\Users\lenovo\Desktop\arg_test&gt;py <span class="number">-3</span> arg_test.py --foo <span class="number">1</span>,<span class="number">23</span>,<span class="number">5</span></span><br><span class="line">foo <span class="keyword">is</span> [<span class="string">'1,23,5'</span>]</span><br></pre></td></tr></table></figure></p>
+<h3 id="count"><a href="#count" class="headerlink" title="count"></a>count</h3><p>&emsp;&emsp;顾名思义，统计该参数出现的次数。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">parser.add_argument(<span class="string">'--foo'</span>,action=<span class="string">'count'</span>)</span><br><span class="line">args = parser.parse_args()</span><br><span class="line">print(<span class="string">'foo is'</span>, args.foo)</span><br><span class="line"></span><br><span class="line">C:\Users\lenovo\Desktop\arg_test&gt;py <span class="number">-3</span> arg_test.py --foo --foo --foo</span><br><span class="line">foo <span class="keyword">is</span> <span class="number">3</span></span><br></pre></td></tr></table></figure></p>
+<hr>
+<h2 id="default"><a href="#default" class="headerlink" title="default"></a>default</h2><p>&emsp;&emsp;很实用的一个属性，设置参数的默认值，也就是说，当没有输入该参数时，参数默认存储<code>default</code>中设置的值。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">parser.add_argument(<span class="string">'--foo'</span>,type=str,default=<span class="string">'default value'</span>)</span><br><span class="line">args = parser.parse_args()</span><br><span class="line">print(<span class="string">'foo is'</span>, args.foo)</span><br><span class="line"></span><br><span class="line">C:\Users\lenovo\Desktop\arg_test&gt;py <span class="number">-3</span> arg_test.py</span><br><span class="line">foo <span class="keyword">is</span> default value</span><br><span class="line"></span><br><span class="line">C:\Users\lenovo\Desktop\arg_test&gt;py <span class="number">-3</span> arg_test.py --foo <span class="keyword">not</span>-default</span><br><span class="line">foo <span class="keyword">is</span> <span class="keyword">not</span>-default</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h2 id="dest"><a href="#dest" class="headerlink" title="dest"></a>dest</h2><p>&emsp;&emsp;指定参数的存储位置，该参数值将被存储为dest声明的变量中。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">parser.add_argument(<span class="string">'--foo'</span>,type=str,dest=<span class="string">'foo_dest'</span>)</span><br><span class="line">args = parser.parse_args()</span><br><span class="line">print(<span class="string">'foo is'</span>, args.foo_dest)  <span class="comment">#注意这里的调用变量为 foo_dest</span></span><br><span class="line"></span><br><span class="line">C:\Users\lenovo\Desktop\arg_test&gt;py <span class="number">-3</span> arg_test.py --foo dest_test</span><br><span class="line">foo <span class="keyword">is</span> dest_test</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h2 id="choice"><a href="#choice" class="headerlink" title="choice"></a>choice</h2><p>&emsp;&emsp;用户输入的参数只能是choices里面规定的,可以限制用户的输入。使程序更加鲁棒<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">parser.add_argument(<span class="string">'--foo'</span>, type=int,choices=[<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>])</span><br><span class="line">args = parser.parse_args()</span><br><span class="line">print(<span class="string">'foo is'</span>, args.foo)</span><br><span class="line"></span><br><span class="line">C:\Users\lenovo\Desktop\arg_test&gt;py <span class="number">-3</span> arg_test.py --foo <span class="number">5</span></span><br><span class="line">foo <span class="keyword">is</span> <span class="number">5</span></span><br><span class="line"></span><br><span class="line">C:\Users\lenovo\Desktop\arg_test&gt;py <span class="number">-3</span> arg_test.py --foo <span class="number">1</span></span><br><span class="line">usage: arg_test.py [-h] [--foo &#123;<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>&#125;]</span><br><span class="line">arg_test.py: error: argument --foo: invalid choice: <span class="number">1</span> (choose <span class="keyword">from</span> <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>)</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h2 id="required"><a href="#required" class="headerlink" title="required"></a>required</h2><p>&emsp;&emsp;设置该参数是否为必须，如果为<code>True</code>则要求用户一定要输入该参数。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">parser.add_argument(<span class="string">'--foo'</span>, type=int,required=<span class="keyword">True</span>)</span><br><span class="line">args = parser.parse_args()</span><br><span class="line">print(<span class="string">'foo is'</span>, args.foo)</span><br><span class="line"></span><br><span class="line">C:\Users\lenovo\Desktop\arg_test&gt;py <span class="number">-3</span> arg_test.py</span><br><span class="line">usage: arg_test.py [-h] --foo FOO</span><br><span class="line">arg_test.py: error: the following arguments are required: --foo</span><br></pre></td></tr></table></figure></p>
+<h2 id="help"><a href="#help" class="headerlink" title="help"></a>help</h2><p>&emsp;&emsp;设置参数帮助信息，可以在其中写入一些提示，告诉用户应该如何输入该参数，相当于一个帮助文档<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">parser.add_argument(<span class="string">'--foo'</span>, type=int,</span><br><span class="line">					help = <span class="string">'add some helpful message here.'</span>)</span><br><span class="line">args = parser.parse_args()</span><br><span class="line">print(<span class="string">'foo is'</span>, args.foo)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">C:\Users\lenovo\Desktop\arg_test&gt;py <span class="number">-3</span> arg_test.py -h</span><br><span class="line">usage: arg_test.py [-h] [--foo FOO]</span><br><span class="line"></span><br><span class="line">Create an image list <span class="keyword">or</span> make a record database by reading <span class="keyword">from</span> an image list</span><br><span class="line"></span><br><span class="line">optional arguments:</span><br><span class="line">  -h, --help  show this help message <span class="keyword">and</span> exit</span><br><span class="line">  --foo FOO   add some helpful message here. (default: <span class="keyword">None</span>)</span><br></pre></td></tr></table></figure></p>
+<h1 id="用parse-args-方法解析参数"><a href="#用parse-args-方法解析参数" class="headerlink" title="用parse_args()方法解析参数"></a>用parse_args()方法解析参数</h1><p>&emsp;&emsp;添加完参数后，最后调用<code>parse_args()</code>方法，将会返回一个命名空间(namespace)，之后我们就可以愉快的调用各个设置好的参数啦~<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">parse_arg</span><span class="params">()</span>:</span></span><br><span class="line">    parser = argparse.ArgumentParser(</span><br><span class="line">        formatter_class=argparse.ArgumentDefaultsHelpFormatter,</span><br><span class="line">        description=<span class="string">'Create an image list or \</span></span><br><span class="line"><span class="string">            make a record database by reading from an image list'</span></span><br><span class="line">    )</span><br><span class="line">    parser.add_argument(<span class="string">'--foo'</span>, type=int,</span><br><span class="line">                        help=<span class="string">'add some helpful message here.'</span>)</span><br><span class="line">    <span class="comment"># parser.add_argument('--foo2', type=int)</span></span><br><span class="line">    <span class="comment"># parser.add_argument('--foo3', type=float)</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">#namespace</span></span><br><span class="line">    args = parser.parse_args()</span><br><span class="line">    <span class="keyword">return</span> args</span><br></pre></td></tr></table></figure></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>&emsp;&emsp;总的来说，argparse库的用法还是比较傻瓜的，如果学会了，恭喜你，你再也不用在代码里面去修改参数啦~</p>
+
+    </div>
+</article>
+
+
+<div id="comments-template"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script>
+	if(!window.commentConfig) {
+      window.commentConfig = {}
+      window.commentConfig.title = 'python常用库总结：argparse库'
+    }
+</script>
+
+                </div>
+                <aside class="col-md-4 gal-left" id="sidebar">
+    <!-- 此为sidebar的搜索框, 非搜索结果页面 -->
+<aside id="sidebar-search">
+    <div class="search hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <form class="form-inline clearfix" id="search-form" method="get" action="/search/index.html">
+            <input type="text" name="s" class="form-control" id="searchInput" placeholder="搜索文章~" autocomplete="off">
+            <button class="btn btn-danger btn-gal" type="submit">
+                <i class="fa fa-search"></i>
+            </button>
+        </form>
+    </div>
+</aside>
+    <aside id="sidebar-author">
+    <div class="panel panel-gal" data-aos="flip-right" data-aos-duration="3000">
+        <div class="panel-heading" style="text-align: center">
+            <i class="fa fa-quote-left"></i>
+            Labmem No.1
+            <i class="fa fa-quote-right"></i>
+        </div>
+        <div class="author-panel text-center">
+            <img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3485132381,143374086&fm=26&gp=0.jpg" width="140" height="140" alt="个人头像" class="author-image">
+            <p class="author-description"></p><p>一切都是命运石之门的选择</p>
+<p></p>
+        </div>
+    </div>
+</aside>
+    
+    <aside id="sidebar-recent_comments">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-comments"></i>
+            最新评论
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush"></ul>
+    </div>
+</aside>
+    
+    <!-- 要配置好leancloud才能开启此小工具 -->
+    
+    <aside id="sidebar-hot_posts">
+    <div class="panel panel-gal hot hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-fire"></i>
+            最热文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush"></ul>
+    </div>
+</aside>
+    
+    
+    <aside id="sidebar-recent_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            近期文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/22/UbuntuToDo/">安装Ubuntu系统必做的事情（常用软件安装＋系统配置）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/mxnet-hrbrid-forward/">MXNet学习笔记：HybridBlock类hybrid_forwar()函数解析</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/mxnet-set-learning-rate/">MXNet使用技巧：单独设置网络中每层的学习率</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/python-argparse/">python常用库总结：argparse库</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/faster-rcnn/">Faster-RCNN论文细节原理解读+代码实现gluoncv(MXNet)</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/traits/">C++ Traits简介（OpenCV中DataType类分析）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode4/">LeetCode 第四题 Median of Two Sorted Arrays（计算两个有序数组的中位数）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode5/">LeetCode 第5题 Longest Palindromic Substring 最长回文子串</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/mxnetAPIobjectdetection/">MXNet中目标检测API使用总结：MultiBoxDetection、MultiBoxPrior、MultiBoxTarget</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode2/">LeetCode 第2题 Add Two Numbers</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    <aside id="sidebar-rand_posts">
+    <div class="panel panel-gal recent hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+        <div class="panel-heading">
+            <i class="fa fa-refresh"></i>
+            随机文章
+            <i class="fa fa-times-circle panel-remove"></i>
+            <i class="fa fa-chevron-circle-up panel-toggle"></i>
+        </div>
+        <ul class="list-group list-group-flush">
+            
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/HDU6345/">2018百度之星程序设计大赛（资格赛） 子串查询 HDU6345 解题思路</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/UVa11536/">UVa11536 Smallest Sub-Array</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/gitpush_deny/">本地仓库git push命令提交到github远程仓库时，出现 更新被拒绝，因为远程仓库包含您本地尚不存在的提交。解决方案</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/faster-rcnn/">Faster-RCNN论文细节原理解读+代码实现gluoncv(MXNet)</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode2/">LeetCode 第2题 Add Two Numbers</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode4/">LeetCode 第四题 Median of Two Sorted Arrays（计算两个有序数组的中位数）</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/leetcode5/">LeetCode 第5题 Longest Palindromic Substring 最长回文子串</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/mxnet-set-learning-rate/">MXNet使用技巧：单独设置网络中每层的学习率</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/python-argparse/">python常用库总结：argparse库</a>
+                </span>
+            </li>
+            
+            <li class="list-group-item">
+                <span class="post-title">
+                    <a href="/2019/01/18/深度学习论文汇总/">深度学习论文汇总</a>
+                </span>
+            </li>
+            
+        </ul>
+    </div>
+</aside>
+    
+    
+    <aside id="gal-sets">
+        <div class="panel panel-gal hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+            <ul class="nav nav-pills pills-gal">
+
+                
+                <li>
+                    <a href="/2019/01/18/python-argparse/index.html#sidebar-tags" data-toggle="tab" id="tags-tab">热门标签</a>
+                </li>
+                
+                
+                <li>
+                    <a href="/2019/01/18/python-argparse/index.html#sidebar-friend-links" data-toggle="tab" id="friend-links-tab">友情链接</a>
+                </li>
+                
+                
+                <li>
+                    <a href="/2019/01/18/python-argparse/index.html#sidebar-links" data-toggle="tab" id="links-tab">个人链接</a>
+                </li>
+                
+            </ul>
+            <div class="tab-content">
+                
+                <div class="cloud-tags tab-pane nav bs-sidenav fade" id="sidebar-tags">
+    
+    <a href="/tags/暴力枚举/" style="font-size: 8.235122045251776px;" class="tag-cloud-link">暴力枚举</a>
+    
+    <a href="/tags/剪枝/" style="font-size: 15.278375577297048px;" class="tag-cloud-link">剪枝</a>
+    
+    <a href="/tags/线段树/" style="font-size: 13.369091468538334px;" class="tag-cloud-link">线段树</a>
+    
+    <a href="/tags/前缀和/" style="font-size: 11.057829469261655px;" class="tag-cloud-link">前缀和</a>
+    
+    <a href="/tags/二分法/" style="font-size: 11.351999567829509px;" class="tag-cloud-link">二分法</a>
+    
+    <a href="/tags/git命令/" style="font-size: 14.157744586693621px;" class="tag-cloud-link">git命令</a>
+    
+    <a href="/tags/mxnet/" style="font-size: 17.19849843905598px;" class="tag-cloud-link">mxnet</a>
+    
+    <a href="/tags/faster-rcnn/" style="font-size: 15.124271384963754px;" class="tag-cloud-link">faster_rcnn</a>
+    
+    <a href="/tags/java/" style="font-size: 11.364706831294033px;" class="tag-cloud-link">java</a>
+    
+    <a href="/tags/jsp/" style="font-size: 11.353133318890048px;" class="tag-cloud-link">jsp</a>
+    
+    <a href="/tags/servlet/" style="font-size: 18.78711671208233px;" class="tag-cloud-link">servlet</a>
+    
+    <a href="/tags/物体检测/" style="font-size: 19.059640522549515px;" class="tag-cloud-link">物体检测</a>
+    
+    <a href="/tags/论文/" style="font-size: 13.13044693454248px;" class="tag-cloud-link">论文</a>
+    
+    <a href="/tags/python/" style="font-size: 16.408844948823173px;" class="tag-cloud-link">python</a>
+    
+    <a href="/tags/深度学习/" style="font-size: 10.418057814571805px;" class="tag-cloud-link">深度学习</a>
+    
+</div>
+                
+                
+                <div class="friend-links tab-pane nav bs-sidenav fade" id="sidebar-friend-links">
+    
+    <li>
+        <a href="http://baidu.com/" target="_blank">百度</a>
+    </li>
+    
+    <li>
+        <a href="http://www.google.com/" target="_blank">谷歌</a>
+    </li>
+    
+    <li>
+        <a href="http://www.moe123.com/" target="_blank">木有啊</a>
+    </li>
+    
+</div>
+                
+                
+                <div class="links tab-pane nav bs-sidenav fade" id="sidebar-links">
+    
+    <li>
+        <a href="https://github.com/JJXiangJiaoJun/" target="_blank">Github</a>
+    </li>
+    
+    <li>
+        <a href="https://blog.csdn.net/XiangJiaoJun_/" target="_blank">CSDN</a>
+    </li>
+    
+    <li>
+        <a href="https://www.zhihu.com/people/ye-xiao-bai-11-96/activities" target="_blank">知乎</a>
+    </li>
+    
+</div>
+                
+            </div>
+        </div>
+    </aside>
+    
+</aside>
+            </div>
+        </div>
+    </div>
+    <footer id="gal-footer">
+    <div class="container">
+        Copyright © 2018 Labmem No.1 Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>.&nbsp;Theme by <a href="https://github.com/ZEROKISEKI" target="_blank">AONOSORA</a>
+    </div>
+</footer>
+
+<!-- 回到顶端 -->
+<div id="gal-gotop">
+    <i class="fa fa-angle-up"></i>
+</div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!-- <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"pluginJsPath":"lib/","pluginRootPath":"live2dw/"});</script><!-- hexo-inject:begin --><!-- hexo-inject:end --></body>
+<script src="/js/activate-power-mode.js"></script>
+<script>
+
+    // 配置highslide
+	hs.graphicsDir = '/js/highslide/graphics/'
+    hs.outlineType = "rounded-white";
+    hs.dimmingOpacity = 0.8;
+    hs.outlineWhileAnimating = true;
+    hs.showCredits = false;
+    hs.captionEval = "this.thumb.alt";
+    hs.numberPosition = "caption";
+    hs.align = "center";
+    hs.transitions = ["expand", "crossfade"];
+    hs.lang.number = '共%2张图, 当前是第%1张';
+    hs.addSlideshow({
+      interval: 5000,
+      repeat: true,
+      useControls: true,
+      fixedControls: "fit",
+      overlayOptions: {
+        opacity: 0.75,
+        position: "bottom center",
+        hideOnMouseOut: true
+      }
+    })
+
+    // 初始化aos
+    AOS.init({
+      duration: 1000,
+      delay: 0,
+      easing: 'ease-out-back'
+    });
+
+</script>
+<script>
+	POWERMODE.colorful = 'true';    // make power mode colorful
+	POWERMODE.shake = 'true';       // turn off shake
+	// TODO 这里根据具体情况修改
+	document.body.addEventListener('input', POWERMODE);
+</script>
+<script>
+    window.slideConfig = {
+      prefix: '/imgs/slide/background',
+      ext: 'jpg',
+      maxCount: '21'
+    }
+</script>
+<script src="/js/hs.js"></script>
+<script src="/js/blog.js"></script>
+
+
+<script>
+    window.hot_posts_count = '10'
+    // window.use_leancloud = 'true'
+</script>
+<script src="/js/comment/leancloud.js"></script>
+
+
+<script src="https://myau.moe/js/comment/gitment.browser.js"></script>
+<script>
+    if(window.commentConfig) {
+      window.commentConfig.id = 'Fri Jan 18 2019 19:32:33 GMT+0800'
+      window.commentConfig.owner = 'JJXiangJiaoJun'
+      window.commentConfig.repo = 'comment_page'
+      window.commentConfig.client_id = 'd7df3d5d159f81371d76'
+      window.commentConfig.client_secret = '3794527fca067871d3795782ae7fd14f94ce3a74'
+      window.commentConfig.redirect_uri = 'https://hongbb.top'
+    } else {
+      window.commentConfig = {
+      	id: 'Fri Jan 18 2019 19:32:33 GMT+0800',
+        owner: 'JJXiangJiaoJun',
+        repo: 'comment_page',
+        client_id: 'd7df3d5d159f81371d76',
+        client_secret: '3794527fca067871d3795782ae7fd14f94ce3a74',
+        redirect_uri: 'https://hongbb.top'
+      }
+    }
+</script>
+<script src="/js/comment/gitment.js"></script>
+
+</html>
